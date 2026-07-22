@@ -1,0 +1,15 @@
+node_modules/
+*.map
+.env
+.env.*
+!.env.example
+.npmrc
+*.pem
+*.key
+*.p12
+*.pfx
+*.log
+coverage/
+.cache/
+data.json
+operation-history.json

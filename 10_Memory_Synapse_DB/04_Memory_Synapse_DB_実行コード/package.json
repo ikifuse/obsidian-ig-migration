@@ -1,0 +1,25 @@
+{
+  "name": "memory-synapse-db",
+  "version": "0.0.1",
+  "description": "Read-only feasibility prototype for Memory Synapse DB",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "build": "npm run check && node esbuild.config.mjs production",
+    "check": "tsc --noEmit --skipLibCheck",
+    "test": "node --import tsx --test TypeScript元コード/02_操作処理/*.test.ts TypeScript元コード/03_データ入出力/*.test.ts"
+  },
+  "keywords": [
+    "obsidian",
+    "prototype",
+    "wikilinks"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.15.17",
+    "esbuild": "0.25.5",
+    "obsidian": "latest",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  }
+}
