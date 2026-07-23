@@ -2,6 +2,408 @@
 
 Instagramのエクスポート記録を、検索・接続・再利用できるObsidian知識ベースへ変換するための実験と実装をまとめています。
 
+## 🗺️ プロジェクト全体マップ
+
+項目を押すと、リポジトリの構成から各文書の内容へ順番に展開できます。
+
+<details>
+<summary><strong>README.md</strong> — このプロジェクトの入口</summary>
+
+<details>
+<summary>開発背景と目的</summary>
+
+- 毎回AIへ自分の背景を説明する負担を減らす
+- 10年分のInstagramデータを「第二の脳」へ変換する
+- Obsidian上に検索・接続・再利用できる知識基盤を構築する
+- AIとの共同作業で巨大化した企画・設計・仕様を整理し直す
+- 現在は機能追加より、既存工程の整合確認と完走を優先する
+
+</details>
+
+<details>
+<summary>設計思想（絶対的なルール）</summary>
+
+- 観測事実と将来の意味判断を分ける
+- 位置情報（物理座標）とシナプス（意味的接続）を分ける
+- 4層の不変スキーマを維持する
+  - ENTITY：識別
+  - TEMPORAL：時間
+  - RELATION：関係・意味
+  - RAW：原本
+- 各データ種別の隔離出力を経由する
+- Phase 1ではAI解析・OCR・文字起こし・クラス化を行わない
+
+</details>
+
+<details>
+<summary>リポジトリ構成</summary>
+
+- 01：プロジェクト全体の企画
+- 02：分冊された全体設計
+- 03：継続中の判断材料・引継ぎ（Git管理外）
+- 04：データ種別ごとの仕様
+- 05：IGP通常投稿の移行実行
+- 06：IGRリールの移行実行
+- 07：IGSストーリーの移行実行
+- 08：IGX欠損サルベージ（現在は保留）
+- 09：IGC統合
+- 10：Memory Synapse DB
+- AGENTS.md・docs：プロジェクト共通の作業ルール
+- 99：完了済み参考資料（Git管理外）
+
+</details>
+
+<details>
+<summary>現在の作業と完走へのステップ</summary>
+
+1. IGP通常投稿を再検証する
+2. IGRリールを再検証する
+3. IGSストーリーを再検証する
+4. IGCを実行し、`output_IGC`を検証する
+5. Memory Synapse DBをObsidian上で動作確認する
+
+</details>
+
+<details>
+<summary>移行対象と現在のステータス</summary>
+
+- IGP：既存出力あり。完成に最も近く、再検証予定
+- IGR：既存出力あり。IGP完走後に再検証予定
+- IGS：既存出力あり。IGP・IGRに続いて再検証予定
+- IGC：3系統の完走後に統合・検証
+- Memory Synapse DB：IGC完了後に動作確認
+- IGX：現在は保留
+
+</details>
+
+<details>
+<summary>開発参加者向け案内</summary>
+
+- 検証には参加者自身のInstagramエクスポートデータが必要
+- オーナーは非エンジニアのシステム設計者
+- 目的や理由は企画書、構造は設計書、実行条件は仕様書で確認する
+- 進行状況と再開点は引継ぎ資料とGitHub Issuesで管理する
+- 変更提案は、目的と変更対象を示したIssueとして起票する
+- コミュニケーションは日本語を前提とする
+
+</details>
+
+</details>
+
+<details>
+<summary><strong>01_IG移行企画書v1.0.md</strong> — 目的・理由・到達点</summary>
+
+- [企画書を開く](01_IG移行企画書v1.0.md)
+- 第1章：プロジェクト概要
+- 第2章：プロジェクトの背景
+- 第3章：本プロジェクトが目指すもの
+- 第4章：設計判断の基本方針
+- 第5章：文書体系と優先順位
+- 第6章：将来構想
+
+</details>
+
+<details>
+<summary><strong>02_IG移行設計書</strong> — 全体設計の分冊</summary>
+
+<details>
+<summary>00_設計書目次.md</summary>
+
+- [設計書目次を開く](02_IG移行設計書/00_設計書目次.md)
+- 設計正本の範囲
+- 6冊の読み分け
+- 企画・仕様・コードとの関係
+
+</details>
+
+<details>
+<summary>01_設計目的・対象範囲・基本原則.md</summary>
+
+- [文書を開く](02_IG移行設計書/01_設計目的・対象範囲・基本原則.md)
+- 設計の目的
+- 対象範囲と対象外
+- オーナーとAIの責任
+- 設計原則
+- 文書体系との関係
+
+</details>
+
+<details>
+<summary>02_システム全体構成・責任境界.md</summary>
+
+- [文書を開く](02_IG移行設計書/02_システム全体構成・責任境界.md)
+- システム全体像
+- データソース・変換・出力の責任
+- IGCの責任境界
+- Memory Synapse DBの責任境界
+- 人間判断とAI利用の境界
+
+</details>
+
+<details>
+<summary>03_データ構造・原本保持設計.md</summary>
+
+- [文書を開く](02_IG移行設計書/03_データ構造・原本保持設計.md)
+- データの基本単位
+- 原本・監査・派生・意味情報の区別
+- 識別・日時・関係情報
+- メディアと抽出事実
+- 将来情報源を追加できる境界
+
+</details>
+
+<details>
+<summary>04_データ取得・変換・出力設計.md</summary>
+
+- [文書を開く](02_IG移行設計書/04_データ取得・変換・出力設計.md)
+- データ種別ごとの独立性
+- 入力と原本保持
+- 抽出・変換・出力の責任
+- 欠損・未知形式・処理失敗
+- 再実行・検証・再現性
+
+</details>
+
+<details>
+<summary>05_リンク・意味ネットワーク設計.md</summary>
+
+- [文書を開く](02_IG移行設計書/05_リンク・意味ネットワーク設計.md)
+- Wikiリンク型データベース
+- TimelineとSynapse
+- 観測事実と意味情報
+- 人間が育てる意味ネットワーク
+
+</details>
+
+<details>
+<summary>06_検証・運用・保全・拡張設計.md</summary>
+
+- [文書を開く](02_IG移行設計書/06_検証・運用・保全・拡張設計.md)
+- 検証と完了条件
+- 再実行・修復・復旧
+- ローカル運用とデータ保護
+- 文書・コード・成果物の保全
+- 将来拡張の境界
+
+</details>
+
+</details>
+
+<details>
+<summary><strong>04_IG移行仕様書</strong> — データ種別ごとの実行条件</summary>
+
+<details>
+<summary>01_IG移行共通仕様書v1.2.md</summary>
+
+- [文書を開く](04_IG移行仕様書/01_IG移行共通仕様書v1.2.md)
+- 共通パイプライン
+- YAML・出力ディレクトリ・Markdown
+- Synapse・リンク・Timeline
+- エラー・ログ・再実行・設定
+- 実データ監査による事実差分
+
+</details>
+
+<details>
+<summary>02_IGP移行仕様書v1.2.md</summary>
+
+- [文書を開く](04_IG移行仕様書/02_IGP移行仕様書v1.2.md)
+- 通常投稿の入力
+- 投稿・メディア・RawData
+- Timeline・Synapse・SystemLogs
+- 検証と例外処理
+
+</details>
+
+<details>
+<summary>03_IGR移行仕様書v1.2.md</summary>
+
+- [文書を開く](04_IG移行仕様書/03_IGR移行仕様書v1.2.md)
+- リールの入力
+- 動画・投稿情報・RawData
+- Timeline・Synapse・SystemLogs
+- 検証と例外処理
+
+</details>
+
+<details>
+<summary>04_IGS移行仕様書v1.2.md</summary>
+
+- [文書を開く](04_IG移行仕様書/04_IGS移行仕様書v1.2.md)
+- ストーリーの入力
+- Story本文とハイライト所属の分離
+- メディア・RawData・Timeline
+- Synapse・SystemLogs・検証
+
+</details>
+
+<details>
+<summary>05_IGX移行仕様書v1.2.md</summary>
+
+- [文書を開く](04_IG移行仕様書/05_IGX移行仕様書v1.2.md)
+- 欠損サルベージの対象
+- 分類不能データ
+- 出力と検証
+- 現在は保留
+
+</details>
+
+<details>
+<summary>06_Memory_Synapse_DB_仕様書v1.2.md</summary>
+
+- [文書を開く](04_IG移行仕様書/06_Memory_Synapse_DB_仕様書v1.2.md)
+- Memory Synapse DBとの接続条件
+- 入出力と操作
+- データ保護と検証
+
+</details>
+
+</details>
+
+<details>
+<summary><strong>AGENTS.md ＋ docs</strong> — プロジェクト共通ルール</summary>
+
+<details>
+<summary>AGENTS.md</summary>
+
+- [共通AGENTSを開く](AGENTS.md)
+- 目的と最上位条件
+- 全工程で守る判断原則
+- 作業範囲と停止条件
+- 読み込みルーター
+- データ保護
+- 編集・記録・外部操作
+
+</details>
+
+<details>
+<summary>docs</summary>
+
+- [企画工程](docs/planning-workflow.md)
+- [設計工程](docs/design-workflow.md)
+- [仕様工程](docs/specification-workflow.md)
+- [文書の配置・退役](docs/document-governance.md)
+- [恒久ルールの追加・修正基準](docs/rule-addition-criteria.md)
+
+</details>
+
+</details>
+
+<details>
+<summary><strong>09_IGC統合</strong> — 3系統の出力を統合</summary>
+
+<details>
+<summary>01_IGC統合企画書v1.0.md</summary>
+
+- [企画書を開く](09_IGC統合/01_IGC統合企画書v1.0.md)
+- 実現したいこと
+- 出力したいもの
+- 3種類の統合
+- 人間とUIの役割
+- 安全と現在の位置付け
+
+</details>
+
+<details>
+<summary>02_IGC統合設計書v1.0.md</summary>
+
+- [設計書を開く](09_IGC統合/02_IGC統合設計書v1.0.md)
+- 入力と出力
+- 統合単位
+- Synapse・SystemLogsの統合構造
+- 入力不一致とIDの境界
+- Memory Synapse DBとの責任境界
+- 安全更新と検証条件
+
+</details>
+
+<details>
+<summary>03_IGC統合仕様書</summary>
+
+- [仕様書目次](09_IGC統合/03_IGC統合仕様書/00_仕様書目次.md)
+- [役割・入力形式](09_IGC統合/03_IGC統合仕様書/01_役割・入力形式.md)
+- [統合・出力形式](09_IGC統合/03_IGC統合仕様書/02_統合・出力形式.md)
+- [異常処理・検証・安全更新](09_IGC統合/03_IGC統合仕様書/03_異常処理・検証・安全更新.md)
+- [実行結果・コード構成・対象外](09_IGC統合/03_IGC統合仕様書/04_実行結果・コード構成・対象外.md)
+
+</details>
+
+<details>
+<summary>AGENTS.md ＋ docs</summary>
+
+- [IGC専用AGENTSを開く](09_IGC統合/AGENTS.md)
+- 専用`docs/`は現在未配置
+- 共通工程はルートの`docs/`を適用
+
+</details>
+
+</details>
+
+<details>
+<summary><strong>10_Memory_Synapse_DB</strong> — Obsidian上で知識を育てる</summary>
+
+<details>
+<summary>README.md</summary>
+
+- [専用READMEを開く](10_Memory_Synapse_DB/README.md)
+- 現在の構成
+- 安全上の境界
+- ビルド
+- レビュー参加者向け案内
+
+</details>
+
+<details>
+<summary>01_Memory_Synapse_DB_企画書v2.1.md</summary>
+
+- [企画書を開く](10_Memory_Synapse_DB/01_Memory_Synapse_DB_企画書v2.1.md)
+- プロジェクトの位置付け
+- 解決したい課題
+- 実現したい価値
+- データを守る原則
+- 現在の対象範囲
+- 継続して守る原則
+- 将来構想
+- 文書体系と判断の優先順位
+
+</details>
+
+<details>
+<summary>02_Memory_Synapse_DB_設計書</summary>
+
+- [設計書目次](10_Memory_Synapse_DB/02_Memory_Synapse_DB_設計書/00_設計書目次.md)
+- [目的・入力・データ保護](10_Memory_Synapse_DB/02_Memory_Synapse_DB_設計書/01_目的・入力・データ保護.md)
+- [大きなカード・受け皿・融合](10_Memory_Synapse_DB/02_Memory_Synapse_DB_設計書/02_大きなカード・受け皿・融合.md)
+- [表示・手書き・分離](10_Memory_Synapse_DB/02_Memory_Synapse_DB_設計書/03_表示・手書き・分離.md)
+- [確認環境・実装環境](10_Memory_Synapse_DB/02_Memory_Synapse_DB_設計書/04_確認環境・実装環境.md)
+
+</details>
+
+<details>
+<summary>03_Memory_Synapse_DB_仕様書</summary>
+
+- [仕様書目次](10_Memory_Synapse_DB/03_Memory_Synapse_DB_仕様書/00_仕様書目次.md)
+- [役割・対象データ](10_Memory_Synapse_DB/03_Memory_Synapse_DB_仕様書/01_役割・対象データ.md)
+- [個別カード・融合状態](10_Memory_Synapse_DB/03_Memory_Synapse_DB_仕様書/02_個別カード・融合状態.md)
+- [表示・手書き情報](10_Memory_Synapse_DB/03_Memory_Synapse_DB_仕様書/03_表示・手書き情報.md)
+- [融合・分離・取消・復旧](10_Memory_Synapse_DB/03_Memory_Synapse_DB_仕様書/04_融合・分離・取消・復旧.md)
+- [ブラウザー確認・Obsidian実装・実物検証](10_Memory_Synapse_DB/03_Memory_Synapse_DB_仕様書/05_ブラウザー確認・Obsidian実装・実物検証.md)
+
+</details>
+
+<details>
+<summary>AGENTS.md ＋ docs</summary>
+
+- [Memory Synapse DB専用AGENTS](10_Memory_Synapse_DB/AGENTS.md)
+- [専用docs目次](10_Memory_Synapse_DB/docs/README.md)
+- [設計工程](10_Memory_Synapse_DB/docs/design-workflow.md)
+- [仕様工程](10_Memory_Synapse_DB/docs/specification-workflow.md)
+- [実装工程](10_Memory_Synapse_DB/docs/implementation-workflow.md)
+
+</details>
+
+</details>
+
 ### 📸 IGPの一部成果物をObsidianへ確認投入したグラフビュー（10年分のデータの繋がり）
 
 | 1. 拡大図（Instagramをハブとした各ノートの繋がり） | 2. 全体図（10年分の関係性の広がり） |

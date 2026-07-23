@@ -1,0 +1,4215 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>obsidian-ig-migration プロジェクト全体マップ</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{width:100%;height:100%;margin:0;overflow:hidden}body{padding:0;background:inherit}iframe{display:block;width:100vw;max-width:none;height:100vh;margin:0;border:0}</style>
+</head>
+<body>
+<iframe sandbox="allow-scripts" referrerpolicy="no-referrer" title="obsidian-ig-migration プロジェクト全体マップ" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;obsidian-ig-migration Project Map&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(--background) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: light-dark(rgb(255 255 255), rgb(24 24 24));
+  --foreground: light-dark(rgb(26 28 31), rgb(255 255 255));
+  --card: color-mix(in oklab, var(--foreground) 5%, transparent);
+  --card-foreground: var(--foreground);
+  --popover: light-dark(rgb(255 255 255), rgb(45 45 45));
+  --popover-foreground: var(--foreground);
+  --primary: light-dark(rgb(51 156 255), rgb(131 195 255));
+  --primary-foreground: light-dark(rgb(255 255 255), rgb(13 13 13));
+  --secondary: light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%));
+  --secondary-foreground: var(--foreground);
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: light-dark(
+    rgb(26 28 31 / 49.4%),
+    rgb(255 255 255 / 49.8%)
+  );
+  --accent: light-dark(rgb(229 242 255), rgb(13 39 63));
+  --accent-foreground: var(--primary);
+  --destructive: light-dark(rgb(226 85 7), rgb(255 133 73));
+  --border: light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%));
+  --input: light-dark(
+    rgb(26 28 31 / 11.8%),
+    color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+  );
+  --ring: light-dark(rgb(51 156 255), rgb(131 195 255 / 76%));
+  --font-size-base: 14px;
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --radius: 12.5px;
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+  --color-background-primary: var(--background);
+  --color-text-primary: var(--foreground);
+  --color-border-secondary: var(--border);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  margin: 0;
+  padding: 5px;
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--viz-font-weight-medium);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive &gt; .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align=&quot;right&quot;]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align=&quot;center&quot;]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: superellipse(1.5);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget &gt; :not(.card) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: superellipse(1.5);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+    [aria-pressed=&quot;true&quot;],
+    [aria-selected=&quot;true&quot;],
+    .is-selected
+  ) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;project-vertical-hybrid-flow&quot;&gt;
+  &lt;style&gt;
+    #project-vertical-hybrid-flow {
+      width: 100%;
+      color: var(--foreground);
+    }
+
+    #project-vertical-hybrid-flow .mind-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    #project-vertical-hybrid-flow .mind-crumb {
+      color: var(--muted-foreground);
+      overflow-wrap: anywhere;
+    }
+
+    #project-vertical-hybrid-flow .mind-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    #project-vertical-hybrid-flow .mind-viewport {
+      position: relative;
+      width: 100%;
+      height: calc(100vh - 62px);
+      min-height: 620px;
+      overflow: hidden;
+      touch-action: none;
+      cursor: grab;
+      background:
+        radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--muted-foreground) 18%, transparent) 1px, transparent 0);
+      background-size: 24px 24px;
+    }
+
+    #project-vertical-hybrid-flow .mind-viewport.is-dragging {
+      cursor: grabbing;
+    }
+
+    #project-vertical-hybrid-flow .mind-world {
+      position: absolute;
+      left: 0;
+      top: 0;
+      transform-origin: 0 0;
+      will-change: transform;
+    }
+
+    #project-vertical-hybrid-flow .mind-lines {
+      position: absolute;
+      inset: 0;
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    #project-vertical-hybrid-flow .mind-line {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      vector-effect: non-scaling-stroke;
+    }
+
+    #project-vertical-hybrid-flow .mind-line[data-series=&quot;1&quot;] { stroke: var(--viz-series-1); }
+    #project-vertical-hybrid-flow .mind-line[data-series=&quot;2&quot;] { stroke: var(--viz-series-2); }
+    #project-vertical-hybrid-flow .mind-line[data-series=&quot;3&quot;] { stroke: var(--viz-series-3); }
+    #project-vertical-hybrid-flow .mind-line[data-series=&quot;4&quot;] { stroke: var(--viz-series-4); }
+    #project-vertical-hybrid-flow .mind-line[data-series=&quot;5&quot;] { stroke: var(--viz-series-5); }
+    #project-vertical-hybrid-flow .mind-line[data-series=&quot;6&quot;] { stroke: var(--viz-series-6); }
+
+    #project-vertical-hybrid-flow .mind-line[data-line-kind=&quot;flow&quot;] {
+      stroke: var(--foreground);
+      stroke-width: 2;
+    }
+
+    #project-vertical-hybrid-flow .mind-line[data-line-kind=&quot;guard&quot;] {
+      stroke: var(--viz-series-5);
+      stroke-width: 2;
+    }
+
+    #project-vertical-hybrid-flow .mind-line[data-line-kind=&quot;excluded&quot;] {
+      stroke: var(--muted-foreground);
+      stroke-dasharray: 8 7;
+    }
+
+    #project-vertical-hybrid-flow .mind-line[data-line-kind=&quot;detail&quot;] {
+      stroke-width: 1.25;
+    }
+
+    #project-vertical-hybrid-flow .mind-node {
+      position: absolute;
+      width: 238px;
+      height: 78px;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.55rem;
+      padding: 0.62rem 0.75rem;
+      border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+      border-radius: 0.8rem;
+      color: var(--foreground);
+      text-align: left;
+      white-space: normal;
+      overflow-wrap: anywhere;
+      background: color-mix(in srgb, var(--card) 94%, transparent);
+      box-shadow: 0 8px 22px color-mix(in srgb, var(--foreground) 7%, transparent);
+      transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
+      cursor: pointer;
+    }
+
+    #project-vertical-hybrid-flow .mind-node:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px color-mix(in srgb, var(--foreground) 11%, transparent);
+    }
+
+    #project-vertical-hybrid-flow .mind-node:focus-visible {
+      outline: 2px solid var(--ring);
+      outline-offset: 3px;
+    }
+
+    #project-vertical-hybrid-flow .mind-node[data-depth=&quot;0&quot;] {
+      width: 268px;
+      min-height: 68px;
+      background: var(--primary);
+      color: var(--primary-foreground);
+      border-color: transparent;
+    }
+
+    #project-vertical-hybrid-flow .mind-node[data-depth=&quot;1&quot;] {
+      width: 252px;
+      min-height: 60px;
+      font-weight: 500;
+    }
+
+    #project-vertical-hybrid-flow .mind-node[data-kind=&quot;entry&quot;] {
+      background: color-mix(in srgb, var(--viz-series-1) 18%, var(--card));
+    }
+
+    #project-vertical-hybrid-flow .mind-node[data-kind=&quot;guard&quot;] {
+      width: 270px;
+      background: color-mix(in srgb, var(--viz-series-5) 20%, var(--card));
+    }
+
+    #project-vertical-hybrid-flow .mind-node[data-kind=&quot;parallel&quot;] {
+      background: color-mix(in srgb, var(--viz-series-3) 17%, var(--card));
+    }
+
+    #project-vertical-hybrid-flow .mind-node[data-kind=&quot;excluded&quot;] {
+      border-style: dashed;
+      background: color-mix(in srgb, var(--muted) 78%, transparent);
+    }
+
+    #project-vertical-hybrid-flow .mind-node[data-kind=&quot;owner&quot;] {
+      background: color-mix(in srgb, var(--viz-series-4) 20%, var(--card));
+    }
+
+    #project-vertical-hybrid-flow .mind-node[data-kind=&quot;goal&quot;] {
+      width: 270px;
+      background: var(--primary);
+      color: var(--primary-foreground);
+      border-color: transparent;
+    }
+
+    #project-vertical-hybrid-flow .mind-node[data-kind=&quot;goal&quot;] .mind-node-note {
+      color: var(--primary-foreground);
+      opacity: 0.78;
+    }
+
+    #project-vertical-hybrid-flow .mind-node.is-active {
+      outline: 3px solid var(--ring);
+      outline-offset: 4px;
+    }
+
+    #project-vertical-hybrid-flow .journey-label {
+      position: absolute;
+      color: var(--muted-foreground);
+      font-weight: 500;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    #project-vertical-hybrid-flow .journey-stage-note {
+      position: absolute;
+      width: 270px;
+      color: var(--muted-foreground);
+      text-align: center;
+      pointer-events: none;
+    }
+
+    #project-vertical-hybrid-flow .mind-node[data-depth=&quot;1&quot;][data-series=&quot;1&quot;],
+    #project-vertical-hybrid-flow .mind-node[data-series=&quot;1&quot;][aria-expanded=&quot;true&quot;] {
+      background: color-mix(in srgb, var(--viz-series-1) 18%, var(--card));
+    }
+
+    #project-vertical-hybrid-flow .mind-node[data-depth=&quot;1&quot;][data-series=&quot;2&quot;],
+    #project-vertical-hybrid-flow .mind-node[data-series=&quot;2&quot;][aria-expanded=&quot;true&quot;] {
+      background: color-mix(in srgb, var(--viz-series-2) 18%, var(--card));
+    }
+
+    #project-vertical-hybrid-flow .mind-node[data-depth=&quot;1&quot;][data-series=&quot;3&quot;],
+    #project-vertical-hybrid-flow .mind-node[data-series=&quot;3&quot;][aria-expanded=&quot;true&quot;] {
+      background: color-mix(in srgb, var(--viz-series-3) 18%, var(--card));
+    }
+
+    #project-vertical-hybrid-flow .mind-node[data-depth=&quot;1&quot;][data-series=&quot;4&quot;],
+    #project-vertical-hybrid-flow .mind-node[data-series=&quot;4&quot;][aria-expanded=&quot;true&quot;] {
+      background: color-mix(in srgb, var(--viz-series-4) 18%, var(--card));
+    }
+
+    #project-vertical-hybrid-flow .mind-node[data-depth=&quot;1&quot;][data-series=&quot;5&quot;],
+    #project-vertical-hybrid-flow .mind-node[data-series=&quot;5&quot;][aria-expanded=&quot;true&quot;] {
+      background: color-mix(in srgb, var(--viz-series-5) 18%, var(--card));
+    }
+
+    #project-vertical-hybrid-flow .mind-node[data-depth=&quot;1&quot;][data-series=&quot;6&quot;],
+    #project-vertical-hybrid-flow .mind-node[data-series=&quot;6&quot;][aria-expanded=&quot;true&quot;] {
+      background: color-mix(in srgb, var(--viz-series-6) 18%, var(--card));
+    }
+
+    #project-vertical-hybrid-flow .mind-node-label {
+      display: grid;
+      gap: 0.18rem;
+      min-width: 0;
+    }
+
+    #project-vertical-hybrid-flow .mind-node-title {
+      font-weight: 500;
+    }
+
+    #project-vertical-hybrid-flow .mind-node-note {
+      color: var(--muted-foreground);
+    }
+
+    #project-vertical-hybrid-flow .mind-node[data-depth=&quot;0&quot;] .mind-node-note {
+      color: var(--primary-foreground);
+      opacity: 0.78;
+    }
+
+    #project-vertical-hybrid-flow .mind-node-marker {
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      width: 1.45rem;
+      height: 1.45rem;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--foreground) 9%, transparent);
+      font-weight: 500;
+    }
+
+    #project-vertical-hybrid-flow .mind-node[data-depth=&quot;0&quot;] .mind-node-marker {
+      background: color-mix(in srgb, var(--primary-foreground) 18%, transparent);
+    }
+
+    #project-vertical-hybrid-flow .mind-node[aria-expanded=&quot;true&quot;] .mind-node-marker {
+      transform: rotate(90deg);
+    }
+
+    #project-vertical-hybrid-flow .mind-hint {
+      position: absolute;
+      left: 0.75rem;
+      bottom: 0.65rem;
+      z-index: 4;
+      color: var(--muted-foreground);
+      pointer-events: none;
+    }
+
+    #project-vertical-hybrid-flow .mind-empty-marker {
+      opacity: 0.35;
+    }
+
+    @media (max-width: 560px) {
+      #project-vertical-hybrid-flow .mind-viewport {
+        height: calc(100vh - 70px);
+        min-height: 480px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #project-vertical-hybrid-flow .mind-node {
+        transition: none;
+      }
+    }
+  &lt;/style&gt;
+
+  &lt;div class=&quot;mind-toolbar&quot;&gt;
+    &lt;span class=&quot;mind-crumb&quot; data-crumb&gt;obsidian-ig-migration&lt;/span&gt;
+    &lt;div class=&quot;mind-controls&quot; aria-label=&quot;表示操作&quot;&gt;
+      &lt;button class=&quot;btn btn-ghost&quot; type=&quot;button&quot; data-fit&gt;全体&lt;/button&gt;
+      &lt;button class=&quot;btn btn-ghost&quot; type=&quot;button&quot; data-entry&gt;入口&lt;/button&gt;
+      &lt;button class=&quot;btn btn-ghost&quot; type=&quot;button&quot; data-zoom-out aria-label=&quot;縮小&quot;&gt;−&lt;/button&gt;
+      &lt;button class=&quot;btn btn-ghost&quot; type=&quot;button&quot; data-zoom-in aria-label=&quot;拡大&quot;&gt;＋&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;mind-viewport&quot; data-viewport&gt;
+    &lt;div class=&quot;mind-world&quot; data-world&gt;
+      &lt;svg class=&quot;mind-lines&quot; data-lines aria-hidden=&quot;true&quot;&gt;&lt;/svg&gt;
+      &lt;div data-nodes&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class=&quot;mind-hint text-small&quot;&gt;ドラッグで移動・ホイールで拡大縮小&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;script&gt;
+    (() =&gt; {
+      const root = document.getElementById(&quot;project-vertical-hybrid-flow&quot;);
+      const viewport = root.querySelector(&quot;[data-viewport]&quot;);
+      const world = root.querySelector(&quot;[data-world]&quot;);
+      const lines = root.querySelector(&quot;[data-lines]&quot;);
+      const nodesHost = root.querySelector(&quot;[data-nodes]&quot;);
+      const crumb = root.querySelector(&quot;[data-crumb]&quot;);
+      const fitButton = root.querySelector(&quot;[data-fit]&quot;);
+      const entryButton = root.querySelector(&quot;[data-entry]&quot;);
+      const zoomInButton = root.querySelector(&quot;[data-zoom-in]&quot;);
+      const zoomOutButton = root.querySelector(&quot;[data-zoom-out]&quot;);
+
+      const views = {
+        readme: {
+          title: &quot;README.md｜プロジェクトの入口&quot;,
+          branches: [
+            [&quot;このプロジェクトを理解する&quot;, [
+              { label: &quot;開発の背景&quot;, children: [
+                &quot;10年分のInstagram記録が個人の文脈として蓄積している&quot;,
+                &quot;AIへ毎回自分の背景を説明する負担がある&quot;,
+                &quot;巨大化した企画・設計・仕様を整理し直す必要がある&quot;
+              ] },
+              { label: &quot;実現したいこと&quot;, children: [
+                &quot;Instagramのエクスポート記録を検索・接続・再利用可能にする&quot;,
+                &quot;個人の記録を「第二の脳」へ変換する&quot;,
+                &quot;AIへ個人の文脈を提供できる基盤を作る&quot;
+              ] },
+              { label: &quot;利用する基盤&quot;, children: [
+                &quot;Obsidianによる知識ベース&quot;,
+                &quot;MarkdownとWikiリンクによる接続&quot;,
+                &quot;Memory Synapse DBによる人間中心の意味整理&quot;
+              ] },
+              { label: &quot;現在の優先事項&quot;, children: [
+                &quot;新機能追加より既存工程の整合確認を優先する&quot;,
+                &quot;既存成果を壊さず完走へ近づける&quot;
+              ] }
+            ]],
+            [&quot;何を守って進めるか&quot;, [
+              { label: &quot;情報を混ぜない&quot;, children: [
+                &quot;観測事実と将来の意味判断を分ける&quot;,
+                &quot;位置情報と意味的な接続を分ける&quot;,
+                &quot;原本・派生情報・人間判断を分ける&quot;
+              ] },
+              { label: &quot;データ構造を守る&quot;, children: [
+                { label: &quot;4層不変スキーマ&quot;, children: [&quot;ENTITY：識別&quot;, &quot;TEMPORAL：時間&quot;, &quot;RELATION：関係・意味&quot;, &quot;RAW：原本&quot;] },
+                &quot;各データ種別を隔離して段階的に出力する&quot;,
+                &quot;原本データとメディア参照を保持する&quot;
+              ] },
+              { label: &quot;人間とAIの境界を守る&quot;, children: [
+                &quot;人間が目的・意味・最終判断を担う&quot;,
+                &quot;AIは設計支援・実装・検証を支援する&quot;,
+                &quot;Phase 1ではAI解析・OCR・文字起こし・クラス化を行わない&quot;
+              ] }
+            ]],
+            [&quot;リポジトリを読む&quot;, [
+              { label: &quot;目的・構造・実行条件を確認する&quot;, children: [
+                &quot;01 企画書：目的・理由・到達点&quot;,
+                &quot;02 設計書：全体構造と責任境界&quot;,
+                &quot;04 仕様書：実装可能な実行条件&quot;
+              ] },
+              { label: &quot;データ種別ごとの移行を確認する&quot;, children: [
+                &quot;05 IGP：通常投稿&quot;,
+                &quot;06 IGR：リール&quot;,
+                &quot;07 IGS：ストーリー&quot;,
+                &quot;08 IGX：欠損サルベージ&quot;
+              ] },
+              { label: &quot;移行後の統合と利用を確認する&quot;, children: [
+                &quot;09 IGC：3系統の出力を本番用output_IGCへ統合&quot;,
+                &quot;10 Memory Synapse DB：Obsidian上で表示・接続・人間判断&quot;
+              ] },
+              { label: &quot;作業方法を確認する&quot;, children: [
+                &quot;AGENTS.md：常に守る判断原則と作業境界&quot;,
+                &quot;docs：工程別workflowと文書・ルールの保全手順&quot;
+              ] }
+            ]],
+            [&quot;現在地から完走まで&quot;, [
+              { label: &quot;現在の位置&quot;, children: [
+                &quot;IGP：既存出力あり・完成に最も近い&quot;,
+                &quot;IGR：既存出力あり・IGP後に再検証&quot;,
+                &quot;IGS：既存出力あり・IGP／IGR後に再検証&quot;,
+                &quot;IGX：現在は保留&quot;
+              ] },
+              { label: &quot;完走への順序&quot;, children: [
+                &quot;IGPを再検証する&quot;,
+                &quot;IGRを再検証する&quot;,
+                &quot;IGSを再検証する&quot;,
+                &quot;IGCを実行してoutput_IGCを検証する&quot;,
+                &quot;Memory Synapse DBをObsidian上で動作確認する&quot;
+              ] },
+              { label: &quot;完走の確認点&quot;, children: [
+                &quot;各工程の出力が仕様と一致する&quot;,
+                &quot;IGCで3系統を安全に統合できる&quot;,
+                &quot;Obsidian上で表示と接続を確認できる&quot;,
+                &quot;人間が意味判断を継続できる&quot;
+              ] }
+            ]],
+            [&quot;開発に参加する人へ&quot;, [
+              { label: &quot;この開発の前提&quot;, children: [
+                &quot;オーナーは非エンジニアのシステム設計者&quot;,
+                &quot;人間とAIによる共同開発&quot;,
+                &quot;コミュニケーションは日本語を前提とする&quot;
+              ] },
+              { label: &quot;検証に必要なもの&quot;, children: [
+                &quot;利用者自身のInstagramエクスポートデータ&quot;,
+                &quot;個人データを公開しないローカル検証環境&quot;,
+                &quot;仕様・コード・成果物を分けた確認&quot;
+              ] },
+              { label: &quot;変更を提案するとき&quot;, children: [
+                &quot;目的と変更対象を明示する&quot;,
+                &quot;成立している既存成果を維持する&quot;,
+                &quot;提案ベースのIssueを利用する&quot;,
+                &quot;承認前に対象範囲を拡大しない&quot;
+              ] }
+            ]]
+          ]
+        },
+        plan: {
+          title: &quot;01_IG移行企画書v1.0.md｜第二の脳 構築プロジェクト&quot;,
+          branches: [
+            [&quot;なぜ必要になったか&quot;, [
+              { label: &quot;人生の記録が人間の記憶を超えた&quot;, children: [
+                &quot;約10年間の写真・動画・投稿&quot;,
+                &quot;位置情報・メモ・経験・思考&quot;,
+                &quot;記憶だけでは管理できない情報量&quot;
+              ] },
+              { label: &quot;単なるファイル管理では足りない&quot;, children: [
+                &quot;保存するだけでは経験同士の関係が分からない&quot;,
+                &quot;過去の経験や思考を再利用しにくい&quot;,
+                &quot;人生の記録を共通の意味で理解できる構造が必要&quot;
+              ] },
+              { label: &quot;人間とAIの解釈差が見えた&quot;, children: [
+                &quot;共同開発で設計変更と試行錯誤を繰り返した&quot;,
+                &quot;人間とAIの間で解釈の違いが発生した&quot;,
+                &quot;共通理解できる知識基盤が必要になった&quot;
+              ] },
+              { label: &quot;非エンジニアが長く運用する&quot;, children: [
+                &quot;オーナー自身が理解できること&quot;,
+                &quot;管理・改善・運用を継続できること&quot;,
+                &quot;高度さより理解しやすさを優先すること&quot;
+              ] }
+            ]],
+            [&quot;何を構築するか&quot;, [
+              { label: &quot;第二の脳&quot;, children: [
+                &quot;Instagramのバックアップを作るだけではない&quot;,
+                &quot;人生の記録を知識構造へ変換する&quot;,
+                &quot;人間とAIが同じ意味で理解できる&quot;,
+                &quot;長期間育て続けられる&quot;
+              ] },
+              { label: &quot;オーナーのための知識基盤&quot;, children: [
+                &quot;過去の経験や思考を振り返る&quot;,
+                &quot;知識を蓄積・関連付け・再利用する&quot;,
+                &quot;人生の意味ネットワークを育てる&quot;
+              ] },
+              { label: &quot;AIへ文脈を渡す基盤&quot;, children: [
+                &quot;経験・価値観・行動履歴・思考を構造化する&quot;,
+                &quot;一般論ではなくオーナー固有の文脈を提供する&quot;,
+                &quot;現在と将来のAIが推論・提案・支援に活用する&quot;
+              ] },
+              { label: &quot;Obsidianを知識基盤として使う&quot;, children: [
+                &quot;単なるノートアプリとして扱わない&quot;,
+                &quot;Markdownによるオープンなデータ形式&quot;,
+                &quot;リンクとグラフによる関係性の理解&quot;,
+                &quot;知識はオーナー自身が管理する&quot;
+              ] },
+              { label: &quot;対象となる情報源&quot;, children: [
+                &quot;現在の出発点：Instagram&quot;,
+                &quot;将来：Facebook・GPS・YouTube&quot;,
+                &quot;将来：資格学習・各種メモ・ライフログ&quot;,
+                &quot;個別管理ではなく一つの知識基盤へ統合する&quot;
+              ] }
+            ]],
+            [&quot;現在どこまで完走するか&quot;, [
+              { label: &quot;独立した移行工程を完走する&quot;, children: [
+                &quot;IGP（通常投稿）を検証・完走&quot;,
+                &quot;IGR（リール）を検証・完走&quot;,
+                &quot;IGS（ストーリー）を検証・完走&quot;
+              ] },
+              { label: &quot;統合工程を完走する&quot;, children: [
+                &quot;IGCを実行・検証する&quot;,
+                &quot;output_IGCを完成させる&quot;,
+                &quot;IGP・IGR・IGSだけの完了を最終地点にしない&quot;
+              ] },
+              { label: &quot;Obsidian上で成果を確認する&quot;, children: [
+                &quot;Memory Synapse DBプラグインを動作させる&quot;,
+                &quot;Obsidian上で表示と接続を確認する&quot;,
+                &quot;人間が成果を確認できる状態にする&quot;
+              ] },
+              { label: &quot;IGXの現在の扱い&quot;, children: [
+                &quot;現在の完走条件から外す&quot;,
+                &quot;現在のブロッカーにしない&quot;,
+                &quot;将来も廃止するかは今回決定しない&quot;
+              ] },
+              { label: &quot;現在の完走点と最終到達点を分ける&quot;, children: [
+                &quot;現在はInstagram移行からObsidian確認までを完走する&quot;,
+                &quot;最終理念や将来の情報源統合は縮小しない&quot;,
+                &quot;同じ最終到達点へ進める経路として扱う&quot;
+              ] }
+            ]],
+            [&quot;どんな判断原則を守るか&quot;, [
+              { label: &quot;技術より目的を優先する&quot;, children: [
+                &quot;第二の脳の構築に寄与するかで判断する&quot;,
+                &quot;技術的合理性だけで企画を変えない&quot;,
+                &quot;コードを書くこと自体を目的にしない&quot;
+              ] },
+              { label: &quot;人間が理解できることを優先する&quot;, children: [
+                &quot;複雑さや高度さより理解・検証可能性を重視する&quot;,
+                &quot;オーナーが将来も改善できる構造を選ぶ&quot;,
+                &quot;理解できない仕組みは採用しない&quot;
+              ] },
+              { label: &quot;人間とAIの役割を分ける&quot;, children: [
+                &quot;人間：目的・意味・価値・最終判断&quot;,
+                &quot;AI：設計・実装・レビュー・分析・提案の支援&quot;,
+                &quot;人間とAIが共同で知識基盤を育てる&quot;
+              ] },
+              { label: &quot;原本を最優先する&quot;, children: [
+                &quot;原本データを絶対に保持する&quot;,
+                &quot;加工済みデータは再生成可能にする&quot;,
+                &quot;将来の技術で原本から再解析できる状態を守る&quot;
+              ] },
+              { label: &quot;特定技術へ依存しない&quot;, children: [
+                &quot;特定のAIサービス専用にしない&quot;,
+                &quot;オープンで永続的な形式を採用する&quot;,
+                &quot;短期的完成より長期的成長を優先する&quot;
+              ] }
+            ]],
+            [&quot;文書で一貫性を保つ&quot;, [
+              { label: &quot;企画書&quot;, children: [
+                &quot;何を実現するか&quot;,
+                &quot;なぜ実現するか&quot;,
+                &quot;目的・理念・設計思想を定める最上位文書&quot;
+              ] },
+              { label: &quot;設計書&quot;, children: [
+                &quot;どのような構造で実現するか&quot;,
+                &quot;企画条件を責任と境界へ分解する&quot;
+              ] },
+              { label: &quot;仕様書&quot;, children: [
+                &quot;どのように実装するか&quot;,
+                &quot;設計を実装可能な条件へ具体化する&quot;
+              ] },
+              { label: &quot;プログラム&quot;, children: [
+                &quot;企画・設計・仕様を実装した成果物&quot;,
+                &quot;上位文書との一致を確認する対象&quot;
+              ] },
+              { label: &quot;判断の優先順位&quot;, children: [
+                &quot;第一：企画書の目的・理念・設計思想&quot;,
+                &quot;第二：設計書&quot;,
+                &quot;第三：仕様書&quot;,
+                &quot;第四：プログラム&quot;,
+                &quot;不一致を企画書の変更だけで合わせない&quot;
+              ] },
+              { label: &quot;人間とAIが同じ思想を読む&quot;, children: [
+                &quot;同じテーマを異なる粒度で追跡可能にする&quot;,
+                &quot;人間にもAIにも誤解されにくい表現を使う&quot;,
+                &quot;企画から実装まで一貫した構造を維持する&quot;
+              ] }
+            ]],
+            [&quot;どこへ育て続けるか&quot;, [
+              { label: &quot;人生全体を理解できる知識ネットワーク&quot;, children: [
+                &quot;経験・学習・趣味・仕事・移動・人との関わりを結ぶ&quot;,
+                &quot;情報源を増やしながら一人の人生を多面的に理解する&quot;,
+                &quot;人生を重ねるたびに知識が成長する&quot;
+              ] },
+              { label: &quot;オーナー固有の文脈を理解するAI&quot;, children: [
+                &quot;AIを単なる検索ツールにしない&quot;,
+                &quot;固有の経験・思考・価値観を理解する&quot;,
+                &quot;その文脈から推論・提案・支援する&quot;
+              ] },
+              { label: &quot;AIの進化を受け止める長期資産&quot;, children: [
+                &quot;現在のAIだけを前提にしない&quot;,
+                &quot;AIが変わっても同じ知識を活用する&quot;,
+                &quot;知識をAIサービス内ではなくオーナー側に保持する&quot;
+              ] },
+              { label: &quot;最終理念&quot;, children: [
+                &quot;Instagram移行だけのプロジェクトではない&quot;,
+                &quot;Obsidian構築やPython開発だけのプロジェクトではない&quot;,
+                &quot;一人の人生を人間とAIが未来へ引き継ぐ&quot;,
+                &quot;人間とAIが共に成長し続ける第二の脳を構築する&quot;
+              ] }
+            ]]
+          ]
+        },
+        design: {
+          title: &quot;02_IG移行設計書｜第二の脳を成立させる全体設計&quot;,
+          branches: [
+            [&quot;設計目的・対象範囲・基本原則&quot;, [
+              { label: &quot;設計が実現するもの&quot;, children: [
+                &quot;Instagram移行そのものではなく第二の脳を構築する&quot;,
+                &quot;企画の目的をシステム構造・役割・関係・運用へ変換する&quot;,
+                &quot;実装方法そのものは仕様書へ渡す&quot;
+              ] },
+              { label: &quot;現在の設計対象&quot;, children: [
+                &quot;Feed・Reel・Storyの原本から知識構造を生成する&quot;,
+                &quot;IGP・IGR・IGSを検証してIGCへ渡す&quot;,
+                &quot;output_IGCとMemory Synapse DBをObsidian上で確認する&quot;
+              ] },
+              { label: &quot;現在の対象外と将来境界&quot;, children: [
+                &quot;IGXは現在の完走範囲とIGC入力から外す&quot;,
+                &quot;将来情報源の取込を現在の完成条件にしない&quot;,
+                &quot;AIによる意味の自動確定を現在の責任にしない&quot;,
+                &quot;未確定候補を置く常設作業台を現在は設けない&quot;
+              ] },
+              { label: &quot;人間中心の設計&quot;, children: [
+                &quot;オーナーが理解・判断・運用できる&quot;,
+                &quot;結果・エラー・判断待ち・未確認を人間が区別できる&quot;,
+                &quot;AIの提案を承認前に確定事項へしない&quot;
+              ] },
+              { label: &quot;守る設計原則&quot;, children: [
+                &quot;単一責任&quot;,
+                &quot;レイヤー分離&quot;,
+                &quot;原本を不変に保つ&quot;,
+                &quot;人間判断を優先する&quot;,
+                &quot;主データと監査データを分ける&quot;,
+                &quot;観測事実と意味情報を分ける&quot;,
+                &quot;将来機能で現在の完了範囲を増やさない&quot;
+              ] },
+              { label: &quot;文書間の責任&quot;, children: [
+                &quot;企画書から目的・理念・対象範囲を受け取る&quot;,
+                &quot;構造・責任境界・禁止事項・成立条件を仕様書へ渡す&quot;,
+                &quot;コードと成果物で設計が実データ上成立するか検証する&quot;
+              ] }
+            ]],
+            [&quot;システム全体構成・責任境界&quot;, [
+              { label: &quot;責任の流れ&quot;, children: [
+                &quot;原本を保持する&quot;,
+                &quot;原本から派生データを生成する&quot;,
+                &quot;工程ごとの出力を隔離して検証する&quot;,
+                &quot;IGCで初期Synapse DBを組み立てる&quot;,
+                &quot;人間がObsidian上で意味判断する&quot;,
+                &quot;確定した知識構造をAIが利用する&quot;
+              ] },
+              { label: &quot;独立した移行工程&quot;, children: [
+                &quot;IGP：Feedの入力から取得できる事実を完成させる&quot;,
+                &quot;IGR：Reelの入力から取得できる事実を完成させる&quot;,
+                &quot;IGS：Storyの入力から取得できる事実を完成させる&quot;,
+                &quot;互いの不足を補わず、失敗や変更を波及させない&quot;,
+                &quot;IGXは将来の独立工程候補として分ける&quot;
+              ] },
+              { label: &quot;IGCの責任&quot;, children: [
+                &quot;IGP・IGR・IGSの3系統だけを入力とする&quot;,
+                &quot;カテゴリと完全同一表記を単位に整理する&quot;,
+                &quot;出どころ・関連投稿・SystemLogsとの対応を保持する&quot;,
+                &quot;意味融合・表記揺れ統合・カテゴリ横断融合を行わない&quot;,
+                &quot;不一致を推測で上書きまたは自動修復しない&quot;
+              ] },
+              { label: &quot;Memory Synapse DBの責任&quot;, children: [
+                &quot;ブラウザー環境で操作設計を安全に確認する&quot;,
+                &quot;Obsidianプラグインを人間判断の最終操作入口にする&quot;,
+                &quot;融合・分離・大きなカード変更・手書き・取消・復旧を扱う&quot;,
+                &quot;抽出工程で欠落した事実や意味を推測補完しない&quot;
+              ] },
+              { label: &quot;人間とAIの責任&quot;, children: [
+                &quot;人間：採否・名寄せ・意味統合・分離・代表名を判断する&quot;,
+                &quot;AI：検索・要約・分析・推論・提案・開発を支援する&quot;,
+                &quot;AIは原本の事実・意味・設計変更を単独で確定しない&quot;
+              ] },
+              { label: &quot;知識基盤への反映境界&quot;, children: [
+                &quot;未検証成果物を利用中データへ自動反映しない&quot;,
+                &quot;IGCの情報統合と実Vaultへの正式投入を分ける&quot;,
+                &quot;部分的なObsidian確認を工程全体の完成にしない&quot;,
+                &quot;オーナーが実物と検証結果を確認して反映を判断する&quot;
+              ] }
+            ]],
+            [&quot;データ構造・原本保持&quot;, [
+              { label: &quot;一つの投稿を記録単位にする&quot;, children: [
+                &quot;本文・日時・メディア・関係情報を投稿へ結び付ける&quot;,
+                &quot;別ファイルへ保存しても所属投稿を追跡できる&quot;,
+                &quot;派生情報から元投稿と原本へ戻れる&quot;
+              ] },
+              { label: &quot;情報の種類を分ける&quot;, children: [
+                &quot;原本：InstagramのJSONとメディア&quot;,
+                &quot;監査情報：主データと照合する重複・別形式原本&quot;,
+                &quot;派生情報：投稿メモ・メタデータ・一覧・関係情報&quot;,
+                &quot;意味情報：人間の判断・意味付け・融合・分離・メモ&quot;
+              ] },
+              { label: &quot;Synapseの成長段階を分ける&quot;, children: [
+                &quot;抽出事実・観測事実&quot;,
+                &quot;カテゴリ固有情報と関連投稿を持つ個別Synapseカード&quot;,
+                &quot;IGCが完全一致整理した初期Synapse DB&quot;,
+                &quot;人間の意味判断によって成長したSynapse&quot;
+              ] },
+              { label: &quot;識別と追跡&quot;, children: [
+                &quot;投稿・位置観測等は個別状態と履歴を追跡する&quot;,
+                &quot;表示名やファイル名が変わっても元情報へ戻れる&quot;,
+                &quot;IGCの完全一致整理に意味融合用IDを持ち込まない&quot;,
+                &quot;Memory Synapse DBは個別カードへのWikiリンクを中心にする&quot;
+              ] },
+              { label: &quot;日時・メディア・本文を保全する&quot;, children: [
+                &quot;投稿時刻・作成時刻・更新時刻を混同しない&quot;,
+                &quot;同時刻の複数記録でも順序と個別性を失わない&quot;,
+                &quot;画像・動画と元投稿・原本の対応を維持する&quot;,
+                &quot;異なる複数本文を自動で一つに決めない&quot;
+              ] },
+              { label: &quot;関係情報を観測事実として保持する&quot;, children: [
+                &quot;ハッシュタグ：大文字小文字・記号を含む元表記&quot;,
+                &quot;メンション：@表記と実在アカウントの確認を分ける&quot;,
+                &quot;位置情報：一投稿の一チェックインを一観測として保持する&quot;,
+                &quot;同名・近い座標・同一投稿内共起だけで意味統合しない&quot;
+              ] },
+              { label: &quot;自動処理が変更できる範囲&quot;, children: [
+                &quot;原本から再生成できる派生情報を作る&quot;,
+                &quot;許可された不足修復だけを行う&quot;,
+                &quot;原本・人間の追記・確定した意味判断を上書きしない&quot;,
+                &quot;将来情報源を追加しても既存情報を作り直さない&quot;
+              ] }
+            ]],
+            [&quot;データ取得・変換・出力&quot;, [
+              { label: &quot;入力と原本保持&quot;, children: [
+                &quot;Instagramから取得した原本を基準とする&quot;,
+                &quot;展開・コピー・解析しても元JSONとメディアを変更しない&quot;,
+                &quot;使用した原本と主データ・監査データの区別を追跡する&quot;
+              ] },
+              { label: &quot;抽出と変換&quot;, children: [
+                &quot;本文・日時・メディア・タグ・メンション・位置情報を抽出する&quot;,
+                &quot;元投稿・元データ・元表記へ戻れる派生情報を作る&quot;,
+                &quot;人物・場所・表記の意味や同一性を自動確定しない&quot;,
+                &quot;後工程が欠落事実を推測し直す前提にしない&quot;
+              ] },
+              { label: &quot;工程ごとの成果物&quot;, children: [
+                &quot;投稿として確認する情報&quot;,
+                &quot;RawData等の原本へ戻る情報&quot;,
+                &quot;参照する画像・動画&quot;,
+                &quot;Timelineと関係情報&quot;,
+                &quot;カテゴリ固有情報と関連投稿を持つ個別Synapseカード&quot;
+              ] },
+              { label: &quot;Storyとハイライトを分ける&quot;, children: [
+                &quot;Story本文・日時・メディア・RawDataの移行を進める&quot;,
+                &quot;ハイライトへの直接所属復元は別の検証対象にする&quot;,
+                &quot;直接根拠なしに意味や時刻の近さで自動所属させない&quot;
+              ] },
+              { label: &quot;欠損・未知形式・処理失敗を残す&quot;, children: [
+                &quot;分類不能・孤立メディアを理由なく捨てない&quot;,
+                &quot;扱えないことと原本に存在しないことを分ける&quot;,
+                &quot;技術的処理失敗と人間判断待ちを分ける&quot;,
+                &quot;失敗範囲を成功として続行しない&quot;
+              ] },
+              { label: &quot;再実行と不足修復&quot;, children: [
+                &quot;正しい既存成果物と人間の追記を保持する&quot;,
+                &quot;不足する関連成果物だけを修復する&quot;,
+                &quot;元データとの競合を自動上書きしない&quot;,
+                &quot;修復後にTimeline等の全体索引を再確認する&quot;
+              ] },
+              { label: &quot;再現性と監査&quot;, children: [
+                &quot;原本・設計仕様の版・コード・設定・実行結果を照合できる&quot;,
+                &quot;成功表示や出力件数だけで完成としない&quot;,
+                &quot;元ファイルと成果物の直接照合を根拠にする&quot;,
+                &quot;役割を終えた補助ツールへ再依存しない&quot;
+              ] }
+            ]],
+            [&quot;リンク・意味ネットワーク&quot;, [
+              { label: &quot;リンクで結ぶ対象&quot;, children: [
+                &quot;投稿と元データ・メディア&quot;,
+                &quot;Timelineによる時系列&quot;,
+                &quot;ハッシュタグ&quot;,
+                &quot;メンション&quot;,
+                &quot;位置情報&quot;,
+                &quot;Synapse&quot;
+              ] },
+              { label: &quot;観測事実と意味判断を分ける&quot;, children: [
+                &quot;抽出した関係を元投稿へ戻れる形で保持する&quot;,
+                &quot;同名・同表記は探索の手がかりとして扱う&quot;,
+                &quot;同一投稿内の共起だけで意味関係を作らない&quot;,
+                &quot;意味・同一性・採否は人間が判断する&quot;
+              ] },
+              { label: &quot;Synapseを段階的に育てる&quot;, children: [
+                &quot;個別Synapseカードを工程成果物として完成させる&quot;,
+                &quot;IGCが初期Synapse DBを組み立てる&quot;,
+                &quot;人間がWikiリンク型の成長したSynapseへ育てる&quot;
+              ] },
+              { label: &quot;三種類の整理・融合&quot;, children: [
+                &quot;IGC：入力系統間の完全一致整理&quot;,
+                &quot;Memory Synapse DB：同一カテゴリ内の意味融合&quot;,
+                &quot;Memory Synapse DB：カテゴリ横断融合&quot;,
+                &quot;完全一致整理と人間の意味融合を混同しない&quot;
+              ] },
+              { label: &quot;大きなカードと受け皿&quot;, children: [
+                &quot;融合用の新しい管理カードを自動生成しない&quot;,
+                &quot;人間が選んだ既存カードを大きなカードとして育てる&quot;,
+                &quot;受け皿で全個別カードと固有情報を確認できる&quot;,
+                &quot;大きなカード同士は入れ子にせず平坦化する&quot;
+              ] },
+              { label: &quot;通常表示と手書き表示&quot;, children: [
+                &quot;通常表示：選ばれた個別カードを上部へ表示する&quot;,
+                &quot;手書き表示：人間の意味情報を大きなカードへ保持する&quot;,
+                &quot;表示の短縮で個別カードの元情報を変更しない&quot;,
+                &quot;手書き情報の保持先をシステムが推測分配しない&quot;
+              ] },
+              { label: &quot;可逆性と変更追従&quot;, children: [
+                &quot;誤って融合した一枚だけを分離できる&quot;,
+                &quot;大きなカードの交代・融合解体でも情報を失わない&quot;,
+                &quot;一つの個別カードを複数の大きなカードへ重複融合しない&quot;,
+                &quot;Wikiリンクの改名・移動・未解決を検出できる&quot;,
+                &quot;自動クラスタリングや自動意味確定を現在の完成条件にしない&quot;
+              ] }
+            ]],
+            [&quot;検証・運用・保全・拡張&quot;, [
+              { label: &quot;オーナーが確認できる状態&quot;, children: [
+                &quot;処理対象・生成件数・欠落・エラーを確認できる&quot;,
+                &quot;判断待ち・再実行結果・未確認範囲を区別できる&quot;,
+                &quot;コード内部や元JSON全体の読解を完成判断の前提にしない&quot;
+              ] },
+              { label: &quot;技術的完成と人間判断待ちを分ける&quot;, children: [
+                &quot;技術的完成：原本と成果物が対応し処理失敗が残らない&quot;,
+                &quot;人間判断待ち：意味・採否・融合・分離が未確定&quot;,
+                &quot;判断待ちだけで技術移行を失敗にしない&quot;,
+                &quot;欠落や処理失敗を判断待ちとして隠さない&quot;
+              ] },
+              { label: &quot;実物で整合性を確認する&quot;, children: [
+                &quot;原本と投稿・RawData・メディアの対応&quot;,
+                &quot;Timeline・タグ・メンション・位置観測の対応&quot;,
+                &quot;IGP・IGR・IGSとIGC出力の対応&quot;,
+                &quot;output_IGCとObsidianプラグインの対応&quot;,
+                &quot;融合・分離・手書き・取消後も個別情報を保持する&quot;
+              ] },
+              { label: &quot;段階的に確認する&quot;, children: [
+                &quot;各データ種別を他工程と利用中データから分けて検証する&quot;,
+                &quot;一部のObsidian投入と全体完成を区別する&quot;,
+                &quot;ブラウザーで操作設計を確認してから仕様へ渡す&quot;,
+                &quot;ObsidianプラグインとMarkdown実物で再確認する&quot;
+              ] },
+              { label: &quot;再実行・修復・復旧&quot;, children: [
+                &quot;正しい既存状態を失わず不足を補修する&quot;,
+                &quot;途中失敗を一部成功として確定しない&quot;,
+                &quot;融合・分離・手書き変更を操作単位で戻せる&quot;,
+                &quot;成功表示ではなく実物を再確認する&quot;
+              ] },
+              { label: &quot;完成表示を鵜呑みにしない&quot;, children: [
+                &quot;状態ファイルの完了表示だけでは完成しない&quot;,
+                &quot;コードの成功表示だけでは完成しない&quot;,
+                &quot;想定件数や一部ノートの表示だけでは完成しない&quot;,
+                &quot;企画・設計・仕様・コード・成果物を照合して判定する&quot;
+              ] },
+              { label: &quot;変更と記録を保全する&quot;, children: [
+                &quot;未確認の発見と仮説は03で管理する&quot;,
+                &quot;承認済み変更は現役設計本文へ統合する&quot;,
+                &quot;無関係な原本・成果物・人間の追記を変更しない&quot;,
+                &quot;設計・仕様・コード・成果物を工程ごとの承認で更新する&quot;
+              ] },
+              { label: &quot;現在と将来の境界&quot;, children: [
+                &quot;現在：IGP・IGR・IGS・IGC・プラグイン・Obsidian実物確認&quot;,
+                &quot;現在：人間判断による融合・分離・手書き・復旧&quot;,
+                &quot;将来：IGX・将来情報源・AIによる意味の自動確定&quot;,
+                &quot;将来拡張で既存の原本と確認済み成果物を壊さない&quot;
+              ] }
+            ]]
+          ]
+        },
+        spec: {
+          title: &quot;04_IG移行仕様書｜入力・処理・出力・例外・完了条件&quot;,
+          branches: [
+            [&quot;システム共通仕様&quot;, [
+              { label: &quot;一方向パイプライン&quot;, children: [
+                &quot;1. 原本JSONを取り込み、文字コードと日時を正規化する&quot;,
+                &quot;2. データ種別ごとのoutput_*へ隔離出力する&quot;,
+                &quot;3. 個別SynapseカードとTimelineを生成する&quot;,
+                &quot;4. 手動確認後に各工程の出力を確定する&quot;,
+                &quot;5. IGP・IGR・IGSの確定後にIGCを実行する&quot;
+              ] },
+              { label: &quot;入力と正規化&quot;, children: [
+                &quot;原本JSONと参照メディアを入力にする&quot;,
+                &quot;MarkdownはUTF-8（BOMなし）で保存する&quot;,
+                &quot;日時はJSTのISO 8601へ変換する&quot;,
+                &quot;秒単位のISO 8601とエポックミリ秒を併用する&quot;
+              ] },
+              { label: &quot;複数JSONが重複するとき&quot;, children: [
+                &quot;情報量が豊富なJSONを主データとして定義する&quot;,
+                &quot;他の重複原本は監査・照合用として保持する&quot;,
+                &quot;個別仕様に定義がない自動マージ・自動補完を行わない&quot;,
+                &quot;一つの投稿からMarkdownを二重生成しない&quot;
+              ] },
+              { label: &quot;工程出力を隔離する&quot;, children: [
+                &quot;IGPはoutput_IGPへ出力する&quot;,
+                &quot;IGRはoutput_IGRへ出力する&quot;,
+                &quot;IGSはoutput_IGSへ出力する&quot;,
+                &quot;IGXはoutput_IGXへ出力する&quot;,
+                &quot;利用中Vaultや別工程へ直接書き込まない&quot;
+              ] },
+              { label: &quot;IGC統合の入口と更新範囲&quot;, children: [
+                &quot;入力はoutput_IGP・output_IGR・output_IGSだけ&quot;,
+                &quot;output_IGXと既存output_IGCを入力・補完元にしない&quot;,
+                &quot;更新対象はSynapses 3分類とSystemLogs 3一覧だけ&quot;,
+                &quot;Posts・Reels・Stories・media・RawData・Timelineを変更しない&quot;,
+                &quot;IGP・IGR・IGSからoutput_IGCへ直接再実行しない&quot;
+              ] }
+            ]],
+            [&quot;データ構造・YAML仕様&quot;, [
+              { label: &quot;識別と種類&quot;, children: [
+                &quot;id：タイムスタンプを基礎にした一意ID&quot;,
+                &quot;source：instagram&quot;,
+                &quot;type：Feed・Reels・Stories・Salvage&quot;,
+                &quot;content：画像はnull・動画はvideo&quot;,
+                &quot;instagram_id・original_filename&quot;
+              ] },
+              { label: &quot;時間&quot;, children: [
+                &quot;date・created_at・updated_at・event_at&quot;,
+                &quot;created_at_ms・updated_at_ms・event_at_ms&quot;,
+                &quot;同時刻の複数メディアを後から再整理できる精度を保つ&quot;
+              ] },
+              { label: &quot;関係&quot;, children: [
+                &quot;tags：元表記を保持したハッシュタグ配列&quot;,
+                &quot;mentions：先頭@を含むメンション表記&quot;,
+                &quot;links：Wikiリンク形式の関係&quot;,
+                &quot;group_id：必要な場合だけ使う&quot;
+              ] },
+              { label: &quot;位置情報&quot;, children: [
+                &quot;raw・normalized：元のスポット名と抽出後の名称&quot;,
+                &quot;geo：緯度・経度・高度&quot;,
+                &quot;address：住所全文と構成要素&quot;,
+                &quot;confidence：位置情報の確認状態&quot;,
+                &quot;synapse_link：Location Synapseへの接続&quot;
+              ] },
+              { label: &quot;原本・メディア・生成情報&quot;, children: [
+                &quot;raw_source_path：個別原本へのWikiリンク&quot;,
+                &quot;media_count・media.path&quot;,
+                &quot;emoji_original・emoji_normalized&quot;,
+                &quot;migration_version・created_from&quot;,
+                &quot;unparsed：将来用のnull固定欄&quot;
+              ] },
+              { label: &quot;Markdown本文&quot;, children: [
+                &quot;YAMLフロントマター&quot;,
+                &quot;元キャプションを改行を保って記述する&quot;,
+                &quot;コピーしたメディアを埋め込む&quot;,
+                &quot;最下部へinstagram・タグ・メンション・位置のWikiリンクを出力する&quot;
+              ] },
+              { label: &quot;出力ディレクトリの役割&quot;, children: [
+                &quot;IGP：半期／Posts・Instagram/media・RawData・Timeline&quot;,
+                &quot;IGR：Reels・共通media・RawData/Reels・Reels_Timeline&quot;,
+                &quot;IGS：半期／Stories・共通media・RawData・Timeline&quot;,
+                &quot;IGX：期間分割しないSalvage・共通media・Salvage_Timeline&quot;,
+                &quot;全工程：Synapses・SystemLogs一覧・Events・状態管理&quot;
+              ] },
+              { label: &quot;配置の禁止事項&quot;, children: [
+                &quot;IGPのFeedメディアを全期間共通mediaへ移さない&quot;,
+                &quot;IGR・IGS・IGXのメディアを半期内Instagram/mediaへ移さない&quot;,
+                &quot;IGR・IGXを半期分割しない&quot;,
+                &quot;RawData・Events・Timeline・状態管理を省略しない&quot;,
+                &quot;空の将来欄や人間が追記した本文を削除しない&quot;
+              ] }
+            ]],
+            [&quot;個別移行モジュール（IGP／IGR／IGS／IGX）&quot;, [
+              { label: &quot;IGP（通常投稿／Feed）&quot;, children: [
+                { label: &quot;入力&quot;, children: [
+                  &quot;実行対象はmedia配下のposts.json&quot;,
+                  &quot;posts_1.json等は監査・照合用として保持する&quot;,
+                  &quot;1原本レコードから1投稿Markdownを生成する&quot;
+                ] },
+                { label: &quot;取込と抽出&quot;, children: [
+                  &quot;label_valuesからキャプションを取得する&quot;,
+                  &quot;複数キャプションはRawDataへすべて保持し、採用値を1件選ぶ&quot;,
+                  &quot;キャプションからハッシュタグとメンションを抽出する&quot;,
+                  &quot;スポット辞書を再帰探索して場所名を取得する&quot;,
+                  &quot;media.uriから参照メディアを取得する&quot;
+                ] },
+                { label: &quot;出力&quot;, children: [
+                  &quot;半期ごとのPosts&quot;,
+                  &quot;投稿ごとのRawData&quot;,
+                  &quot;半期内Instagram/media&quot;,
+                  &quot;期間Timeline・Events・状態管理&quot;,
+                  &quot;Tags・Mentions・Locationsの個別Synapse&quot;,
+                  &quot;ハッシュタグ・メンション・場所一覧&quot;
+                ] },
+                { label: &quot;自動判断してはいけないこと&quot;, children: [
+                  &quot;構造Aと構造Bを自動マージしない&quot;,
+                  &quot;ハッシュタグ表記を短縮・補正・大文字小文字統合しない&quot;,
+                  &quot;@文字列だけで実在アカウントや本人性を確定しない&quot;,
+                  &quot;場所名・座標・住所だけで同一場所へ統合しない&quot;
+                ] },
+                { label: &quot;完了条件&quot;, children: [
+                  &quot;対象投稿・RawData・参照メディアの全対応&quot;,
+                  &quot;Timeline・Synapse・一覧・Events・状態管理の対応&quot;,
+                  &quot;個別Synapseが情報YAML1件と関連投稿Wikiリンクを持つ&quot;,
+                  &quot;技術的処理エラーが0件&quot;,
+                  &quot;再実行で人間入力値を保持し、不足だけを補う&quot;,
+                  &quot;原本との食い違いは自動上書きせず停止する&quot;
+                ] }
+              ] },
+              { label: &quot;IGR（リール／Reels）&quot;, children: [
+                { label: &quot;入力&quot;, children: [
+                  &quot;media/reels*.jsonと参照メディア&quot;,
+                  &quot;トップレベルig_reels_mediaを持つ辞書構造&quot;,
+                  &quot;media要素のtitleとcreation_timestampを使用する&quot;
+                ] },
+                { label: &quot;取込と抽出&quot;, children: [
+                  &quot;type=Reels・content=video・ID接頭辞IGR&quot;,
+                  &quot;本文・日時・メディア・タグ・メンションを抽出する&quot;,
+                  &quot;GPS座標があればlocation.geoへ観測値として保持する&quot;
+                ] },
+                { label: &quot;出力&quot;, children: [
+                  &quot;Reelsメモ・RawData/Reels・共通media&quot;,
+                  &quot;Reels_Timeline・Events・状態管理&quot;,
+                  &quot;Tags・Mentions・Locationsの個別Synapse&quot;,
+                  &quot;ハッシュタグ・メンション・場所一覧&quot;
+                ] },
+                { label: &quot;IGR固有の例外&quot;, children: [
+                  &quot;スポット名なしのGPS座標だけではLocation Synapseを生成しない&quot;,
+                  &quot;.srt欠損は警告として記録し、他成果物の処理を続ける&quot;,
+                  &quot;文章・店名・#打ち間違いと思われる@表記をメンション抽出しない&quot;,
+                  &quot;原文とRawDataは変更しない&quot;
+                ] },
+                { label: &quot;完了条件&quot;, children: [
+                  &quot;全入力を生成・明示的除外・技術的失敗へ分類する&quot;,
+                  &quot;リールメモ・RawData・全参照メディアを対応させる&quot;,
+                  &quot;座標観測と.srt警告を失わない&quot;,
+                  &quot;Synapseと関連投稿を対応させる&quot;,
+                  &quot;再実行で人間入力値を保持し不足だけを補う&quot;,
+                  &quot;技術的処理エラー0件と実物対応確認&quot;
+                ] }
+              ] },
+              { label: &quot;IGS（ストーリー／Stories）&quot;, children: [
+                { label: &quot;入力&quot;, children: [
+                  &quot;media/stories*.jsonと参照メディア&quot;,
+                  &quot;トップレベルig_storiesを持つ辞書構造&quot;,
+                  &quot;title・creation_timestamp・uriを使用する&quot;,
+                  &quot;story_interactionsは主処理へ混ぜない&quot;
+                ] },
+                { label: &quot;取込と抽出&quot;, children: [
+                  &quot;type=Stories・ID接頭辞IGS&quot;,
+                  &quot;画像はcontent=null・動画はcontent=video&quot;,
+                  &quot;秒単位の作成日時を時系列復元へ使う&quot;,
+                  &quot;GPS座標があればlocation.geoへ観測値として保持する&quot;
+                ] },
+                { label: &quot;出力&quot;, children: [
+                  &quot;半期ごとのStories・RawData・Timeline&quot;,
+                  &quot;全期間共通media・Events・状態管理&quot;,
+                  &quot;Tags・Mentions・Locationsの個別Synapse&quot;,
+                  &quot;ハッシュタグ・メンション・場所一覧&quot;
+                ] },
+                { label: &quot;IGS固有の境界&quot;, children: [
+                  &quot;story_interactionsは将来の関係解析材料として原本保持する&quot;,
+                  &quot;ハイライト所属はStory本体の移行と分けて検証する&quot;,
+                  &quot;直接対応が確認できるまで推定リンクを出力しない&quot;,
+                  &quot;所属未確認をIGS本体の技術的失敗へ混ぜない&quot;
+                ] },
+                { label: &quot;完了条件&quot;, children: [
+                  &quot;全Storyを生成・明示的除外・技術的失敗へ分類する&quot;,
+                  &quot;Story・RawData・メディア・座標観測を対応させる&quot;,
+                  &quot;Timeline・Synapse・一覧・Events・状態管理を確認する&quot;,
+                  &quot;未確認のハイライト所属を確定情報として出力しない&quot;,
+                  &quot;再実行で人間入力値を保持し不足だけを補う&quot;,
+                  &quot;技術的処理エラー0件と実物対応確認&quot;
+                ] }
+              ] },
+              { label: &quot;IGX（サルベージ／Salvage・現在は完走範囲外）&quot;, children: [
+                { label: &quot;役割と入力&quot;, children: [
+                  &quot;IGP・IGR・IGSで扱えない欠損・孤児・分類不能データを救出する&quot;,
+                  &quot;timestamp・label_values・media等を持つ原本を扱う&quot;,
+                  &quot;現在のIGC入力へ追加しない&quot;
+                ] },
+                { label: &quot;出力&quot;, children: [
+                  &quot;期間分割しないSalvageメモ&quot;,
+                  &quot;RawData・共通media・Salvage_Timeline&quot;,
+                  &quot;Events・状態管理&quot;,
+                  &quot;Tags・Mentions・Locationsの個別Synapseと一覧&quot;
+                ] },
+                { label: &quot;保護条件&quot;, children: [
+                  &quot;IGP・IGR・IGSの正式成果物を上書きしない&quot;,
+                  &quot;同一データを根拠なく重複生成しない&quot;,
+                  &quot;救出元と参照メディアへ戻れる&quot;,
+                  &quot;場所名なしのGPS座標だけではLocation Synapseを生成しない&quot;
+                ] },
+                { label: &quot;完了条件&quot;, children: [
+                  &quot;全対象を生成・明示的除外・技術的失敗へ分類する&quot;,
+                  &quot;Salvage・RawData・メディアを対応させる&quot;,
+                  &quot;Synapseと関連投稿を対応させる&quot;,
+                  &quot;技術的処理エラー0件と関連成果物を確認する&quot;
+                ] }
+              ] }
+            ]],
+            [&quot;Synapseメモ・Memory DB仕様&quot;, [
+              { label: &quot;生成時に行わないこと&quot;, children: [
+                &quot;ハッシュタグ・メンション・位置情報の自動揺らぎ判定&quot;,
+                &quot;名前・表記・座標・住所による自動統合&quot;,
+                &quot;自動分離&quot;,
+                &quot;実在アカウントや同一場所の自動確定&quot;
+              ] },
+              { label: &quot;個別Synapseカードの共通契約&quot;, children: [
+                &quot;各抽出工程が空の仮カードではなく完成したカードを出力する&quot;,
+                &quot;カテゴリ固有の初期情報と人間が育てる欄を持つ&quot;,
+                &quot;## 関連投稿に元投稿へのWikiリンクを並べる&quot;,
+                &quot;出現回数・投稿回数を持たせない&quot;,
+                &quot;投稿ごとの抽出YAMLやSTART/END管理印を繰り返さない&quot;
+              ] },
+              { label: &quot;タグメモ（Tags）&quot;, children: [
+                &quot;hashtag_noteを1件だけ置く&quot;,
+                &quot;hashtagに先頭#を含む元表記を保持する&quot;,
+                &quot;noteは人間が後から育てる自由メモ欄&quot;,
+                &quot;大文字小文字・数字・記号を人間判断前に変更しない&quot;
+              ] },
+              { label: &quot;メンションメモ（Mentions）&quot;, children: [
+                &quot;mention_noteを1件だけ置く&quot;,
+                &quot;mentionに先頭@を含む元表記を保持する&quot;,
+                &quot;name・phone・web・noteを人間が後から育てる&quot;,
+                &quot;@文字列から作るURLは存在・所有者・本人性を保証しない&quot;,
+                &quot;related_locationsや独立email欄を設置しない&quot;
+              ] },
+              { label: &quot;場所メモ（Locations）&quot;, children: [
+                &quot;location_note・geo・addressを1件のYAMLへ置く&quot;,
+                &quot;activity_id・source_files・noteを人間が育てる&quot;,
+                &quot;一投稿の一チェックインを基本単位として保持する&quot;,
+                &quot;場所名なしのGPS座標だけではLocation Synapseを生成しない&quot;,
+                &quot;投稿ごとの位置観測YAMLを場所メモへ繰り返さない&quot;
+              ] },
+              { label: &quot;SystemLogsとの役割分担&quot;, children: [
+                &quot;SystemLogs一覧は静的な確認用ログ&quot;,
+                &quot;人間が育てる本体はSynapses配下の個別メモ&quot;,
+                &quot;一覧を唯一の保存場所にしない&quot;
+              ] },
+              { label: &quot;再実行時の人間入力値を守る&quot;, children: [
+                &quot;Tagのnoteを保持する&quot;,
+                &quot;Mentionのname・phone・web・noteを保持する&quot;,
+                &quot;Locationのactivity_id・source_files・noteを保持する&quot;,
+                &quot;人間が追記した本文を保持する&quot;,
+                &quot;原本との食い違いは自動上書きせず停止する&quot;
+              ] },
+              { label: &quot;IGCとの接続境界&quot;, children: [
+                &quot;IGCはカテゴリ固有情報・人間が育てる欄・元投稿リンクを保持する&quot;,
+                &quot;IGCは意味統合・分離・投稿リンク書換えを行わない&quot;,
+                &quot;同一カテゴリで同名・同内容だけを完全重複として整理する&quot;,
+                &quot;同名・異内容では停止する&quot;,
+                &quot;識別と接続は元メモへのWikiリンクを中心にする&quot;
+              ] },
+              { label: &quot;現行v1.2で具体化が残る領域&quot;, children: [
+                &quot;融合・分離・取消・復元の具体的なYAML&quot;,
+                &quot;大きなカード・受け皿・判断履歴・操作履歴&quot;,
+                &quot;Obsidianプラグインの画面操作と保存処理&quot;,
+                &quot;分割後設計と現行Memory仕様の対応確認&quot;
+              ] }
+            ]],
+            [&quot;運用・管理・整合性&quot;, [
+              { label: &quot;Timeline生成&quot;, children: [
+                &quot;対象期間の全投稿を日時昇順で並べる&quot;,
+                &quot;投稿IDへのWikiリンクとプレビューを出力する&quot;,
+                &quot;プレビューは改行を除いた先頭30文字&quot;,
+                &quot;キャプションがない場合は無題とする&quot;
+              ] },
+              { label: &quot;エラーと例外&quot;, children: [
+                &quot;個別エントリの例外を捕捉して他の正常処理と分ける&quot;,
+                &quot;ERROR／POST_PROCESSING_ERRORとしてイベントログへ記録する&quot;,
+                &quot;1件でも技術的処理失敗がある期間を完了扱いにしない&quot;,
+                &quot;人間判断待ちと技術的処理失敗を分ける&quot;
+              ] },
+              { label: &quot;イベントログ&quot;, children: [
+                &quot;日付ごとのJSONLへ一行一イベントを記録する&quot;,
+                &quot;timestamp・action・category・detailsを持つ&quot;,
+                &quot;Synapse更新・期間完了・処理エラーを追跡する&quot;
+              ] },
+              { label: &quot;冪等性と再実行&quot;, children: [
+                &quot;投稿メモの存在だけで処理済みにしない&quot;,
+                &quot;RawData・メディア・Synapse・一覧等との対応を確認する&quot;,
+                &quot;正しい既存物を保持し不足だけを補う&quot;,
+                &quot;食い違い時は自動上書きせず停止する&quot;,
+                &quot;関連成果物確認まで完了した範囲だけ状態管理へ記録する&quot;
+              ] },
+              { label: &quot;設定と実行環境&quot;, children: [
+                &quot;BASE_DIR・POSTS_JSON_DIR&quot;,
+                &quot;SRC_MEDIA_DIRS&quot;,
+                &quot;DEST_VAULT_DIRは工程ごとのoutput_*&quot;,
+                &quot;LOGS_ROOT・STATE_FILE&quot;,
+                &quot;IGC本番出力を個別工程の直接出力先にしない&quot;
+              ] },
+              { label: &quot;実データ監査で確認された差分&quot;, children: [
+                &quot;Feed原本に構造Aのposts.jsonと構造Bのposts_1.jsonが混在する&quot;,
+                &quot;Reelsはig_reels_mediaを持つ辞書構造&quot;,
+                &quot;Storiesはig_storiesを持つ辞書構造&quot;,
+                &quot;JSONのURIと物理メディア配置が完全一致しないものがある&quot;,
+                &quot;現在の実行フォルダは05_IGP・06_IGR・07_IGS・08_IGX&quot;
+              ] },
+              { label: &quot;共通の完了判定&quot;, children: [
+                &quot;全入力を生成・明示的除外・技術的失敗へ分類する&quot;,
+                &quot;投稿メモ・RawData・メディア・Timelineを対応させる&quot;,
+                &quot;Synapse・一覧・Events・状態管理を対応させる&quot;,
+                &quot;対象外データと未確認情報を確定成果物へ混ぜない&quot;,
+                &quot;技術的処理エラー0件と実物対応確認後だけ完了とする&quot;
+              ] }
+            ]]
+          ]
+        },
+        rules: {
+          title: &quot;AGENTS.md ＋ docs｜判断・工程・承認・保全&quot;,
+          branches: [
+            [&quot;判断の土台（AGENTS.md）&quot;, [
+              { label: &quot;何を基準に判断するか&quot;, children: [
+                &quot;01企画書を目的・理由・到達点の最上位条件とする&quot;,
+                &quot;企画・設計・仕様・実装・成果物検証を混ぜない&quot;,
+                &quot;事実・仮定・提案・未確認事項を区別する&quot;,
+                &quot;成立している部分を維持し、承認済みの最小差分を優先する&quot;
+              ] },
+              { label: &quot;作業を始める前に決めること&quot;, children: [
+                &quot;今回の対象&quot;,
+                &quot;行う操作&quot;,
+                &quot;停止する地点&quot;,
+                &quot;変更しない範囲&quot;
+              ] },
+              { label: &quot;許可を拡大しない&quot;, children: [
+                &quot;閲覧許可は変更許可ではない&quot;,
+                &quot;前工程の承認は後工程の変更許可ではない&quot;,
+                &quot;README・Issue・Git操作は明示指示時だけ行う&quot;
+              ] },
+              { label: &quot;データと既存成果を守る&quot;, children: [
+                &quot;macOS・ローカル作業を前提とする&quot;,
+                &quot;原本と既存成果物を壊さない&quot;,
+                &quot;個人情報を公開Git管理しない&quot;,
+                &quot;既存変更と今回の変更を分ける&quot;
+              ] },
+              { label: &quot;読み込みルーター：該当するdocsへの入口&quot;, children: [
+                &quot;現在の工程を特定する&quot;,
+                &quot;その工程のworkflowを読む&quot;,
+                &quot;本文正本は必要な範囲だけ読む&quot;,
+                &quot;配置・退役時はdocument-governanceへ進む&quot;
+              ] }
+            ]],
+            [&quot;工程別の進め方（workflow docs）&quot;, [
+              { label: &quot;企画工程&quot;, children: [
+                &quot;目的・理由・対象範囲・到達点を扱う&quot;,
+                &quot;承認済み条件と仮メモを分ける&quot;,
+                &quot;成立性に問題があれば複数案を比較する&quot;,
+                &quot;設計へ渡す前にオーナー確認で止まる&quot;
+              ] },
+              { label: &quot;設計工程&quot;, children: [
+                &quot;承認済み企画を固定条件として受け取る&quot;,
+                &quot;必要な設計分冊だけを読む&quot;,
+                &quot;構造・責任・境界・保持条件をサンドバッグ検証する&quot;,
+                &quot;仕様へ渡す内容を分離する&quot;,
+                &quot;仕様へ渡す前にオーナー確認で止まる&quot;
+              ] },
+              { label: &quot;仕様工程&quot;, children: [
+                &quot;確認済み設計を開始条件とする&quot;,
+                &quot;対象仕様と対応設計を確認する&quot;,
+                &quot;入出力・型・保存先・処理順・例外を確定する&quot;,
+                &quot;未確定部分を推測で補わない&quot;,
+                &quot;実装へ渡す前にオーナー確認で止まる&quot;
+              ] },
+              { label: &quot;実装・成果物検証（AGENTS.mdが入口）&quot;, children: [
+                &quot;対象仕様書を基準にする&quot;,
+                &quot;対象コードと対象成果物だけを読む&quot;,
+                &quot;コード・仕様・成果物の不一致を分類する&quot;,
+                &quot;コード変更と成果物再生成は別に承認を得る&quot;
+              ] }
+            ]],
+            [&quot;止まる・戻る・承認する&quot;, [
+              { label: &quot;進む流れ&quot;, children: [
+                &quot;企画 → 設計&quot;,
+                &quot;設計 → 仕様&quot;,
+                &quot;仕様 → 実装&quot;,
+                &quot;実装 → 成果物検証&quot;
+              ] },
+              { label: &quot;戻る流れ&quot;, children: [
+                &quot;仕様で設計問題を発見 → 仕様化を止めて設計へ戻る&quot;,
+                &quot;設計で企画の不成立を発見 → 代替案を比較して企画へ戻る&quot;,
+                &quot;後工程の都合で上位文書を自動変更しない&quot;
+              ] },
+              { label: &quot;不一致を見つけたとき&quot;, children: [
+                &quot;維持&quot;,
+                &quot;微調整&quot;,
+                &quot;設計変更候補&quot;,
+                &quot;実装不具合&quot;,
+                &quot;未確認&quot;
+              ] },
+              { label: &quot;承認の停止線&quot;, children: [
+                &quot;変更結果と未変更範囲を報告する&quot;,
+                &quot;オーナーが確認するまで次工程へ進まない&quot;,
+                &quot;承認は指定された対象と工程にだけ適用する&quot;
+              ] }
+            ]],
+            [&quot;文書とルールを保全する（governance docs）&quot;, [
+              { label: &quot;文書・資料をどこへ置くか&quot;, children: [
+                &quot;未完了の調査・未確定判断・現役引継ぎは03&quot;,
+                &quot;再利用する補助ツールはtools&quot;,
+                &quot;役割を終えた資料は完了済み参考資料&quot;,
+                &quot;公開版は原本を変えず別に作る&quot;,
+                &quot;配置判断が必要なときだけdocument-governanceを使う&quot;
+              ] },
+              { label: &quot;文書を退役するとき&quot;, children: [
+                &quot;対象・理由・関連資料への影響を確認&quot;,
+                &quot;置き換え先または役割を終えた理由を記録&quot;,
+                &quot;原則として削除せず完了済み参考資料へ移す&quot;,
+                &quot;削除は対象と方法が明示された場合だけ行う&quot;
+              ] },
+              { label: &quot;恒久ルールを追加・修正するとき&quot;, children: [
+                &quot;繰り返し必要なプロジェクト固有ルールか確認&quot;,
+                &quot;既存ルールとの重複・曖昧さを確認&quot;,
+                &quot;機械的に防げる場合は自動化を優先&quot;,
+                &quot;一時的な進捗・引継ぎを恒久化しない&quot;,
+                &quot;必要なときだけrule-addition-criteriaを使う&quot;,
+                &quot;変更理由と影響を示し、承認後に反映する&quot;
+              ] }
+            ]]
+          ]
+        },
+        igc: {
+          title: &quot;09_IGC統合｜IGC統合&quot;,
+          branches: [
+            [&quot;目的・今回の完了条件&quot;, [
+              { label: &quot;三系統をObsidian投入前に整理&quot;, children: [
+                &quot;output_IGP・output_IGR・output_IGSを受け取る&quot;,
+                &quot;Tags・Mentions・Locationsを系統横断で整理する&quot;,
+                &quot;完全に同じ項目を一件にする&quot;,
+                &quot;一系統だけにある項目も欠落させない&quot;
+              ] },
+              { label: &quot;本番用output_IGCを生成&quot;, children: [
+                &quot;Synapseカード三種類を生成する&quot;,
+                &quot;SystemLogs一覧三種類を生成する&quot;,
+                &quot;カードと一覧を相互に対応させる&quot;,
+                &quot;Memory Synapse DBへ安全に引き渡す&quot;
+              ] },
+              { label: &quot;Synapseを育てるための前処理&quot;, children: [
+                &quot;移行時点の事実と関連投稿を減らさない&quot;,
+                &quot;将来の意味融合・分離に耐えられる材料を残す&quot;,
+                &quot;今回の技術的整理と将来の人間判断を混ぜない&quot;
+              ] }
+            ]],
+            [&quot;三種類の統合と責任境界&quot;, [
+              { label: &quot;今回IGCが行う統合&quot;, children: [
+                &quot;同じカテゴリ内だけを比較する&quot;,
+                &quot;人間向け表記が完全一致した項目だけを一件にする&quot;,
+                &quot;IGP・IGR・IGS間の重複を整理する&quot;,
+                &quot;Obsidian投入前に機械的に確定できる範囲&quot;
+              ] },
+              { label: &quot;Memory Synapse DBが行う統合&quot;, children: [
+                &quot;表記は違うが同じ意味だと人間が判断する融合&quot;,
+                &quot;Tags・Mentions・Locationsを越えるカテゴリ横断融合&quot;,
+                &quot;大きなカード・構成員・表示順の決定&quot;,
+                &quot;共有メモ・分離・判断履歴の操作&quot;
+              ] },
+              { label: &quot;今回先取りしない判断&quot;, children: [
+                &quot;類似名・別名・座標による自動名寄せ&quot;,
+                &quot;意味上の同一人物・同一場所・同一概念の確定&quot;,
+                &quot;融合ID・所有者・融合グループIDの付与&quot;,
+                &quot;統合プレビューUIと分離・取消UI&quot;
+              ] }
+            ]],
+            [&quot;入力の範囲と相互契約&quot;, [
+              { label: &quot;入力系統&quot;, children: [
+                &quot;output_IGP/Instagram_Logs&quot;,
+                &quot;output_IGR/Instagram_Logs&quot;,
+                &quot;output_IGS/Instagram_Logs&quot;,
+                &quot;既存output_IGCとoutput_IGXは入力・正解・補完元にしない&quot;
+              ] },
+              { label: &quot;Synapseカード入力&quot;, children: [
+                &quot;Synapses/Tags&quot;,
+                &quot;Synapses/Mentions&quot;,
+                &quot;Synapses/Locations&quot;,
+                &quot;共通情報と関連投稿を保持する&quot;
+              ] },
+              { label: &quot;SystemLogs入力&quot;, children: [
+                &quot;ハッシュタグ一覧.md&quot;,
+                &quot;メンション一覧.md&quot;,
+                &quot;場所一覧.md&quot;,
+                &quot;項目・物理リンク先・出現回数・出現投稿を保持する&quot;
+              ] },
+              { label: &quot;カードと一覧の相互照合&quot;, children: [
+                &quot;人間向け表記集合が一致する&quot;,
+                &quot;一覧リンクが実カードを指す&quot;,
+                &quot;関連投稿の件数・値・順序が一致する&quot;,
+                &quot;出現回数が関連投稿数と一致する&quot;,
+                &quot;片方だけを正解として推測補完しない&quot;
+              ] }
+            ]],
+            [&quot;入力形式・完全一致の読み取り&quot;, [
+              { label: &quot;文字の扱い&quot;, children: [
+                &quot;UTF-8で読み取る&quot;,
+                &quot;改行だけLFへ統一して比較する&quot;,
+                &quot;Unicode・空白・大文字小文字・全角半角を正規化しない&quot;,
+                &quot;デコード不能は異常終了する&quot;
+              ] },
+              { label: &quot;カテゴリごとの人間向け表記&quot;, children: [
+                &quot;Tags：hashtag_note.hashtag&quot;,
+                &quot;Mentions：mention_note.mention&quot;,
+                &quot;Locations：location_note.location&quot;,
+                &quot;物理ファイル名は統合キーに使わない&quot;
+              ] },
+              { label: &quot;一枚のカード内で一致させる四箇所&quot;, children: [
+                &quot;Frontmatter aliasesの唯一の値&quot;,
+                &quot;本文先頭のH1見出し&quot;,
+                &quot;カテゴリ固有YAMLの値&quot;,
+                &quot;SystemLogs Wikiリンクの表示名&quot;
+              ] },
+              { label: &quot;関連投稿領域&quot;, children: [
+                &quot;## 関連投稿を一つだけ置く&quot;,
+                &quot;見出しより前を共通情報とする&quot;,
+                &quot;見出しより後は空行と[[投稿ID]]だけ&quot;,
+                &quot;投稿リンク0件・同一リンク重複は異常&quot;
+              ] }
+            ]],
+            [&quot;完全一致統合の判断手順&quot;, [
+              { label: &quot;統合キー&quot;, children: [
+                &quot;（カテゴリキー, 人間向け表記）の組&quot;,
+                &quot;Python文字列の完全一致で比較する&quot;,
+                &quot;#ABCと#abcは別&quot;,
+                &quot;#abcと＃abcは別&quot;,
+                &quot;大阪城と大阪城天守閣は別&quot;,
+                &quot;同じ表記でもカテゴリが異なれば別&quot;
+              ] },
+              { label: &quot;共通情報の採否&quot;, children: [
+                &quot;同じ統合キーの共通情報を文字単位で比較&quot;,
+                &quot;完全一致した場合だけ一組を出力&quot;,
+                &quot;入力順で最初にあるカードの共通情報を使用&quot;,
+                &quot;異なる場合は選択・混合せず全処理停止&quot;
+              ] },
+              { label: &quot;関連投稿の加算&quot;, children: [
+                &quot;IGPカード内の順序&quot;,
+                &quot;次にIGRカード内の順序&quot;,
+                &quot;最後にIGSカード内の順序&quot;,
+                &quot;意味・日時・画像・出来事でまとめない&quot;,
+                &quot;系統間の完全同一リンクは黙って除去せず異常&quot;
+              ] },
+              { label: &quot;一系統だけのカード&quot;, children: [
+                &quot;共通情報をそのまま保持&quot;,
+                &quot;関連投稿をそのまま保持&quot;,
+                &quot;他系統の情報を推測追加しない&quot;,
+                &quot;欠損として捨てない&quot;
+              ] }
+            ]],
+            [&quot;Synapseカード出力&quot;, [
+              { label: &quot;出力する三カテゴリ&quot;, children: [
+                &quot;output_IGC/.../Synapses/Tags&quot;,
+                &quot;output_IGC/.../Synapses/Mentions&quot;,
+                &quot;output_IGC/.../Synapses/Locations&quot;
+              ] },
+              { label: &quot;カード本文の組立て&quot;, children: [
+                &quot;一致確認済みの共通情報を一組置く&quot;,
+                &quot;## 関連投稿を置く&quot;,
+                &quot;三系統の投稿リンクを順番どおり置く&quot;,
+                &quot;ファイル末尾はLF一つ&quot;
+              ] },
+              { label: &quot;追加・変更しない情報&quot;, children: [
+                &quot;synapse_id・UUID&quot;,
+                &quot;synapse_facets&quot;,
+                &quot;integration_state・integration_target_id&quot;,
+                &quot;integration_source_ids・igc_sources&quot;,
+                &quot;融合ID・融合グループID・所有者&quot;,
+                &quot;融合・分離・取消・判断履歴の作業台&quot;
+              ] }
+            ]],
+            [&quot;物理ファイル名とmacOS衝突&quot;, [
+              { label: &quot;人間向け表記から基底名を作る&quot;, children: [
+                &quot;Tagsだけ先頭#または＃を一文字除く&quot;,
+                &quot;禁止文字 \\ / : * ? \&quot; &lt; &gt; | を_へ置換&quot;,
+                &quot;CR・LFを空白へ置換&quot;,
+                &quot;前後空白を除き先頭100文字へ制限&quot;,
+                &quot;空ならunnamed&quot;
+              ] },
+              { label: &quot;macOS上の衝突判定&quot;, children: [
+                &quot;カテゴリごとに判定する&quot;,
+                &quot;基底名をUnicode NFDへ変換&quot;,
+                &quot;casefoldした値を衝突判定キーにする&quot;,
+                &quot;異なる表記が衝突した場合は決定的接尾辞を付ける&quot;
+              ] },
+              { label: &quot;接尾辞の意味&quot;, children: [
+                &quot;カテゴリ性質値と人間向け表記からSHA-256を作る&quot;,
+                &quot;先頭12桁の小文字16進数を使う&quot;,
+                &quot;物理保存名の衝突回避だけに使う&quot;,
+                &quot;Synapse IDや意味融合IDにはしない&quot;,
+                &quot;接尾辞後も一意でなければ停止&quot;
+              ] },
+              { label: &quot;保存名と表示名の分離&quot;, children: [
+                &quot;安全名はファイル保存にだけ使う&quot;,
+                &quot;aliases・H1・カテゴリ固有値は元表記のまま&quot;,
+                &quot;意味上の同一性を物理名から推測しない&quot;
+              ] }
+            ]],
+            [&quot;SystemLogs一覧出力&quot;, [
+              { label: &quot;出力する三一覧&quot;, children: [
+                &quot;ハッシュタグ一覧 - IGC統合&quot;,
+                &quot;メンション一覧 - IGC統合&quot;,
+                &quot;場所一覧 - IGC統合&quot;
+              ] },
+              { label: &quot;項目集合&quot;, children: [
+                &quot;対応カテゴリの出力カードを一件ずつ載せる&quot;,
+                &quot;三入力一覧を単純連結しない&quot;,
+                &quot;統合キーごとに一項目を出す&quot;,
+                &quot;一覧とカードの人間向け表記集合を一致させる&quot;
+              ] },
+              { label: &quot;一項目の内容&quot;, children: [
+                &quot;初期状態は- [x]&quot;,
+                &quot;物理リンク先と人間向け表記&quot;,
+                &quot;出現回数は統合後関連投稿数&quot;,
+                &quot;出現投稿はカードと同じ値・同じ順番&quot;
+              ] },
+              { label: &quot;安定した並び順&quot;, children: [
+                &quot;出現回数の降順&quot;,
+                &quot;同数なら人間向け表記の昇順&quot;,
+                &quot;順序は意味・優先度・融合候補を表さない&quot;
+              ] }
+            ]],
+            [&quot;異常条件と禁止する自動修復&quot;, [
+              { label: &quot;入力・構造の異常&quot;, children: [
+                &quot;必須ディレクトリ・一覧がない&quot;,
+                &quot;UTF-8で読めない&quot;,
+                &quot;必須構造・値・カテゴリが不正&quot;,
+                &quot;同一系統・同一カテゴリで同じ表記が複数&quot;,
+                &quot;一覧に- [ ]が存在する&quot;
+              ] },
+              { label: &quot;対応・統合の異常&quot;, children: [
+                &quot;共通情報が一致しない&quot;,
+                &quot;カードと一覧が対応しない&quot;,
+                &quot;投稿リンクが重複する&quot;,
+                &quot;出力物理名が一意にならない&quot;,
+                &quot;準備出力の検証に失敗する&quot;
+              ] },
+              { label: &quot;自動修復しない&quot;, children: [
+                &quot;一系統を正解として選ばない&quot;,
+                &quot;空欄・追記・カテゴリ固有情報を上書きしない&quot;,
+                &quot;一覧だけから不足カードを生成しない&quot;,
+                &quot;カードだけの項目を黙って削らない&quot;,
+                &quot;関連投稿を推測追加・削除・重複除去しない&quot;,
+                &quot;表記やカテゴリを変更して続行しない&quot;
+              ] },
+              { label: &quot;停止と再開&quot;, children: [
+                &quot;一カテゴリの異常でも全カテゴリを恒久反映しない&quot;,
+                &quot;終了コード1で停止する&quot;,
+                &quot;段階・カテゴリ・系統・表記・パス・不一致を報告&quot;,
+                &quot;上流成果物を直して最初から再実行&quot;,
+                &quot;既存output_IGCを手修正して吸収しない&quot;
+              ] }
+            ]],
+            [&quot;検証と安全な置換&quot;, [
+              { label: &quot;入力検証&quot;, children: [
+                &quot;カード件数と一覧件数&quot;,
+                &quot;人間向け表記集合&quot;,
+                &quot;物理リンク先&quot;,
+                &quot;関連投稿列と出現回数&quot;,
+                &quot;カード・一覧・投稿リンクの重複&quot;
+              ] },
+              { label: &quot;準備出力検証&quot;, children: [
+                &quot;出力集合が三入力の完全一致和集合&quot;,
+                &quot;共通情報が入力と完全一致&quot;,
+                &quot;関連投稿がIGP→IGR→IGS順&quot;,
+                &quot;表記違い・カテゴリ違いを分離維持&quot;,
+                &quot;物理名がmacOSで一意&quot;,
+                &quot;不要なID・融合状態・作業台がない&quot;
+              ] },
+              { label: &quot;SystemLogs検証&quot;, children: [
+                &quot;一覧件数とカード件数&quot;,
+                &quot;人間向け表記集合&quot;,
+                &quot;カテゴリ・物理ファイルへのリンク&quot;,
+                &quot;出現回数・投稿値・順番&quot;,
+                &quot;一覧項目の安定順序&quot;
+              ] },
+              { label: &quot;準備領域とドライラン&quot;, children: [
+                &quot;最終出力へ直接書かない&quot;,
+                &quot;重複しない一時ディレクトリで六出力を生成&quot;,
+                &quot;全検証成功まで既存output_IGCを変更しない&quot;,
+                &quot;--dry-runは生成・検証だけで恒久置換しない&quot;
+              ] },
+              { label: &quot;置換・失敗・復旧&quot;, children: [
+                &quot;既存六出力だけを一時バックアップへ移す&quot;,
+                &quot;準備済み六出力と置き換える&quot;,
+                &quot;途中失敗は新出力を除き全六出力を復元&quot;,
+                &quot;復旧失敗は成功扱いせず残存状態を報告&quot;,
+                &quot;成功後に一時バックアップを削除&quot;
+              ] }
+            ]],
+            [&quot;実行結果とコード責任&quot;, [
+              { label: &quot;正常時の結果&quot;, children: [
+                &quot;終了コード0&quot;,
+                &quot;標準出力へ一つのJSON&quot;,
+                &quot;mode・ok・replaced&quot;,
+                &quot;入力パスとカテゴリ別件数&quot;,
+                &quot;和集合件数・複数系統項目数・出力件数&quot;,
+                &quot;関連投稿総数と検証結果&quot;
+              ] },
+              { label: &quot;異常時の結果&quot;, children: [
+                &quot;終了コード1&quot;,
+                &quot;error.type・phase・message&quot;,
+                &quot;特定可能ならcategory・source・display_name&quot;,
+                &quot;path・post_linkは確認に必要な対象だけ&quot;
+              ] },
+              { label: &quot;五つの実行責任&quot;, children: [
+                { label: &quot;01 メイン実行&quot;, children: [&quot;全処理の呼出し&quot;, &quot;入出力名・カテゴリ・物理名規則&quot;, &quot;ドライラン・JSON・終了コード&quot;] },
+                { label: &quot;02 入力解析&quot;, children: [&quot;カードと一覧の解析&quot;, &quot;入力系統ごとの相互照合&quot;] },
+                { label: &quot;03 データ統合&quot;, children: [&quot;完全一致統合&quot;, &quot;投稿加算・物理名決定&quot;, &quot;カードと一覧の生成&quot;] },
+                { label: &quot;04 品質検証&quot;, children: [&quot;入力検証&quot;, &quot;準備出力検証&quot;, &quot;対象外保護&quot;] },
+                { label: &quot;05 安全置換&quot;, children: [&quot;六出力のバックアップ&quot;, &quot;置換&quot;, &quot;失敗時復元&quot;] }
+              ] }
+            ]],
+            [&quot;変更しない範囲・次工程への判断材料&quot;, [
+              { label: &quot;上流と対象外を守る&quot;, children: [
+                &quot;IGP・IGR・IGSのコードと成果物を変更しない&quot;,
+                &quot;Posts・Reels・Storiesを作成・変更しない&quot;,
+                &quot;media・Timeline・RawDataを変更しない&quot;,
+                &quot;実際のObsidian VaultとiCloudで直接処理しない&quot;,
+                &quot;output_IGXを対象にしない&quot;
+              ] },
+              { label: &quot;IGC完了時に確認できること&quot;, children: [
+                &quot;三カテゴリの完全一致整理が成立&quot;,
+                &quot;一系統だけの情報も保持&quot;,
+                &quot;カードと一覧が対応&quot;,
+                &quot;異なる表記・カテゴリは自動融合されない&quot;,
+                &quot;対象外成果物が変更されていない&quot;
+              ] },
+              { label: &quot;10で人間が判断すること&quot;, children: [
+                &quot;異なる表記を同じ知識として融合するか&quot;,
+                &quot;カテゴリを越えて融合するか&quot;,
+                &quot;どのカードを大きなカードにするか&quot;,
+                &quot;意味・記憶・補正情報をどう育てるか&quot;,
+                &quot;誤った融合をどの単位で分離・取消するか&quot;
+              ] }
+            ]]
+          ]
+        },
+        memory: {
+          title: &quot;10_Memory_Synapse_DB｜Memory Synapse DB&quot;,
+          branches: [
+            [&quot;目的・現在の完走点&quot;, [
+              { label: &quot;第二の脳としての目的&quot;, children: [
+                &quot;Instagramの投稿・タグ・人物・場所を長期知識へ変える&quot;,
+                &quot;人生の記録を人間とAIが共通理解できる形にする&quot;,
+                &quot;振り返り・関係発見・将来判断・創造へ活用する&quot;,
+                &quot;単なる投稿閲覧・バックアップ・検索画面で終わらせない&quot;
+              ] },
+              { label: &quot;現在の確定入力&quot;, children: [
+                &quot;IGP・IGR・IGSを完走する&quot;,
+                &quot;IGCを実行・検証する&quot;,
+                &quot;完成したoutput_IGCを受け取る&quot;,
+                &quot;output_IGCはInstagram原本ではなく加工成果物&quot;
+              ] },
+              { label: &quot;Obsidian上の完走条件&quot;, children: [
+                &quot;個別カードと関連投稿を確認できる&quot;,
+                &quot;人間判断で融合・分離できる&quot;,
+                &quot;融合後も各個別情報を確認できる&quot;,
+                &quot;必要な一枚だけを分離できる&quot;,
+                &quot;手書きで大きなカードを育てられる&quot;,
+                &quot;誤操作の影響を確認し情報を失わず戻せる&quot;
+              ] },
+              { label: &quot;ブラウザー確認の位置付け&quot;, children: [
+                &quot;画面と操作を具体化する検証環境&quot;,
+                &quot;検証用データだけを使う&quot;,
+                &quot;実Vaultとoutput_IGCを書き換えない&quot;,
+                &quot;Obsidian実物確認の代わりにはしない&quot;
+              ] }
+            ]],
+            [&quot;解決したい課題と判断原則&quot;, [
+              { label: &quot;情報が散在している&quot;, children: [
+                &quot;投稿本文・写真・位置・タグ・人物が別々&quot;,
+                &quot;個別保存だけでは同じ対象のつながりが見えにくい&quot;,
+                &quot;全体俯瞰と一件の詳細確認を両立する必要がある&quot;
+              ] },
+              { label: &quot;表記と意味は一致しない&quot;, children: [
+                &quot;同じ対象でも時期・言語・表記揺れで別カードになる&quot;,
+                &quot;似た表記でも別の意味の場合がある&quot;,
+                &quot;完全一致整理と意味融合を分ける&quot;
+              ] },
+              { label: &quot;人間が最終判断する&quot;, children: [
+                &quot;AI・システムは候補提示と比較を支援&quot;,
+                &quot;融合・分離・意味付けを自動確定しない&quot;,
+                &quot;大きなカードも人間が選ぶ&quot;,
+                &quot;非エンジニアのオーナーが影響を理解できることを優先&quot;
+              ] },
+              { label: &quot;知識を育てる場所を作る&quot;, children: [
+                &quot;移行時点の事実を保持する&quot;,
+                &quot;後から意味・記憶・判断・関係を加える&quot;,
+                &quot;特定AIや特定プラグインだけに閉じない&quot;,
+                &quot;長期的に育て続けられる基盤にする&quot;
+              ] }
+            ]],
+            [&quot;対象データ・書込み境界&quot;, [
+              { label: &quot;対象ルート&quot;, children: [
+                &quot;output_IGC/Instagram_Logs/Synapses&quot;,
+                &quot;Vault導入後は同じ相対構造&quot;,
+                &quot;プラグイン設定で対象ルートを一つ選ぶ&quot;,
+                &quot;初期値はInstagram_Logs/Synapses&quot;
+              ] },
+              { label: &quot;三種類の個別カード&quot;, children: [
+                &quot;*/Synapses/Tags/*.md → tag&quot;,
+                &quot;*/Synapses/Mentions/*.md → mention&quot;,
+                &quot;*/Synapses/Locations/*.md → location&quot;,
+                &quot;カード種類はVault相対パスで判定&quot;
+              ] },
+              { label: &quot;融合関係を書かない対象&quot;, children: [
+                &quot;IGX&quot;,
+                &quot;SystemLogs&quot;,
+                &quot;投稿・Reel・Story&quot;,
+                &quot;RawData・media&quot;,
+                &quot;対象外パスを自動判定しない&quot;
+              ] },
+              { label: &quot;上流へ逆流させない&quot;, children: [
+                &quot;Instagram原本を変更しない&quot;,
+                &quot;IGP・IGR・IGS・IGCの抽出変換仕様を変更しない&quot;,
+                &quot;投稿Frontmatterへ融合状態や補正値を同期しない&quot;,
+                &quot;外部ネットワークへ自動接続しない&quot;
+              ] }
+            ]],
+            [&quot;個別カードと事実の保護&quot;, [
+              { label: &quot;融合後もファイルを残す&quot;, children: [
+                &quot;個別カードは独立したMarkdownのまま&quot;,
+                &quot;一つのファイルへ物理結合しない&quot;,
+                &quot;元ファイルを削除しない&quot;,
+                &quot;ファイル名と配置フォルダーを融合だけで変えない&quot;
+              ] },
+              { label: &quot;維持する情報&quot;, children: [
+                &quot;Frontmatterと未知の項目&quot;,
+                &quot;カテゴリ固有YAML&quot;,
+                &quot;元表記&quot;,
+                &quot;関連投稿&quot;,
+                &quot;未知の本文・コメント・空欄&quot;
+              ] },
+              { label: &quot;Memory Synapse DBが管理する見出し&quot;, children: [
+                &quot;## Memory Synapse&quot;,
+                &quot;## 手書き情報&quot;,
+                &quot;## 関連投稿とリンク群の後ろへ置く&quot;,
+                &quot;同名見出しを重複追加しない&quot;,
+                &quot;管理対象YAMLだけを更新する&quot;
+              ] },
+              { label: &quot;作らないカード&quot;, children: [
+                &quot;融合専用カード&quot;,
+                &quot;受け皿専用カード&quot;,
+                &quot;手書き専用カード&quot;,
+                &quot;融合管理だけを目的とする自動生成カード&quot;
+              ] }
+            ]],
+            [&quot;カテゴリ固有情報の読み方&quot;, [
+              { label: &quot;Tagカード&quot;, children: [
+                &quot;hashtag_note.hashtag：抽出された元表記&quot;,
+                &quot;hashtag_note.note：人間が育てる既存欄&quot;,
+                &quot;関連投稿Wikiリンクを開ける状態で保持&quot;
+              ] },
+              { label: &quot;Mentionカード&quot;, children: [
+                &quot;mention_note.mention：元の@文字列&quot;,
+                &quot;name・phone・web・noteを保持&quot;,
+                &quot;生成済みInstagram URLを本人性の保証にしない&quot;
+              ] },
+              { label: &quot;Locationカード&quot;, children: [
+                &quot;location_note.location&quot;,
+                &quot;geo・address&quot;,
+                &quot;activity_id・source_files&quot;,
+                &quot;移行時点の値を融合操作で変更しない&quot;,
+                &quot;人間の補正値は手書き情報へ保存&quot;
+              ] },
+              { label: &quot;事実と育てた知識を分ける&quot;, children: [
+                &quot;移行時点のカテゴリ固有情報&quot;,
+                &quot;人間が後から加えた意味・記憶・補正&quot;,
+                &quot;画面でも両者を区別して表示する&quot;
+              ] }
+            ]],
+            [&quot;大きなカード・受け皿・融合単位&quot;, [
+              { label: &quot;大きなカード&quot;, children: [
+                &quot;融合参加中の既存個別カードから一枚を選ぶ&quot;,
+                &quot;そのカード自体を大きなカードとして育てる&quot;,
+                &quot;人間が選び、後から変更できる&quot;,
+                &quot;大きなカード専用ファイルや専用IDを作らない&quot;
+              ] },
+              { label: &quot;受け皿&quot;, children: [
+                &quot;大きなカードを含む全構成員のまとまり&quot;,
+                &quot;別カードや常設作業台ではない&quot;,
+                &quot;各カードの種類・元表記・固有情報・関連投稿を区別保持&quot;,
+                &quot;情報を平らな一文章へ混ぜない&quot;
+              ] },
+              { label: &quot;平坦な融合単位&quot;, children: [
+                &quot;大きなカードとmembersを合わせて一単位&quot;,
+                &quot;参加枚数を二枚に限定しない&quot;,
+                &quot;大きなカード同士も全構成員を一列へ展開&quot;,
+                &quot;受け皿の中に受け皿を残さない&quot;
+              ] },
+              { label: &quot;一般リンクとの区別&quot;, children: [
+                &quot;融合関係はMemory Synapse専用領域で表す&quot;,
+                &quot;一般本文リンクを構成員として解釈しない&quot;,
+                &quot;関連投稿リンクも構成員として解釈しない&quot;,
+                &quot;一枚を同時に複数の大きなカードへ所属させない&quot;
+              ] }
+            ]],
+            [&quot;融合状態のMarkdown保存&quot;, [
+              { label: &quot;保存場所&quot;, children: [
+                &quot;大きなカードだけに## Memory Synapseを置く&quot;,
+                &quot;大きなカード以外の構成員には置かない&quot;,
+                &quot;見出しの存在で大きなカードを識別&quot;,
+                &quot;大きなカード自身へのWikiリンクは保存しない&quot;
+              ] },
+              { label: &quot;memory_synapse YAML&quot;, children: [
+                &quot;schema_version：v1.0では1&quot;,
+                &quot;display_mode：sourceまたはhandwritten&quot;,
+                &quot;members：大きなカード以外の全構成員&quot;,
+                &quot;同じ解決先を重複登録しない&quot;,
+                &quot;空membersのmemory_synapseは保存しない&quot;
+              ] },
+              { label: &quot;Wikiリンク生成と追従&quot;, children: [
+                &quot;Obsidianのリンク生成機能を使う&quot;,
+                &quot;同名ファイルはVault相対パスを含める&quot;,
+                &quot;表示名は現在のファイル名&quot;,
+                &quot;解決先がない場合は融合しない&quot;,
+                &quot;Obsidianの改名・移動後リンクを正とする&quot;
+              ] },
+              { label: &quot;不正状態として止めるもの&quot;, children: [
+                &quot;一枚が複数の大きなカードに所属&quot;,
+                &quot;大きなカードをmembersに残す入れ子&quot;,
+                &quot;membersに大きなカード自身を含む&quot;,
+                &quot;リンク切れ・YAML解析失敗&quot;,
+                &quot;未対応schema_version&quot;
+              ] }
+            ]],
+            [&quot;通常表示・受け皿・単独カード&quot;, [
+              { label: &quot;sourceモードの主表示&quot;, children: [
+                &quot;大きなカード自身のカテゴリ固有情報を上部表示&quot;,
+                &quot;Tag：元表記・自由メモ&quot;,
+                &quot;Mention：@文字列・名前・電話・Web・メモ&quot;,
+                &quot;Location：場所・座標・住所・活動ID・元ファイル・記憶&quot;,
+                &quot;関連投稿を元Wikiリンクから開ける&quot;
+              ] },
+              { label: &quot;受け皿の表示順&quot;, children: [
+                &quot;先頭に大きなカード自身&quot;,
+                &quot;その後にmembers順&quot;,
+                &quot;大きなカード自身は短縮表示できる&quot;,
+                &quot;種類・カード名・上に表示中・関連投稿数を示す&quot;
+              ] },
+              { label: &quot;他の構成員&quot;, children: [
+                &quot;カテゴリ固有情報を通常表示&quot;,
+                &quot;手書き情報があれば併記&quot;,
+                &quot;関連投稿リンクを通常表示&quot;,
+                &quot;短縮は表示だけでMarkdownを削らない&quot;
+              ] },
+              { label: &quot;単独カード&quot;, children: [
+                &quot;Memory Synapseがなく他グループにも属さない&quot;,
+                &quot;受け皿を表示しない&quot;,
+                &quot;手書きボタンは使える&quot;,
+                &quot;一枚だけのmemory_synapseを作らない&quot;,
+                &quot;手書きがあれば上部、その下に元情報&quot;
+              ] }
+            ]],
+            [&quot;手書き情報・補正情報&quot;, [
+              { label: &quot;保存の考え方&quot;, children: [
+                &quot;手書きした個別カード自身へ保存&quot;,
+                &quot;## 手書き情報のmemory_synapse_note&quot;,
+                &quot;融合状態と独立して保持&quot;,
+                &quot;大きなカード変更・分離で自動削除しない&quot;
+              ] },
+              { label: &quot;入力できる情報&quot;, children: [
+                &quot;display_name・aliases&quot;,
+                &quot;name・phone・web&quot;,
+                &quot;geo.lat・geo.lng・geo.alt&quot;,
+                &quot;address.full・住所内訳&quot;,
+                &quot;note：意味・記憶・判断&quot;
+              ] },
+              { label: &quot;値の整理&quot;, children: [
+                &quot;空文字はnullへ変換&quot;,
+                &quot;複数値の空行は除去&quot;,
+                &quot;入力順を維持&quot;,
+                &quot;同じ値は一件にする&quot;
+              ] },
+              { label: &quot;保存操作&quot;, children: [
+                &quot;手書きボタンで同じカード内に全入力欄を表示&quot;,
+                &quot;保存前に入力内容と変更対象を確認&quot;,
+                &quot;確認後に同じファイルへ追加・更新&quot;,
+                &quot;キャンセルはMarkdownを変更しない&quot;
+              ] },
+              { label: &quot;handwrittenモード&quot;, children: [
+                &quot;手書き情報を上部の主表示にする&quot;,
+                &quot;閲覧時は値のある項目だけ表示&quot;,
+                &quot;元の大きなカード情報は受け皿で通常表示へ戻す&quot;,
+                &quot;通常表示へ戻しても手書き情報は削除しない&quot;
+              ] },
+              { label: &quot;補正の境界&quot;, children: [
+                &quot;人間の位置・住所補正は手書き側へ保存&quot;,
+                &quot;移行時点のLocation geo・addressは変更しない&quot;,
+                &quot;投稿Frontmatterを変更しない&quot;,
+                &quot;Instagram原本・上流output_IGCを変更しない&quot;
+              ] }
+            ]],
+            [&quot;融合の開始・候補・確認&quot;, [
+              { label: &quot;二つの操作入口&quot;, children: [
+                &quot;カードを別カードへドラッグ＆ドロップ&quot;,
+                &quot;カード内の融合へ追加から対象を選ぶ&quot;,
+                &quot;操作方向だけで大きなカードを確定しない&quot;
+              ] },
+              { label: &quot;候補集合を展開&quot;, children: [
+                &quot;単独カードならその一枚&quot;,
+                &quot;大きなカードまたは構成員なら所属全カード&quot;,
+                &quot;重複を除いた平らな一配列&quot;,
+                &quot;融合前の受け皿を入れ子で残さない&quot;
+              ] },
+              { label: &quot;大きなカードの推奨順&quot;, children: [
+                &quot;第一：Mention&quot;,
+                &quot;第二：Location&quot;,
+                &quot;第三：Tag&quot;,
+                &quot;同順位なら受け入れ側または現在の大きなカードを第一候補&quot;,
+                &quot;同順位が複数で第一候補にできなければ全て推奨・自動選択しない&quot;
+              ] },
+              { label: &quot;確認ポップアップ&quot;, children: [
+                &quot;全候補の種類とカード名&quot;,
+                &quot;現在の大きなカード&quot;,
+                &quot;推奨候補と推奨理由&quot;,
+                &quot;融合後の全構成員&quot;,
+                &quot;変更されるMarkdown&quot;,
+                &quot;人間が一枚選ぶまで融合を有効にしない&quot;
+              ] }
+            ]],
+            [&quot;融合の書込みと大きなカード変更&quot;, [
+              { label: &quot;融合書込み案&quot;, children: [
+                &quot;選択した大きなカードを集合の先頭へ&quot;,
+                &quot;残りを既存表示順のままmembersへ&quot;,
+                &quot;選択カードへMemory Synapseを追加・更新&quot;,
+                &quot;旧大きなカードからMemory Synapseだけを除く&quot;,
+                &quot;全カードの手書き・カテゴリ固有情報を維持&quot;
+              ] },
+              { label: &quot;書込み前の停止条件&quot;, children: [
+                &quot;全対象を先に検証する&quot;,
+                &quot;読込不能・リンク切れ・解析不能なら書かない&quot;,
+                &quot;多重所属があれば書かない&quot;,
+                &quot;一件でも失敗すれば全ファイルを未変更にする&quot;
+              ] },
+              { label: &quot;大きなカードの変更&quot;, children: [
+                &quot;現在の全構成員から新しい一枚を選ぶ&quot;,
+                &quot;同じ候補・推奨・確認ポップアップを使う&quot;,
+                &quot;Memory Synapse見出しを新カードへ移す&quot;,
+                &quot;旧カードの手書き情報は削除しない&quot;
+              ] },
+              { label: &quot;変更後の表示モード&quot;, children: [
+                &quot;新大きなカードに手書きがあれば主表示を選択&quot;,
+                &quot;元の個別カード情報か手書き情報&quot;,
+                &quot;手書きがなければsource固定&quot;
+              ] }
+            ]],
+            [&quot;分離・解体・関係の組み直し&quot;, [
+              { label: &quot;通常構成員を一枚分離&quot;, children: [
+                &quot;受け皿のこのカードを分離から開始&quot;,
+                &quot;確認後に対象Wikiリンクだけをmembersから除く&quot;,
+                &quot;分離カードのファイル内容は変更しない&quot;,
+                &quot;二枚以上残れば現在の大きなカードを維持&quot;
+              ] },
+              { label: &quot;大きなカード自身を分離&quot;, children: [
+                &quot;大きなカードも通常の分離対象&quot;,
+                &quot;残る全構成員を表示&quot;,
+                &quot;二枚以上残るなら次の大きなカードを人間が選ぶ&quot;,
+                &quot;推奨規則は融合時と同じ&quot;,
+                &quot;旧大きなカードの固有情報・手書きを維持&quot;
+              ] },
+              { label: &quot;一枚だけ残る場合&quot;, children: [
+                &quot;残った一枚を単独カードへ戻す&quot;,
+                &quot;Memory Synapseを残さない&quot;,
+                &quot;新しい大きなカードを選ばせない&quot;,
+                &quot;空の受け皿を残さない&quot;
+              ] },
+              { label: &quot;融合全体を解体&quot;, children: [
+                &quot;全構成員と影響を表示&quot;,
+                &quot;確認後に大きなカードのMemory Synapseだけを除く&quot;,
+                &quot;全カードの固有情報・関連投稿・手書きを維持&quot;
+              ] }
+            ]],
+            [&quot;操作単位・失敗・取消・復旧&quot;, [
+              { label: &quot;一回として扱う操作&quot;, children: [
+                &quot;融合&quot;,
+                &quot;大きなカード変更&quot;,
+                &quot;一枚の分離&quot;,
+                &quot;融合全体の解体&quot;,
+                &quot;手書き保存&quot;,
+                &quot;表示モード変更&quot;
+              ] },
+              { label: &quot;操作前検証&quot;, children: [
+                &quot;対象ファイルが存在し読める&quot;,
+                &quot;管理対象YAMLを解析できる&quot;,
+                &quot;リンクを一意に解決できる&quot;,
+                &quot;多重所属・入れ子がない&quot;,
+                &quot;読み取り後に別操作で変更されていない&quot;
+              ] },
+              { label: &quot;ローカル操作履歴&quot;, children: [
+                &quot;Vault相対パス&quot;,
+                &quot;操作前後の管理対象見出し&quot;,
+                &quot;操作日時・操作種類&quot;,
+                &quot;操作前後の内容照合値&quot;,
+                &quot;直近100操作を保持&quot;,
+                &quot;知識関係の正本・Git管理・外部送信には使わない&quot;
+              ] },
+              { label: &quot;途中失敗のロールバック&quot;, children: [
+                &quot;書込み済み管理対象見出しを操作前へ戻す&quot;,
+                &quot;復旧失敗を成功表示しない&quot;,
+                &quot;変更済み・未変更・復旧失敗を分けて表示&quot;
+              ] },
+              { label: &quot;直前操作を元に戻す&quot;, children: [
+                &quot;最後に成功したMemory Synapse DB操作が対象&quot;,
+                &quot;現在内容が履歴の操作後内容と一致する場合だけ実行&quot;,
+                &quot;人間や別処理の編集があれば上書きしない&quot;,
+                &quot;差分を表示して取消を中止&quot;
+              ] }
+            ]],
+            [&quot;ブラウザー確認で判断すること&quot;, [
+              { label: &quot;三つの画面領域&quot;, children: [
+                &quot;カード一覧&quot;,
+                &quot;選択中の大きなカードと受け皿&quot;,
+                &quot;確認ポップアップまたは手書き入力欄&quot;
+              ] },
+              { label: &quot;必須操作&quot;, children: [
+                &quot;ドラッグ＆ドロップ・融合へ追加&quot;,
+                &quot;大きなカード選択・変更&quot;,
+                &quot;手書き・通常表示へ戻す&quot;,
+                &quot;一枚分離・全体解体&quot;,
+                &quot;元に戻す・初期状態へ戻す&quot;
+              ] },
+              { label: &quot;融合の確認ケース&quot;, children: [
+                &quot;Mention＋Location：Mention推奨・変更可能&quot;,
+                &quot;Location＋Tag：Location推奨&quot;,
+                &quot;Tag同士・Mention同士：受入側推奨・変更可能&quot;,
+                &quot;四枚融合：全四枚を一つの受け皿へ&quot;,
+                &quot;大きなカード同士：入れ子にしない&quot;
+              ] },
+              { label: &quot;表示・分離・安全の確認ケース&quot;, children: [
+                &quot;通常表示と短縮表示&quot;,
+                &quot;手書き表示と元情報の通常表示&quot;,
+                &quot;通常構成員・大きなカード自身の分離&quot;,
+                &quot;一枚残しで融合状態を終了&quot;,
+                &quot;元に戻す・キャンセル&quot;,
+                &quot;多重所属を実行せず理由を表示&quot;
+              ] },
+              { label: &quot;画面上でオーナーが判断する観点&quot;, children: [
+                &quot;操作の意味が分かるか&quot;,
+                &quot;変更対象が分かるか&quot;,
+                &quot;融合後の全構成員が分かるか&quot;,
+                &quot;推奨と人間の最終選択を区別できるか&quot;,
+                &quot;失敗理由と戻り方が分かるか&quot;
+              ] }
+            ]],
+            [&quot;Obsidian正式実装と実物検証&quot;, [
+              { label: &quot;実装条件&quot;, children: [
+                &quot;TypeScriptで実装&quot;,
+                &quot;macOS・iMac M4のデスクトップ版Obsidian&quot;,
+                &quot;Vault読込・Markdown変更・リンク生成を使用&quot;,
+                &quot;Pythonサーバーを必須にしない&quot;,
+                &quot;外部ネットワークへ自動接続しない&quot;
+              ] },
+              { label: &quot;起動時と変更時の索引&quot;, children: [
+                &quot;カードパスからカード種類&quot;,
+                &quot;大きなカードから全構成員&quot;,
+                &quot;構成員から所属大きなカード&quot;,
+                &quot;Wikiリンクから解決先&quot;,
+                &quot;作成・変更・改名・移動・削除時に更新&quot;
+              ] },
+              { label: &quot;Markdown更新条件&quot;, children: [
+                &quot;管理対象見出し以外を変更しない&quot;,
+                &quot;Frontmatter・固有YAML・関連投稿・未知本文を維持&quot;,
+                &quot;UTF-8 BOMなし&quot;,
+                &quot;既存の改行コードを維持&quot;,
+                &quot;リンク切れや不正状態を自動修復しない&quot;
+              ] },
+              { label: &quot;最初の実物検証環境&quot;, children: [
+                &quot;実Vaultの複製または専用検証Vault&quot;,
+                &quot;日常利用Vaultへ直接導入しない&quot;,
+                &quot;ブラウザー全操作をObsidianで再現&quot;,
+                &quot;MarkdownとWikiリンクの実物を確認&quot;
+              ] },
+              { label: &quot;完成判定&quot;, children: [
+                &quot;個別ファイル・フォルダーが変わらない&quot;,
+                &quot;融合専用カードが生成されない&quot;,
+                &quot;固有情報・関連投稿・Frontmatterが一致&quot;,
+                &quot;大きなカード同士でも入れ子にならない&quot;,
+                &quot;分離・解体・取消後も全情報が残る&quot;,
+                &quot;プラグイン停止中もMarkdownから主要関係を読める&quot;,
+                &quot;外部通信がない&quot;
+              ] }
+            ]],
+            [&quot;工程の停止点と戻り道&quot;, [
+              { label: &quot;ブラウザー確認まで&quot;, children: [
+                &quot;現仕様で確認画面を作る&quot;,
+                &quot;検証用カードで画面と操作を確認&quot;,
+                &quot;実Vault・output_IGCは変更しない&quot;
+              ] },
+              { label: &quot;意味が変わる場合の戻り道&quot;, children: [
+                &quot;画面確認で設計上の意味が変わるなら仕様へ進めない&quot;,
+                &quot;専用設計へ戻る&quot;,
+                &quot;オーナーが設計変更を確認・承認する&quot;,
+                &quot;必要な仕様変更を再承認する&quot;
+              ] },
+              { label: &quot;正式プラグインへの進行条件&quot;, children: [
+                &quot;ブラウザー確認結果を反映&quot;,
+                &quot;必要な仕様変更を承認&quot;,
+                &quot;書込み可能な正式実装を別停止点として開始&quot;
+              ] },
+              { label: &quot;完成できない場合&quot;, children: [
+                &quot;実物検証が一項目でも不成立なら完成としない&quot;,
+                &quot;仕様と実装のどちらが原因か自動決定しない&quot;,
+                &quot;確認済み事実・影響・変更候補を分ける&quot;,
+                &quot;該当工程へ戻って再確認する&quot;
+              ] }
+            ]],
+            [&quot;現在の対象外・将来判断&quot;, [
+              { label: &quot;現在は実装しない&quot;, children: [
+                &quot;AIによる意味同一性の自動確定&quot;,
+                &quot;人間確認なしの自動融合・自動分離&quot;,
+                &quot;未確定候補を長期保存する常設作業台&quot;,
+                &quot;複数の大きなカードへの同時所属&quot;,
+                &quot;受け皿の入れ子&quot;,
+                &quot;実データを使うブラウザー確認&quot;
+              ] },
+              { label: &quot;現在の完走条件へ加えない&quot;, children: [
+                &quot;Instagram以外の情報源&quot;,
+                &quot;IGX&quot;,
+                &quot;外部AI送信機能&quot;,
+                &quot;投稿Frontmatterへの位置情報同期&quot;
+              ] },
+              { label: &quot;将来検討する方向&quot;, children: [
+                &quot;Facebook・GPS・YouTube・学習・メモ・ライフログ&quot;,
+                &quot;AIによる関連候補・表記揺れ・検索支援&quot;,
+                &quot;人物・場所・出来事・作品・学習の知識ネットワーク&quot;,
+                &quot;外部AI利用時の送信対象・目的・確認画面・送信しない選択&quot;
+              ] },
+              { label: &quot;将来も維持する原則&quot;, children: [
+                &quot;意味関係の最終決定は人間&quot;,
+                &quot;知識の正本はローカルMarkdown&quot;,
+                &quot;原本と加工成果物を区別&quot;,
+                &quot;特定AI・特定プラグインへ依存しない&quot;,
+                &quot;オーナーが理解し続けられる&quot;
+              ] }
+            ]]
+          ]
+        }
+      };
+
+      const masterItems = [
+        [&quot;readme&quot;, &quot;README.md&quot;, &quot;理解・原則・読み方・現在地・参加案内&quot;],
+        [&quot;plan&quot;, &quot;01_IG移行企画書v1.0.md&quot;, &quot;必要性・目的・完走点・原則・文書・未来&quot;],
+        [&quot;design&quot;, &quot;02_IG移行設計書&quot;, &quot;目的・責任・データ・変換・意味・保全&quot;],
+        [&quot;spec&quot;, &quot;04_IG移行仕様書&quot;, &quot;共通契約・個別処理・Synapse・運用条件&quot;],
+        [&quot;rules&quot;, &quot;AGENTS.md ＋ docs&quot;, &quot;判断・工程・承認・保全の関係&quot;],
+        [&quot;igc&quot;, &quot;09_IGC統合&quot;, &quot;完全一致統合・検証・安全置換・10への判断境界&quot;],
+        [&quot;memory&quot;, &quot;10_Memory_Synapse_DB&quot;, &quot;知識モデル・人間判断・操作・復旧・完走条件&quot;]
+      ];
+
+      const NODE_WIDTH = 220;
+      const NODE_HEIGHT = 78;
+      const MAIN_Y = 1250;
+      const DETAIL_Y = 1610;
+      const DETAIL_LEVEL_GAP = 205;
+      const DETAIL_NODE_GAP = 28;
+      const transform = { x: 0, y: 0, scale: 0.82 };
+      const layout = { width: 3080, height: MAIN_Y + 380 };
+      const detailExpanded = new Set();
+      const detailPositions = new Map();
+      const openStageIds = [];
+      let activeStageId = null;
+
+      const stages = [
+        { id: &quot;readme&quot;, label: &quot;README&quot;, note: &quot;入口・全体の読み方&quot;, x: 70, y: MAIN_Y, kind: &quot;entry&quot;, viewId: &quot;readme&quot;, series: 1 },
+        { id: &quot;idea&quot;, label: &quot;一つのアイデア&quot;, note: &quot;個人の文脈を第二の脳へ&quot;, x: 345, y: MAIN_Y, kind: &quot;idea&quot;, series: 1 },
+        { id: &quot;plan&quot;, label: &quot;01 企画&quot;, note: &quot;目的・理由・完走点&quot;, x: 620, y: MAIN_Y, kind: &quot;stage&quot;, viewId: &quot;plan&quot;, series: 2 },
+        { id: &quot;design&quot;, label: &quot;02 設計&quot;, note: &quot;構造・責任・境界&quot;, x: 895, y: MAIN_Y, kind: &quot;stage&quot;, viewId: &quot;design&quot;, series: 3 },
+        { id: &quot;spec&quot;, label: &quot;04 仕様&quot;, note: &quot;実装可能な条件へ&quot;, x: 1170, y: MAIN_Y, kind: &quot;stage&quot;, viewId: &quot;spec&quot;, series: 4 },
+        { id: &quot;igp&quot;, label: &quot;05 IGP&quot;, note: &quot;通常投稿&quot;, x: 1465, y: MAIN_Y - 140, kind: &quot;parallel&quot;, series: 3 },
+        { id: &quot;igr&quot;, label: &quot;06 IGR&quot;, note: &quot;リール&quot;, x: 1465, y: MAIN_Y - 40, kind: &quot;parallel&quot;, series: 3 },
+        { id: &quot;igs&quot;, label: &quot;07 IGS&quot;, note: &quot;ストーリー&quot;, x: 1465, y: MAIN_Y + 60, kind: &quot;parallel&quot;, series: 3 },
+        { id: &quot;igx&quot;, label: &quot;08 IGX&quot;, note: &quot;現在の完走条件から除外&quot;, x: 1465, y: MAIN_Y + 195, kind: &quot;excluded&quot;, series: 6 },
+        { id: &quot;igc&quot;, label: &quot;09 IGC統合&quot;, note: &quot;05・06・07を集約&quot;, x: 1760, y: MAIN_Y - 40, kind: &quot;stage&quot;, viewId: &quot;igc&quot;, series: 5 },
+        { id: &quot;import&quot;, label: &quot;Obsidianへ導入&quot;, note: &quot;オーナーが行う工程&quot;, x: 2055, y: MAIN_Y - 40, kind: &quot;owner&quot;, series: 4 },
+        { id: &quot;memory&quot;, label: &quot;10 Memory Synapse DB&quot;, note: &quot;知識を融合・分離・成長&quot;, x: 2350, y: MAIN_Y - 40, kind: &quot;stage&quot;, viewId: &quot;memory&quot;, series: 6 },
+        { id: &quot;goal&quot;, label: &quot;Obsidianで育てる第二の脳&quot;, note: &quot;人間とAIが理解できる知識基盤&quot;, x: 2645, y: MAIN_Y - 40, kind: &quot;goal&quot;, series: 1 },
+        { id: &quot;rules&quot;, label: &quot;AGENTS.md ＋ docs&quot;, note: &quot;全工程の判断・承認・停止条件&quot;, x: 620, y: MAIN_Y - 260, kind: &quot;guard&quot;, viewId: &quot;rules&quot;, series: 5 }
+      ];
+
+      const stageById = new Map(stages.map((stage) =&gt; [stage.id, stage]));
+      const flowEdges = [
+        [&quot;readme&quot;, &quot;idea&quot;, &quot;flow&quot;],
+        [&quot;idea&quot;, &quot;plan&quot;, &quot;flow&quot;],
+        [&quot;plan&quot;, &quot;design&quot;, &quot;flow&quot;],
+        [&quot;design&quot;, &quot;spec&quot;, &quot;flow&quot;],
+        [&quot;spec&quot;, &quot;igp&quot;, &quot;flow&quot;],
+        [&quot;spec&quot;, &quot;igr&quot;, &quot;flow&quot;],
+        [&quot;spec&quot;, &quot;igs&quot;, &quot;flow&quot;],
+        [&quot;spec&quot;, &quot;igx&quot;, &quot;excluded&quot;],
+        [&quot;igp&quot;, &quot;igc&quot;, &quot;flow&quot;],
+        [&quot;igr&quot;, &quot;igc&quot;, &quot;flow&quot;],
+        [&quot;igs&quot;, &quot;igc&quot;, &quot;flow&quot;],
+        [&quot;igc&quot;, &quot;import&quot;, &quot;flow&quot;],
+        [&quot;import&quot;, &quot;memory&quot;, &quot;flow&quot;],
+        [&quot;memory&quot;, &quot;goal&quot;, &quot;flow&quot;]
+      ];
+
+      function semanticChildren(nodes, path, series, stageId) {
+        return nodes.map((node, index) =&gt; {
+          const id = `${path}-${index}`;
+          if (typeof node === &quot;string&quot;) {
+            return { id, label: node, children: [], series, stageId };
+          }
+          return {
+            id,
+            label: node.label,
+            children: semanticChildren(node.children, id, series, stageId),
+            series,
+            stageId
+          };
+        });
+      }
+
+      function buildDetailForest(viewId, series, stageId) {
+        return views[viewId].branches.map(([label, children], index) =&gt; {
+          const id = `detail-${viewId}-${index}`;
+          return {
+            id,
+            label,
+            children: semanticChildren(children, id, series, stageId),
+            series,
+            stageId
+          };
+        });
+      }
+
+      function visibleDetailChildren(node) {
+        return detailExpanded.has(node.id) ? node.children : [];
+      }
+
+      function measureDetail(node) {
+        const children = visibleDetailChildren(node);
+        if (!children.length) {
+          node.span = NODE_WIDTH;
+          return node.span;
+        }
+        const span = children.reduce((sum, child, index) =&gt; {
+          return sum + measureDetail(child) + (index ? DETAIL_NODE_GAP : 0);
+        }, 0);
+        node.span = Math.max(NODE_WIDTH, span);
+        return node.span;
+      }
+
+      function placeDetail(node, left, depth, baseY, direction = &quot;down&quot;) {
+        const children = visibleDetailChildren(node);
+        let x = left;
+        if (children.length) {
+          let cursor = left;
+          children.forEach((child, index) =&gt; {
+            if (index) cursor += DETAIL_NODE_GAP;
+            placeDetail(child, cursor, depth + 1, baseY, direction);
+            cursor += child.span;
+          });
+          const first = detailPositions.get(children[0].id);
+          const last = detailPositions.get(children[children.length - 1].id);
+          x = (first.x + last.x + NODE_WIDTH) / 2 - NODE_WIDTH / 2;
+        }
+        detailPositions.set(node.id, {
+          x,
+          y: direction === &quot;up&quot;
+            ? baseY - depth * DETAIL_LEVEL_GAP
+            : baseY + depth * DETAIL_LEVEL_GAP,
+          depth: depth + 2,
+          stageId: node.stageId,
+          direction
+        });
+      }
+
+      function calculateDetails() {
+        detailPositions.clear();
+        if (!openStageIds.length) {
+          layout.width = 3080;
+          layout.height = MAIN_Y + 380;
+          return [];
+        }
+        const bands = [];
+        let bandTop = DETAIL_Y;
+        let maxRight = 0;
+        const ruleOpen = openStageIds.includes(&quot;rules&quot;);
+        const downwardStageIds = openStageIds.filter((stageId) =&gt; stageId !== &quot;rules&quot;);
+
+        if (ruleOpen) {
+          const stage = stageById.get(&quot;rules&quot;);
+          const forest = buildDetailForest(stage.viewId, stage.series, stage.id);
+          let total = 0;
+          forest.forEach((node, index) =&gt; {
+            total += measureDetail(node) + (index ? DETAIL_NODE_GAP : 0);
+          });
+          let cursor = Math.max(60, stage.x + NODE_WIDTH / 2 - total / 2);
+          const branchY = 700;
+          forest.forEach((node, index) =&gt; {
+            if (index) cursor += DETAIL_NODE_GAP;
+            placeDetail(node, cursor, 0, branchY, &quot;up&quot;);
+            cursor += node.span;
+          });
+          const stack = [...forest];
+          while (stack.length) {
+            const node = stack.pop();
+            const position = detailPositions.get(node.id);
+            if (position) maxRight = Math.max(maxRight, position.x + NODE_WIDTH);
+            stack.push(...visibleDetailChildren(node));
+          }
+          bands.push({
+            stage,
+            forest,
+            direction: &quot;up&quot;,
+            busY: 820,
+            departureY: 900,
+            corridorX: 38,
+            labelY: 790
+          });
+        }
+
+        downwardStageIds.forEach((stageId, bandIndex) =&gt; {
+          const stage = stageById.get(stageId);
+          const forest = buildDetailForest(stage.viewId, stage.series, stage.id);
+          let total = 0;
+          forest.forEach((node, index) =&gt; {
+            total += measureDetail(node) + (index ? DETAIL_NODE_GAP : 0);
+          });
+          let cursor = Math.max(60, stage.x + NODE_WIDTH / 2 - total / 2);
+          const branchY = bandTop + 105;
+          forest.forEach((node, index) =&gt; {
+            if (index) cursor += DETAIL_NODE_GAP;
+            placeDetail(node, cursor, 0, branchY, &quot;down&quot;);
+            cursor += node.span;
+          });
+          let bandMaxDepth = 0;
+          const stack = [...forest];
+          while (stack.length) {
+            const node = stack.pop();
+            const position = detailPositions.get(node.id);
+            if (position) {
+              bandMaxDepth = Math.max(bandMaxDepth, position.depth - 2);
+              maxRight = Math.max(maxRight, position.x + NODE_WIDTH);
+            }
+            stack.push(...visibleDetailChildren(node));
+          }
+          const busY = bandTop + 45;
+          const departureY = MAIN_Y + 295 + bandIndex * 18;
+          const corridorX = 38 + bandIndex * 22;
+          bands.push({
+            stage,
+            forest,
+            direction: &quot;down&quot;,
+            busY,
+            departureY,
+            corridorX,
+            labelY: bandTop + 5
+          });
+          bandTop = branchY + bandMaxDepth * DETAIL_LEVEL_GAP + NODE_HEIGHT + 175;
+        });
+        layout.width = Math.max(3080, maxRight + 80);
+        layout.height = Math.max(MAIN_Y + 380, bandTop + 60);
+        return bands;
+      }
+
+      function applyTransform() {
+        world.style.transform = `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale})`;
+      }
+
+      function setScale(nextScale, centerX, centerY) {
+        const clamped = Math.min(1.45, Math.max(0.2, nextScale));
+        const worldX = (centerX - transform.x) / transform.scale;
+        const worldY = (centerY - transform.y) / transform.scale;
+        transform.x = centerX - worldX * clamped;
+        transform.y = centerY - worldY * clamped;
+        transform.scale = clamped;
+        applyTransform();
+      }
+
+      function fitAll() {
+        const rect = viewport.getBoundingClientRect();
+        const scaleX = (rect.width - 48) / layout.width;
+        const scaleY = (rect.height - 48) / layout.height;
+        transform.scale = Math.min(0.9, Math.max(0.2, Math.min(scaleX, scaleY)));
+        transform.x = (rect.width - layout.width * transform.scale) / 2;
+        transform.y = (rect.height - layout.height * transform.scale) / 2;
+        applyTransform();
+      }
+
+      function focusEntry() {
+        const rect = viewport.getBoundingClientRect();
+        transform.scale = Math.min(0.9, Math.max(0.68, rect.width / 1050));
+        transform.x = 34 - 70 * transform.scale;
+        transform.y = rect.height * 0.46 - MAIN_Y * transform.scale;
+        applyTransform();
+      }
+
+      function focusStage(stage) {
+        const rect = viewport.getBoundingClientRect();
+        transform.scale = Math.max(transform.scale, 0.68);
+        transform.x = rect.width * 0.26 - (stage.x + NODE_WIDTH / 2) * transform.scale;
+        transform.y = rect.height * 0.24 - stage.y * transform.scale;
+        applyTransform();
+      }
+
+      function focusDetailNode(id) {
+        const position = detailPositions.get(id);
+        if (!position) return;
+        const rect = viewport.getBoundingClientRect();
+        transform.scale = Math.max(transform.scale, 0.68);
+        transform.x = rect.width * 0.5 - (position.x + NODE_WIDTH / 2) * transform.scale;
+        transform.y = rect.height * 0.46 - position.y * transform.scale;
+        applyTransform();
+      }
+
+      function appendArrowDefinition() {
+        const defs = document.createElementNS(&quot;http://www.w3.org/2000/svg&quot;, &quot;defs&quot;);
+        const marker = document.createElementNS(&quot;http://www.w3.org/2000/svg&quot;, &quot;marker&quot;);
+        marker.setAttribute(&quot;id&quot;, &quot;journey-arrow&quot;);
+        marker.setAttribute(&quot;viewBox&quot;, &quot;0 0 10 10&quot;);
+        marker.setAttribute(&quot;refX&quot;, &quot;9&quot;);
+        marker.setAttribute(&quot;refY&quot;, &quot;5&quot;);
+        marker.setAttribute(&quot;markerWidth&quot;, &quot;6&quot;);
+        marker.setAttribute(&quot;markerHeight&quot;, &quot;6&quot;);
+        marker.setAttribute(&quot;orient&quot;, &quot;auto-start-reverse&quot;);
+        const arrow = document.createElementNS(&quot;http://www.w3.org/2000/svg&quot;, &quot;path&quot;);
+        arrow.setAttribute(&quot;d&quot;, &quot;M 0 0 L 10 5 L 0 10 z&quot;);
+        arrow.setAttribute(&quot;fill&quot;, &quot;var(--foreground)&quot;);
+        marker.append(arrow);
+        defs.append(marker);
+        lines.append(defs);
+      }
+
+      function appendPath(d, series, kind, arrow = false) {
+        const path = document.createElementNS(&quot;http://www.w3.org/2000/svg&quot;, &quot;path&quot;);
+        path.classList.add(&quot;mind-line&quot;);
+        path.dataset.series = String(series);
+        path.dataset.lineKind = kind;
+        path.setAttribute(&quot;d&quot;, d);
+        if (arrow &amp;&amp; kind === &quot;flow&quot;) path.setAttribute(&quot;marker-end&quot;, &quot;url(#journey-arrow)&quot;);
+        lines.append(path);
+      }
+
+      function horizontalPath(from, to) {
+        const x1 = from.x + NODE_WIDTH;
+        const y1 = from.y;
+        const x2 = to.x;
+        const y2 = to.y;
+        const middle = x1 + (x2 - x1) * 0.5;
+        return `M ${x1} ${y1} C ${middle} ${y1}, ${middle} ${y2}, ${x2} ${y2}`;
+      }
+
+      function verticalPath(x1, y1, x2, y2) {
+        const middle = y1 + (y2 - y1) * 0.5;
+        return `M ${x1} ${y1} C ${x1} ${middle}, ${x2} ${middle}, ${x2} ${y2}`;
+      }
+
+      function createLabel(text, x, y, className = &quot;journey-label text-small&quot;) {
+        const label = document.createElement(&quot;span&quot;);
+        label.className = className;
+        label.textContent = text;
+        label.style.left = `${x}px`;
+        label.style.top = `${y}px`;
+        nodesHost.append(label);
+      }
+
+      function createNode({ id, label, note = &quot;&quot;, x, y, kind = &quot;detail&quot;, series = 1, depth = 1, hasChildren = false, expanded = false, active = false, onClick }) {
+        const button = document.createElement(&quot;button&quot;);
+        button.type = &quot;button&quot;;
+        button.className = &quot;mind-node&quot;;
+        if (active) button.classList.add(&quot;is-active&quot;);
+        button.dataset.nodeId = id;
+        button.dataset.kind = kind;
+        button.dataset.series = String(series);
+        button.dataset.depth = String(depth);
+        button.style.left = `${x}px`;
+        button.style.top = `${y - NODE_HEIGHT / 2}px`;
+        button.style.width = `${kind === &quot;goal&quot; || kind === &quot;guard&quot; ? 270 : NODE_WIDTH}px`;
+
+        const labelWrap = document.createElement(&quot;span&quot;);
+        labelWrap.className = &quot;mind-node-label&quot;;
+        const title = document.createElement(&quot;span&quot;);
+        title.className = &quot;mind-node-title&quot;;
+        title.textContent = label;
+        labelWrap.append(title);
+        if (note) {
+          const noteNode = document.createElement(&quot;span&quot;);
+          noteNode.className = &quot;mind-node-note text-small&quot;;
+          noteNode.textContent = note;
+          labelWrap.append(noteNode);
+        }
+
+        const marker = document.createElement(&quot;span&quot;);
+        marker.className = &quot;mind-node-marker&quot;;
+        marker.setAttribute(&quot;aria-hidden&quot;, &quot;true&quot;);
+        if (hasChildren) {
+          marker.textContent = &quot;›&quot;;
+          button.setAttribute(&quot;aria-expanded&quot;, String(expanded));
+        } else {
+          marker.textContent = &quot;•&quot;;
+          marker.classList.add(&quot;mind-empty-marker&quot;);
+        }
+        button.append(labelWrap, marker);
+        if (onClick) button.addEventListener(&quot;click&quot;, onClick);
+        nodesHost.append(button);
+      }
+
+      function renderStage(stage) {
+        const hasDetails = Boolean(stage.viewId);
+        const isOpen = openStageIds.includes(stage.id);
+        createNode({
+          ...stage,
+          depth: 1,
+          hasChildren: hasDetails,
+          expanded: isOpen,
+          active: activeStageId === stage.id,
+          onClick: (event) =&gt; {
+            event.stopPropagation();
+            if (hasDetails) {
+              const openIndex = openStageIds.indexOf(stage.id);
+              if (openIndex &gt;= 0) {
+                openStageIds.splice(openIndex, 1);
+                activeStageId = null;
+                crumb.textContent = &quot;READMEから第二の脳までの横軸&quot;;
+              } else {
+                openStageIds.push(stage.id);
+                activeStageId = stage.id;
+                crumb.textContent = `横軸 › ${stage.label} › 詳細`;
+              }
+              render();
+              if (openIndex &gt;= 0) focusStage(stage);
+              else focusDetailNode(`detail-${stage.viewId}-0`);
+            } else {
+              activeStageId = stage.id;
+              crumb.textContent = `横軸 › ${stage.label}`;
+              render();
+              focusStage(stage);
+            }
+          }
+        });
+      }
+
+      function renderDetailNode(node) {
+        const position = detailPositions.get(node.id);
+        const children = visibleDetailChildren(node);
+        createNode({
+          id: node.id,
+          label: node.label,
+          x: position.x,
+          y: position.y,
+          kind: &quot;detail&quot;,
+          series: node.series,
+          depth: position.depth,
+          hasChildren: node.children.length &gt; 0,
+          expanded: detailExpanded.has(node.id),
+          onClick: node.children.length ? (event) =&gt; {
+            event.stopPropagation();
+            if (detailExpanded.has(node.id)) {
+              const stack = [...node.children];
+              while (stack.length) {
+                const child = stack.pop();
+                detailExpanded.delete(child.id);
+                stack.push(...child.children);
+              }
+              detailExpanded.delete(node.id);
+            } else {
+              detailExpanded.add(node.id);
+            }
+            activeStageId = node.stageId;
+            crumb.textContent = `横軸 › ${stageById.get(node.stageId).label} › ${node.label}`;
+            render();
+            focusDetailNode(node.id);
+          } : null
+        });
+        children.forEach((child) =&gt; {
+          const childPosition = detailPositions.get(child.id);
+          const isUpward = childPosition.direction === &quot;up&quot;;
+          appendPath(
+            verticalPath(
+              position.x + NODE_WIDTH / 2,
+              position.y + (isUpward ? -NODE_HEIGHT / 2 : NODE_HEIGHT / 2),
+              childPosition.x + NODE_WIDTH / 2,
+              childPosition.y + (isUpward ? NODE_HEIGHT / 2 : -NODE_HEIGHT / 2)
+            ),
+            child.series,
+            &quot;detail&quot;
+          );
+          renderDetailNode(child);
+        });
+      }
+
+      function renderGuardrail() {
+        const rules = stageById.get(&quot;rules&quot;);
+        const memory = stageById.get(&quot;memory&quot;);
+        const guardY = MAIN_Y - 205;
+        const guardEndX = memory.x + NODE_WIDTH / 2;
+        appendPath(
+          `M ${rules.x + 135} ${rules.y + NODE_HEIGHT / 2} L ${rules.x + 135} ${guardY} L ${guardEndX} ${guardY}`,
+          rules.series,
+          &quot;guard&quot;
+        );
+        [&quot;plan&quot;, &quot;design&quot;, &quot;spec&quot;, &quot;igc&quot;, &quot;import&quot;, &quot;memory&quot;].forEach((id) =&gt; {
+          const stage = stageById.get(id);
+          const centerX = stage.x + NODE_WIDTH / 2;
+          appendPath(`M ${centerX} ${guardY - 4} L ${centerX} ${stage.y - NODE_HEIGHT / 2 + 6}`, rules.series, &quot;guard&quot;);
+        });
+        createLabel(&quot;企画から10の完走確認までを支える判断・承認・停止条件&quot;, 940, guardY - 33);
+      }
+
+      function render() {
+        const bands = calculateDetails();
+        nodesHost.replaceChildren();
+        lines.replaceChildren();
+        world.style.width = `${layout.width}px`;
+        world.style.height = `${layout.height}px`;
+        lines.setAttribute(&quot;width&quot;, String(layout.width));
+        lines.setAttribute(&quot;height&quot;, String(layout.height));
+        lines.setAttribute(&quot;viewBox&quot;, `0 0 ${layout.width} ${layout.height}`);
+        appendArrowDefinition();
+
+        flowEdges.forEach(([fromId, toId, kind]) =&gt; {
+          const from = stageById.get(fromId);
+          const to = stageById.get(toId);
+          appendPath(horizontalPath(from, to), to.series, kind, true);
+        });
+        renderGuardrail();
+
+        createLabel(&quot;プロジェクトの構想から第二の脳へ進む主軸&quot;, 350, MAIN_Y - 85);
+        createLabel(&quot;並列実行&quot;, 1515, MAIN_Y - 200);
+        createLabel(&quot;現在の完走条件には含めない&quot;, 1435, MAIN_Y + 255, &quot;journey-stage-note text-small&quot;);
+        stages.forEach(renderStage);
+
+        bands.forEach(({ stage, forest, direction, busY, departureY, corridorX, labelY }) =&gt; {
+          forest.forEach((node) =&gt; {
+            const position = detailPositions.get(node.id);
+            const stageCenterX = stage.x + NODE_WIDTH / 2;
+            const rootCenterX = position.x + NODE_WIDTH / 2;
+            const isUpward = direction === &quot;up&quot;;
+            const stageEdgeY = stage.y + (isUpward ? -NODE_HEIGHT / 2 : NODE_HEIGHT / 2);
+            const rootEdgeY = position.y + (isUpward ? NODE_HEIGHT / 2 : -NODE_HEIGHT / 2);
+            appendPath(
+              `M ${stageCenterX} ${stageEdgeY} L ${stageCenterX} ${departureY} L ${corridorX} ${departureY} L ${corridorX} ${busY} L ${rootCenterX} ${busY} L ${rootCenterX} ${rootEdgeY}`,
+              node.series,
+              &quot;detail&quot;
+            );
+            renderDetailNode(node);
+          });
+          createLabel(`${stage.label}の詳細構造`, Math.max(60, stage.x - 20), labelY);
+        });
+      }
+
+      const V_NODE_WIDTH = 238;
+      const V_STAGE_WIDTH = 252;
+      const V_GUARD_WIDTH = 270;
+      const V_NODE_HEIGHT = 78;
+      const V_SPINE_X = 2300;
+      const V_DETAIL_X_GAP = 310;
+      const V_DETAIL_Y_GAP = 26;
+      const V_ROW_GAP = 72;
+      const V_CLOSED_ROW_HEIGHT = 152;
+      const verticalDetailLayouts = [];
+
+      const verticalRows = [
+        [&quot;readme&quot;],
+        [&quot;idea&quot;],
+        [&quot;plan&quot;],
+        [&quot;design&quot;],
+        [&quot;spec&quot;],
+        [&quot;igp&quot;, &quot;igr&quot;, &quot;igs&quot;, &quot;igx&quot;],
+        [&quot;igc&quot;],
+        [&quot;import&quot;],
+        [&quot;memory&quot;],
+        [&quot;goal&quot;]
+      ];
+
+      function verticalNodeWidth(node) {
+        if (node.kind === &quot;guard&quot;) return V_GUARD_WIDTH;
+        if (node.kind === &quot;detail&quot;) return V_NODE_WIDTH;
+        return node.kind === &quot;goal&quot; ? V_GUARD_WIDTH : V_STAGE_WIDTH;
+      }
+
+      function measureVerticalDetail(node) {
+        const children = visibleDetailChildren(node);
+        if (!children.length) {
+          node.verticalSpan = V_NODE_HEIGHT;
+          return node.verticalSpan;
+        }
+        const childrenSpan = children.reduce((sum, child, index) =&gt; {
+          return sum + measureVerticalDetail(child) + (index ? V_DETAIL_Y_GAP : 0);
+        }, 0);
+        node.verticalSpan = Math.max(V_NODE_HEIGHT, childrenSpan);
+        return node.verticalSpan;
+      }
+
+      function measureVerticalForest(forest) {
+        return forest.reduce((sum, node, index) =&gt; {
+          return sum + measureVerticalDetail(node) + (index ? V_DETAIL_Y_GAP : 0);
+        }, 0);
+      }
+
+      function placeVerticalDetail(node, top, depth, rootX, direction) {
+        const children = visibleDetailChildren(node);
+        if (children.length) {
+          let cursor = top;
+          children.forEach((child, index) =&gt; {
+            if (index) cursor += V_DETAIL_Y_GAP;
+            placeVerticalDetail(child, cursor, depth + 1, rootX, direction);
+            cursor += child.verticalSpan;
+          });
+        }
+        let y = top + node.verticalSpan / 2;
+        if (children.length) {
+          const first = detailPositions.get(children[0].id);
+          const last = detailPositions.get(children[children.length - 1].id);
+          y = (first.y + last.y) / 2;
+        }
+        detailPositions.set(node.id, {
+          x: direction === &quot;left&quot;
+            ? rootX - depth * V_DETAIL_X_GAP
+            : rootX + depth * V_DETAIL_X_GAP,
+          y,
+          depth: depth + 2,
+          direction,
+          stageId: node.stageId
+        });
+      }
+
+      function calculateVerticalLayout() {
+        detailPositions.clear();
+        verticalDetailLayouts.length = 0;
+
+        const rightForests = new Map();
+        openStageIds
+          .filter((stageId) =&gt; stageId !== &quot;rules&quot;)
+          .forEach((stageId) =&gt; {
+            const stage = stageById.get(stageId);
+            if (!stage?.viewId) return;
+            const forest = buildDetailForest(stage.viewId, stage.series, stage.id);
+            rightForests.set(stageId, {
+              forest,
+              totalHeight: measureVerticalForest(forest)
+            });
+          });
+
+        let cursorY = 110;
+        verticalRows.forEach((row) =&gt; {
+          let rowHeight = V_CLOSED_ROW_HEIGHT;
+          row.forEach((stageId) =&gt; {
+            const detail = rightForests.get(stageId);
+            if (detail) rowHeight = Math.max(rowHeight, detail.totalHeight + 70);
+          });
+          const centerY = cursorY + rowHeight / 2;
+          if (row[0] === &quot;igp&quot;) {
+            stageById.get(&quot;igp&quot;).x = V_SPINE_X - 320;
+            stageById.get(&quot;igr&quot;).x = V_SPINE_X;
+            stageById.get(&quot;igs&quot;).x = V_SPINE_X + 320;
+            stageById.get(&quot;igx&quot;).x = V_SPINE_X + 640;
+          } else {
+            stageById.get(row[0]).x = V_SPINE_X;
+          }
+          row.forEach((stageId) =&gt; {
+            stageById.get(stageId).y = centerY;
+          });
+          cursorY += rowHeight + V_ROW_GAP;
+        });
+
+        rightForests.forEach(({ forest, totalHeight }, stageId) =&gt; {
+          const stage = stageById.get(stageId);
+          const rootX = V_SPINE_X + V_STAGE_WIDTH + 180;
+          let top = stage.y - totalHeight / 2;
+          forest.forEach((node, index) =&gt; {
+            if (index) top += V_DETAIL_Y_GAP;
+            placeVerticalDetail(node, top, 0, rootX, &quot;right&quot;);
+            top += node.verticalSpan;
+          });
+          verticalDetailLayouts.push({ stage, forest, direction: &quot;right&quot; });
+        });
+
+        const plan = stageById.get(&quot;plan&quot;);
+        const memory = stageById.get(&quot;memory&quot;);
+        const rules = stageById.get(&quot;rules&quot;);
+        rules.x = V_SPINE_X - 850;
+        rules.y = (plan.y + memory.y) / 2;
+
+        if (openStageIds.includes(&quot;rules&quot;)) {
+          const forest = buildDetailForest(rules.viewId, rules.series, rules.id);
+          const totalHeight = measureVerticalForest(forest);
+          let top = Math.max(80, rules.y - totalHeight / 2);
+          const rootX = rules.x - 180 - V_NODE_WIDTH;
+          forest.forEach((node, index) =&gt; {
+            if (index) top += V_DETAIL_Y_GAP;
+            placeVerticalDetail(node, top, 0, rootX, &quot;left&quot;);
+            top += node.verticalSpan;
+          });
+          verticalDetailLayouts.push({ stage: rules, forest, direction: &quot;left&quot; });
+        }
+
+        let minX = 70;
+        let maxX = V_SPINE_X + V_STAGE_WIDTH + 80;
+        let maxY = cursorY + 80;
+        detailPositions.forEach((position) =&gt; {
+          minX = Math.min(minX, position.x - 70);
+          maxX = Math.max(maxX, position.x + V_NODE_WIDTH + 100);
+          maxY = Math.max(maxY, position.y + V_NODE_HEIGHT / 2 + 100);
+        });
+        layout.width = Math.max(4200, maxX - Math.min(0, minX));
+        layout.height = Math.max(2350, maxY);
+      }
+
+      function verticalFlowPath(from, to) {
+        const fromWidth = verticalNodeWidth(from);
+        const toWidth = verticalNodeWidth(to);
+        const x1 = from.x + fromWidth / 2;
+        const y1 = from.y + V_NODE_HEIGHT / 2;
+        const x2 = to.x + toWidth / 2;
+        const y2 = to.y - V_NODE_HEIGHT / 2;
+        const middleY = y1 + (y2 - y1) / 2;
+        return `M ${x1} ${y1} C ${x1} ${middleY}, ${x2} ${middleY}, ${x2} ${y2}`;
+      }
+
+      function sidePath(x1, y1, x2, y2) {
+        const middleX = x1 + (x2 - x1) / 2;
+        return `M ${x1} ${y1} C ${middleX} ${y1}, ${middleX} ${y2}, ${x2} ${y2}`;
+      }
+
+      function createVerticalNode({
+        id,
+        label,
+        note = &quot;&quot;,
+        x,
+        y,
+        kind = &quot;detail&quot;,
+        series = 1,
+        depth = 1,
+        hasChildren = false,
+        expanded = false,
+        active = false,
+        onClick
+      }) {
+        const button = document.createElement(&quot;button&quot;);
+        button.type = &quot;button&quot;;
+        button.className = &quot;mind-node&quot;;
+        if (active) button.classList.add(&quot;is-active&quot;);
+        button.dataset.nodeId = id;
+        button.dataset.kind = kind;
+        button.dataset.series = String(series);
+        button.dataset.depth = String(depth);
+        button.style.left = `${x}px`;
+        button.style.top = `${y - V_NODE_HEIGHT / 2}px`;
+        button.style.width = `${kind === &quot;guard&quot; || kind === &quot;goal&quot;
+          ? V_GUARD_WIDTH
+          : depth === 1
+            ? V_STAGE_WIDTH
+            : V_NODE_WIDTH}px`;
+
+        const labelWrap = document.createElement(&quot;span&quot;);
+        labelWrap.className = &quot;mind-node-label&quot;;
+        const title = document.createElement(&quot;span&quot;);
+        title.className = &quot;mind-node-title&quot;;
+        title.textContent = label;
+        labelWrap.append(title);
+        if (note) {
+          const noteNode = document.createElement(&quot;span&quot;);
+          noteNode.className = &quot;mind-node-note text-small&quot;;
+          noteNode.textContent = note;
+          labelWrap.append(noteNode);
+        }
+
+        const marker = document.createElement(&quot;span&quot;);
+        marker.className = &quot;mind-node-marker&quot;;
+        marker.setAttribute(&quot;aria-hidden&quot;, &quot;true&quot;);
+        if (hasChildren) {
+          marker.textContent = kind === &quot;guard&quot; ? &quot;‹&quot; : &quot;›&quot;;
+          button.setAttribute(&quot;aria-expanded&quot;, String(expanded));
+        } else {
+          marker.textContent = &quot;•&quot;;
+          marker.classList.add(&quot;mind-empty-marker&quot;);
+        }
+        button.append(labelWrap, marker);
+        if (onClick) button.addEventListener(&quot;click&quot;, onClick);
+        nodesHost.append(button);
+      }
+
+      function renderVerticalStage(stage) {
+        const hasDetails = Boolean(stage.viewId);
+        const isOpen = openStageIds.includes(stage.id);
+        createVerticalNode({
+          ...stage,
+          depth: 1,
+          hasChildren: hasDetails,
+          expanded: isOpen,
+          active: activeStageId === stage.id,
+          onClick: (event) =&gt; {
+            event.stopPropagation();
+            if (!hasDetails) {
+              activeStageId = stage.id;
+              crumb.textContent = `工程フロー › ${stage.label}`;
+              renderVertical();
+              focusVerticalStage(stage);
+              return;
+            }
+            const openIndex = openStageIds.indexOf(stage.id);
+            if (openIndex &gt;= 0) {
+              openStageIds.splice(openIndex, 1);
+              activeStageId = null;
+              crumb.textContent = &quot;READMEから第二の脳までの工程フロー&quot;;
+            } else {
+              openStageIds.push(stage.id);
+              activeStageId = stage.id;
+              crumb.textContent = `工程フロー › ${stage.label} › 詳細`;
+            }
+            renderVertical();
+            if (openIndex &gt;= 0) focusVerticalStage(stage);
+            else focusVerticalDetail(`detail-${stage.viewId}-0`);
+          }
+        });
+      }
+
+      function renderVerticalDetailNode(node) {
+        const position = detailPositions.get(node.id);
+        if (!position) return;
+        const children = visibleDetailChildren(node);
+        createVerticalNode({
+          id: node.id,
+          label: node.label,
+          x: position.x,
+          y: position.y,
+          kind: &quot;detail&quot;,
+          series: node.series,
+          depth: position.depth,
+          hasChildren: node.children.length &gt; 0,
+          expanded: detailExpanded.has(node.id),
+          onClick: node.children.length ? (event) =&gt; {
+            event.stopPropagation();
+            if (detailExpanded.has(node.id)) {
+              const stack = [...node.children];
+              while (stack.length) {
+                const child = stack.pop();
+                detailExpanded.delete(child.id);
+                stack.push(...child.children);
+              }
+              detailExpanded.delete(node.id);
+            } else {
+              detailExpanded.add(node.id);
+            }
+            activeStageId = node.stageId;
+            crumb.textContent = `工程フロー › ${stageById.get(node.stageId).label} › ${node.label}`;
+            renderVertical();
+            focusVerticalDetail(node.id);
+          } : null
+        });
+
+        children.forEach((child) =&gt; {
+          const childPosition = detailPositions.get(child.id);
+          const isLeft = position.direction === &quot;left&quot;;
+          appendPath(
+            sidePath(
+              isLeft ? position.x : position.x + V_NODE_WIDTH,
+              position.y,
+              isLeft ? childPosition.x + V_NODE_WIDTH : childPosition.x,
+              childPosition.y
+            ),
+            child.series,
+            &quot;detail&quot;
+          );
+          renderVerticalDetailNode(child);
+        });
+      }
+
+      function renderVerticalFlow() {
+        const chainBeforeParallel = [&quot;readme&quot;, &quot;idea&quot;, &quot;plan&quot;, &quot;design&quot;, &quot;spec&quot;];
+        for (let index = 0; index &lt; chainBeforeParallel.length - 1; index += 1) {
+          const from = stageById.get(chainBeforeParallel[index]);
+          const to = stageById.get(chainBeforeParallel[index + 1]);
+          appendPath(verticalFlowPath(from, to), to.series, &quot;flow&quot;, true);
+        }
+
+        const specStage = stageById.get(&quot;spec&quot;);
+        const parallelStages = [&quot;igp&quot;, &quot;igr&quot;, &quot;igs&quot;].map((id) =&gt; stageById.get(id));
+        const parallelTop = parallelStages[0].y - V_NODE_HEIGHT / 2;
+        const splitY = specStage.y + V_NODE_HEIGHT / 2
+          + (parallelTop - (specStage.y + V_NODE_HEIGHT / 2)) / 2;
+        const firstCenter = parallelStages[0].x + V_STAGE_WIDTH / 2;
+        const lastCenter = parallelStages[2].x + V_STAGE_WIDTH / 2;
+        const spineCenter = V_SPINE_X + V_STAGE_WIDTH / 2;
+        appendPath(
+          `M ${spineCenter} ${specStage.y + V_NODE_HEIGHT / 2} L ${spineCenter} ${splitY} M ${firstCenter} ${splitY} L ${lastCenter} ${splitY}`,
+          3,
+          &quot;flow&quot;
+        );
+        parallelStages.forEach((stage) =&gt; {
+          const centerX = stage.x + V_STAGE_WIDTH / 2;
+          appendPath(`M ${centerX} ${splitY} L ${centerX} ${stage.y - V_NODE_HEIGHT / 2}`, stage.series, &quot;flow&quot;, true);
+        });
+
+        const igcStage = stageById.get(&quot;igc&quot;);
+        const mergeY = parallelStages[0].y + V_NODE_HEIGHT / 2
+          + (igcStage.y - V_NODE_HEIGHT / 2 - (parallelStages[0].y + V_NODE_HEIGHT / 2)) / 2;
+        appendPath(`M ${firstCenter} ${mergeY} L ${lastCenter} ${mergeY}`, 3, &quot;flow&quot;);
+        parallelStages.forEach((stage) =&gt; {
+          const centerX = stage.x + V_STAGE_WIDTH / 2;
+          appendPath(`M ${centerX} ${stage.y + V_NODE_HEIGHT / 2} L ${centerX} ${mergeY}`, stage.series, &quot;flow&quot;);
+        });
+        appendPath(
+          `M ${spineCenter} ${mergeY} L ${spineCenter} ${igcStage.y - V_NODE_HEIGHT / 2}`,
+          igcStage.series,
+          &quot;flow&quot;,
+          true
+        );
+
+        const igxStage = stageById.get(&quot;igx&quot;);
+        const igxCenter = igxStage.x + V_STAGE_WIDTH / 2;
+        appendPath(
+          `M ${lastCenter} ${splitY} C ${igxCenter} ${splitY}, ${igxCenter} ${splitY}, ${igxCenter} ${igxStage.y - V_NODE_HEIGHT / 2}`,
+          igxStage.series,
+          &quot;excluded&quot;
+        );
+
+        const chainAfterParallel = [&quot;igc&quot;, &quot;import&quot;, &quot;memory&quot;, &quot;goal&quot;];
+        for (let index = 0; index &lt; chainAfterParallel.length - 1; index += 1) {
+          const from = stageById.get(chainAfterParallel[index]);
+          const to = stageById.get(chainAfterParallel[index + 1]);
+          appendPath(verticalFlowPath(from, to), to.series, &quot;flow&quot;, true);
+        }
+      }
+
+      function renderVerticalGuardrail() {
+        const rules = stageById.get(&quot;rules&quot;);
+        const plan = stageById.get(&quot;plan&quot;);
+        const memory = stageById.get(&quot;memory&quot;);
+        const bracketX = V_SPINE_X - 420;
+        const topY = plan.y - V_NODE_HEIGHT / 2;
+        const bottomY = memory.y + V_NODE_HEIGHT / 2;
+        appendPath(
+          `M ${rules.x + V_GUARD_WIDTH} ${rules.y} L ${bracketX} ${rules.y} M ${bracketX + 24} ${topY} L ${bracketX} ${topY} L ${bracketX} ${bottomY} L ${bracketX + 24} ${bottomY}`,
+          rules.series,
+          &quot;guard&quot;
+        );
+        createLabel(&quot;企画から10の完走確認までに適用&quot;, bracketX - 88, topY - 42);
+      }
+
+      function renderVertical() {
+        calculateVerticalLayout();
+        nodesHost.replaceChildren();
+        lines.replaceChildren();
+        world.style.width = `${layout.width}px`;
+        world.style.height = `${layout.height}px`;
+        lines.setAttribute(&quot;width&quot;, String(layout.width));
+        lines.setAttribute(&quot;height&quot;, String(layout.height));
+        lines.setAttribute(&quot;viewBox&quot;, `0 0 ${layout.width} ${layout.height}`);
+        appendArrowDefinition();
+
+        renderVerticalFlow();
+        renderVerticalGuardrail();
+        createLabel(&quot;中央の工程フロー&quot;, V_SPINE_X + 42, 54);
+        const parallel = stageById.get(&quot;igr&quot;);
+        createLabel(&quot;05・06・07は並列実行&quot;, parallel.x + 42, parallel.y - V_NODE_HEIGHT / 2 - 48);
+        const igx = stageById.get(&quot;igx&quot;);
+        createLabel(&quot;現在の完走条件には含めない&quot;, igx.x - 4, igx.y + V_NODE_HEIGHT / 2 + 18, &quot;journey-stage-note text-small&quot;);
+
+        stages.forEach(renderVerticalStage);
+
+        verticalDetailLayouts.forEach(({ stage, forest, direction }) =&gt; {
+          forest.forEach((node) =&gt; {
+            const position = detailPositions.get(node.id);
+            const stageWidth = verticalNodeWidth(stage);
+            appendPath(
+              sidePath(
+                direction === &quot;left&quot; ? stage.x : stage.x + stageWidth,
+                stage.y,
+                direction === &quot;left&quot; ? position.x + V_NODE_WIDTH : position.x,
+                position.y
+              ),
+              node.series,
+              &quot;detail&quot;
+            );
+            renderVerticalDetailNode(node);
+          });
+        });
+      }
+
+      function verticalViewportRect() {
+        const rect = viewport.getBoundingClientRect();
+        return {
+          width: rect.width || window.innerWidth || 736,
+          height: rect.height || window.innerHeight || 720
+        };
+      }
+
+      function fitVerticalAll() {
+        const rect = verticalViewportRect();
+        const scaleX = (rect.width - 48) / layout.width;
+        const scaleY = (rect.height - 48) / layout.height;
+        transform.scale = Math.min(0.88, Math.max(0.16, Math.min(scaleX, scaleY)));
+        transform.x = (rect.width - layout.width * transform.scale) / 2;
+        transform.y = (rect.height - layout.height * transform.scale) / 2;
+        applyTransform();
+      }
+
+      function focusVerticalEntry() {
+        const entry = stageById.get(&quot;readme&quot;);
+        const rect = verticalViewportRect();
+        transform.scale = Math.min(0.92, Math.max(0.62, rect.width / 1500));
+        transform.x = rect.width * 0.46 - (entry.x + V_STAGE_WIDTH / 2) * transform.scale;
+        transform.y = 90 - entry.y * transform.scale;
+        applyTransform();
+      }
+
+      function focusVerticalStage(stage) {
+        const rect = verticalViewportRect();
+        transform.scale = Math.max(transform.scale, 0.64);
+        transform.x = rect.width * 0.42 - (stage.x + verticalNodeWidth(stage) / 2) * transform.scale;
+        transform.y = rect.height * 0.34 - stage.y * transform.scale;
+        applyTransform();
+      }
+
+      function focusVerticalDetail(id) {
+        const position = detailPositions.get(id);
+        if (!position) return;
+        const rect = verticalViewportRect();
+        transform.scale = Math.max(transform.scale, 0.64);
+        transform.x = rect.width * 0.52 - (position.x + V_NODE_WIDTH / 2) * transform.scale;
+        transform.y = rect.height * 0.44 - position.y * transform.scale;
+        applyTransform();
+      }
+
+      render = renderVertical;
+      fitAll = fitVerticalAll;
+      focusEntry = focusVerticalEntry;
+      focusStage = focusVerticalStage;
+      focusDetailNode = focusVerticalDetail;
+
+      let dragging = false;
+      let dragStartX = 0;
+      let dragStartY = 0;
+      let transformStartX = 0;
+      let transformStartY = 0;
+
+      viewport.addEventListener(&quot;pointerdown&quot;, (event) =&gt; {
+        if (event.target.closest(&quot;.mind-node, .btn&quot;)) return;
+        dragging = true;
+        dragStartX = event.clientX;
+        dragStartY = event.clientY;
+        transformStartX = transform.x;
+        transformStartY = transform.y;
+        viewport.classList.add(&quot;is-dragging&quot;);
+        viewport.setPointerCapture(event.pointerId);
+      });
+
+      viewport.addEventListener(&quot;pointermove&quot;, (event) =&gt; {
+        if (!dragging) return;
+        transform.x = transformStartX + event.clientX - dragStartX;
+        transform.y = transformStartY + event.clientY - dragStartY;
+        applyTransform();
+      });
+
+      viewport.addEventListener(&quot;pointerup&quot;, (event) =&gt; {
+        dragging = false;
+        viewport.classList.remove(&quot;is-dragging&quot;);
+        if (viewport.hasPointerCapture(event.pointerId)) viewport.releasePointerCapture(event.pointerId);
+      });
+
+      viewport.addEventListener(&quot;pointercancel&quot;, () =&gt; {
+        dragging = false;
+        viewport.classList.remove(&quot;is-dragging&quot;);
+      });
+
+      viewport.addEventListener(&quot;wheel&quot;, (event) =&gt; {
+        event.preventDefault();
+        const rect = viewport.getBoundingClientRect();
+        const factor = event.deltaY &lt; 0 ? 1.1 : 0.9;
+        setScale(transform.scale * factor, event.clientX - rect.left, event.clientY - rect.top);
+      }, { passive: false });
+
+      fitButton.addEventListener(&quot;click&quot;, fitAll);
+      entryButton.addEventListener(&quot;click&quot;, focusEntry);
+      zoomInButton.addEventListener(&quot;click&quot;, () =&gt; {
+        const rect = viewport.getBoundingClientRect();
+        setScale(transform.scale * 1.15, rect.width / 2, rect.height / 2);
+      });
+      zoomOutButton.addEventListener(&quot;click&quot;, () =&gt; {
+        const rect = viewport.getBoundingClientRect();
+        setScale(transform.scale * 0.85, rect.width / 2, rect.height / 2);
+      });
+
+      crumb.textContent = &quot;READMEから第二の脳までの工程フロー&quot;;
+      render();
+      requestAnimationFrame(focusEntry);
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+
+  const getTrigger = (target) =&gt;
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest(&quot;[data-tooltip]&quot;)
+      : null;
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handleLeave = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
+    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
+    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
+    document.removeEventListener(&quot;focusout&quot;, handleLeave);
+    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
+  document.addEventListener(&quot;pointerout&quot;, handleLeave);
+  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
+  document.addEventListener(&quot;focusout&quot;, handleLeave);
+  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
+  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+</body>
+</html>
