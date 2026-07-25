@@ -1134,6 +1134,19 @@ html&gt;body{padding:0}&lt;/style&gt;
       const zoomOutButton = root.querySelector(&quot;[data-zoom-out]&quot;);
 
       const views = {
+        index: {
+          title: "00_目次.md｜プロジェクト全体の最上位案内板",
+          branches: [
+            ["案内", [
+              "01_IG移行企画書v1.0.md",
+              "02_IG移行設計書",
+              "04_IG移行仕様書",
+              "05〜08_各移行実行フォルダ",
+              "09_IGC統合",
+              "10_Memory_Synapse_DB"
+            ]]
+          ]
+        },
         readme: {
           title: &quot;README.md｜プロジェクトの入口&quot;,
           branches: [
@@ -1176,20 +1189,24 @@ html&gt;body{padding:0}&lt;/style&gt;
               ] }
             ]],
             [&quot;リポジトリを読む&quot;, [
+              { label: &quot;全体像と各工程の案内板（最優先）&quot;, children: [
+                &quot;00_目次.md：プロジェクト全体の最上位案内板&quot;,
+                &quot;各フォルダの00_案内ファイル：各ディレクトリの目次・コード構成&quot;
+              ] },
               { label: &quot;目的・構造・実行条件を確認する&quot;, children: [
-                &quot;01 企画書：目的・理由・到達点&quot;,
-                &quot;02 設計書：全体構造と責任境界&quot;,
-                &quot;04 仕様書：実装可能な実行条件&quot;
+                &quot;01_IG移行企画書：目的・理由・到達点&quot;,
+                &quot;02_IG移行設計書：全体構造と責任境界&quot;,
+                &quot;04_IG移行仕様書：実装可能な実行条件&quot;
               ] },
               { label: &quot;データ種別ごとの移行を確認する&quot;, children: [
-                &quot;05 IGP：通常投稿&quot;,
-                &quot;06 IGR：リール&quot;,
-                &quot;07 IGS：ストーリー&quot;,
-                &quot;08 IGX：欠損サルベージ&quot;
+                &quot;05_IGP移行_実行：通常投稿&quot;,
+                &quot;06_IGR移行_実行：リール&quot;,
+                &quot;07_IGS移行_実行：ストーリー&quot;,
+                &quot;08_IGX移行_実行：欠損サルベージ&quot;
               ] },
               { label: &quot;移行後の統合と利用を確認する&quot;, children: [
-                &quot;09 IGC：3系統の出力を本番用output_IGCへ統合&quot;,
-                &quot;10 Memory Synapse DB：Obsidian上で表示・接続・人間判断&quot;
+                &quot;09_IGC統合：3系統の出力を本番用output_IGCへ統合&quot;,
+                &quot;10_Memory_Synapse_DB：Obsidian上で表示・接続・人間判断&quot;
               ] },
               { label: &quot;作業方法を確認する&quot;, children: [
                 &quot;AGENTS.md：常に守る判断原則と作業境界&quot;,
@@ -2328,70 +2345,7 @@ html&gt;body{padding:0}&lt;/style&gt;
                 &quot;関連投稿を推測追加・削除・重複除去しない&quot;,
                 &quot;表記やカテゴリを変更して続行しない&quot;
               ] },
-              { label: &quot;停止と再開&quot;, children: [
-                &quot;一カテゴリの異常でも全カテゴリを恒久反映しない&quot;,
-                &quot;終了コード1で停止する&quot;,
-                &quot;段階・カテゴリ・系統・表記・パス・不一致を報告&quot;,
-                &quot;上流成果物を直して最初から再実行&quot;,
-                &quot;既存output_IGCを手修正して吸収しない&quot;
-              ] }
-            ]],
-            [&quot;検証と安全な置換&quot;, [
-              { label: &quot;入力検証&quot;, children: [
-                &quot;カード件数と一覧件数&quot;,
-                &quot;人間向け表記集合&quot;,
-                &quot;物理リンク先&quot;,
-                &quot;関連投稿列と出現回数&quot;,
-                &quot;カード・一覧・投稿リンクの重複&quot;
-              ] },
-              { label: &quot;準備出力検証&quot;, children: [
-                &quot;出力集合が三入力の完全一致和集合&quot;,
-                &quot;共通情報が入力と完全一致&quot;,
-                &quot;関連投稿がIGP→IGR→IGS順&quot;,
-                &quot;表記違い・カテゴリ違いを分離維持&quot;,
-                &quot;物理名がmacOSで一意&quot;,
-                &quot;不要なID・融合状態・作業台がない&quot;
-              ] },
-              { label: &quot;SystemLogs検証&quot;, children: [
-                &quot;一覧件数とカード件数&quot;,
-                &quot;人間向け表記集合&quot;,
-                &quot;カテゴリ・物理ファイルへのリンク&quot;,
-                &quot;出現回数・投稿値・順番&quot;,
-                &quot;一覧項目の安定順序&quot;
-              ] },
-              { label: &quot;準備領域とドライラン&quot;, children: [
-                &quot;最終出力へ直接書かない&quot;,
-                &quot;重複しない一時ディレクトリで六出力を生成&quot;,
-                &quot;全検証成功まで既存output_IGCを変更しない&quot;,
-                &quot;--dry-runは生成・検証だけで恒久置換しない&quot;
-              ] },
-              { label: &quot;置換・失敗・復旧&quot;, children: [
-                &quot;既存六出力だけを一時バックアップへ移す&quot;,
-                &quot;準備済み六出力と置き換える&quot;,
-                &quot;途中失敗は新出力を除き全六出力を復元&quot;,
-                &quot;復旧失敗は成功扱いせず残存状態を報告&quot;,
-                &quot;成功後に一時バックアップを削除&quot;
-              ] }
-            ]],
-            [&quot;実行結果とコード責任&quot;, [
-              { label: &quot;正常時の結果&quot;, children: [
-                &quot;終了コード0&quot;,
-                &quot;標準出力へ一つのJSON&quot;,
-                &quot;mode・ok・replaced&quot;,
-                &quot;入力パスとカテゴリ別件数&quot;,
-                &quot;和集合件数・複数系統項目数・出力件数&quot;,
-                &quot;関連投稿総数と検証結果&quot;
-              ] },
-              { label: &quot;異常時の結果&quot;, children: [
-                &quot;終了コード1&quot;,
-                &quot;error.type・phase・message&quot;,
-                &quot;特定可能ならcategory・source・display_name&quot;,
-                &quot;path・post_linkは確認に必要な対象だけ&quot;
-              ] },
-              { label: &quot;五つの実行責任&quot;, children: [
-                { label: &quot;01 メイン実行&quot;, children: [&quot;全処理の呼出し&quot;, &quot;入出力名・カテゴリ・物理名規則&quot;, &quot;ドライラン・JSON・終了コード&quot;] },
-                { label: &quot;02 入力解析&quot;, children: [&quot;カードと一覧の解析&quot;, &quot;入力系統ごとの相互照合&quot;] },
-                { label: &quot;03 データ統合&quot;, children: [&quot;完全一致統合&quot;, &quot;投稿加算・物理名決定&quot;, &quot;カードと一覧の生成&quot;] },
+              { label: &quot;03 データ統合&quot;, children: [&quot;完全一致統合&quot;, &quot;投稿加算・物理名決定&quot;, &quot;カードと一覧の生成&quot;] },
                 { label: &quot;04 品質検証&quot;, children: [&quot;入力検証&quot;, &quot;準備出力検証&quot;, &quot;対象外保護&quot;] },
                 { label: &quot;05 安全置換&quot;, children: [&quot;六出力のバックアップ&quot;, &quot;置換&quot;, &quot;失敗時復元&quot;] }
               ] }
@@ -2948,24 +2902,26 @@ html&gt;body{padding:0}&lt;/style&gt;
       let activeStageId = null;
 
       const stages = [
+        { id: &quot;index&quot;, label: &quot;00_目次&quot;, note: &quot;プロジェクト全体の案内板&quot;, x: 70, y: MAIN_Y - 130, kind: &quot;guard&quot;, viewId: &quot;index&quot;, series: 1 },
         { id: &quot;readme&quot;, label: &quot;README&quot;, note: &quot;入口・全体の読み方&quot;, x: 70, y: MAIN_Y, kind: &quot;entry&quot;, viewId: &quot;readme&quot;, series: 1 },
         { id: &quot;idea&quot;, label: &quot;一つのアイデア&quot;, note: &quot;個人の文脈を第二の脳へ&quot;, x: 345, y: MAIN_Y, kind: &quot;idea&quot;, series: 1 },
-        { id: &quot;plan&quot;, label: &quot;01 企画&quot;, note: &quot;目的・理由・完走点&quot;, x: 620, y: MAIN_Y, kind: &quot;stage&quot;, viewId: &quot;plan&quot;, series: 2 },
-        { id: &quot;design&quot;, label: &quot;02 設計&quot;, note: &quot;構造・責任・境界&quot;, x: 895, y: MAIN_Y, kind: &quot;stage&quot;, viewId: &quot;design&quot;, series: 3 },
-        { id: &quot;spec&quot;, label: &quot;04 仕様&quot;, note: &quot;実装可能な条件へ&quot;, x: 1170, y: MAIN_Y, kind: &quot;stage&quot;, viewId: &quot;spec&quot;, series: 4 },
-        { id: &quot;igp&quot;, label: &quot;05 IGP&quot;, note: &quot;通常投稿&quot;, x: 1465, y: MAIN_Y - 140, kind: &quot;parallel&quot;, series: 3 },
-        { id: &quot;igr&quot;, label: &quot;06 IGR&quot;, note: &quot;リール&quot;, x: 1465, y: MAIN_Y - 40, kind: &quot;parallel&quot;, series: 3 },
-        { id: &quot;igs&quot;, label: &quot;07 IGS&quot;, note: &quot;ストーリー&quot;, x: 1465, y: MAIN_Y + 60, kind: &quot;parallel&quot;, series: 3 },
-        { id: &quot;igx&quot;, label: &quot;08 IGX&quot;, note: &quot;現在の完走条件から除外&quot;, x: 1465, y: MAIN_Y + 195, kind: &quot;excluded&quot;, series: 6 },
-        { id: &quot;igc&quot;, label: &quot;09 IGC統合&quot;, note: &quot;05・06・07を集約&quot;, x: 1760, y: MAIN_Y - 40, kind: &quot;stage&quot;, viewId: &quot;igc&quot;, series: 5 },
+        { id: &quot;plan&quot;, label: &quot;01_IG移行企画書&quot;, note: &quot;目的・理由・完走点&quot;, x: 620, y: MAIN_Y, kind: &quot;stage&quot;, viewId: &quot;plan&quot;, series: 2 },
+        { id: &quot;design&quot;, label: &quot;02_IG移行設計書&quot;, note: &quot;構造・責任・境界&quot;, x: 895, y: MAIN_Y, kind: &quot;stage&quot;, viewId: &quot;design&quot;, series: 3 },
+        { id: &quot;spec&quot;, label: &quot;04_IG移行仕様書&quot;, note: &quot;実装可能な条件へ&quot;, x: 1170, y: MAIN_Y, kind: &quot;stage&quot;, viewId: &quot;spec&quot;, series: 4 },
+        { id: &quot;igp&quot;, label: &quot;05_IGP移行_実行&quot;, note: &quot;通常投稿&quot;, x: 1465, y: MAIN_Y - 140, kind: &quot;parallel&quot;, series: 3 },
+        { id: &quot;igr&quot;, label: &quot;06_IGR移行_実行&quot;, note: &quot;リール&quot;, x: 1465, y: MAIN_Y - 40, kind: &quot;parallel&quot;, series: 3 },
+        { id: &quot;igs&quot;, label: &quot;07_IGS移行_実行&quot;, note: &quot;ストーリー&quot;, x: 1465, y: MAIN_Y + 60, kind: &quot;parallel&quot;, series: 3 },
+        { id: &quot;igx&quot;, label: &quot;08_IGX移行_実行&quot;, note: &quot;現在の完走条件から除外&quot;, x: 1465, y: MAIN_Y + 195, kind: &quot;excluded&quot;, series: 6 },
+        { id: &quot;igc&quot;, label: &quot;09_IGC統合&quot;, note: &quot;05・06・07を集約&quot;, x: 1760, y: MAIN_Y - 40, kind: &quot;stage&quot;, viewId: &quot;igc&quot;, series: 5 },
         { id: &quot;import&quot;, label: &quot;Obsidianへ導入&quot;, note: &quot;オーナーが行う工程&quot;, x: 2055, y: MAIN_Y - 40, kind: &quot;owner&quot;, series: 4 },
-        { id: &quot;memory&quot;, label: &quot;10 Memory Synapse DB&quot;, note: &quot;知識を融合・分離・成長&quot;, x: 2350, y: MAIN_Y - 40, kind: &quot;stage&quot;, viewId: &quot;memory&quot;, series: 6 },
+        { id: &quot;memory&quot;, label: &quot;10_Memory_Synapse_DB&quot;, note: &quot;知識を融合・分離・成長&quot;, x: 2350, y: MAIN_Y - 40, kind: &quot;stage&quot;, viewId: &quot;memory&quot;, series: 6 },
         { id: &quot;goal&quot;, label: &quot;Obsidianで育てる第二の脳&quot;, note: &quot;人間とAIが理解できる知識基盤&quot;, x: 2645, y: MAIN_Y - 40, kind: &quot;goal&quot;, series: 1 },
         { id: &quot;rules&quot;, label: &quot;AGENTS.md ＋ docs&quot;, note: &quot;全工程の判断・承認・停止条件&quot;, x: 620, y: MAIN_Y - 260, kind: &quot;guard&quot;, viewId: &quot;rules&quot;, series: 5 }
       ];
 
       const stageById = new Map(stages.map((stage) =&gt; [stage.id, stage]));
       const flowEdges = [
+        [&quot;index&quot;, &quot;readme&quot;, &quot;flow&quot;],
         [&quot;readme&quot;, &quot;idea&quot;, &quot;flow&quot;],
         [&quot;idea&quot;, &quot;plan&quot;, &quot;flow&quot;],
         [&quot;plan&quot;, &quot;design&quot;, &quot;flow&quot;],
