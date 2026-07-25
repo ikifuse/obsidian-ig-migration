@@ -44,8 +44,7 @@ IGXが生成するハッシュタグ・メンション・位置情報のSynapse�
 
 * Salvageメモ: `output_IGX/Instagram_Logs/Salvage/{post_id}.md`
 * 個別原本: `output_IGX/Instagram_Logs/SystemLogs/RawData/{post_id}.json`
-* メディア: `output_IGX/Instagram_Logs/media/{post_id}_{photo|video}_{連番}.{拡張子}`
-* Timeline: `output_IGX/Instagram_Logs/Salvage/Salvage_Timeline.md`
+* Salvage (Markdown): `output_IGX/Instagram_Logs/Salvage/YYYY-MM-DD-HH-MM-SS_IGX_XXXX.md`
 * Events: `output_IGX/Instagram_Logs/SystemLogs/Events/YYYY-MM-DD_Events.jsonl`
 * Synapse: `output_IGX/Instagram_Logs/Synapses/{Tags|Mentions|Locations}/*.md`
 * 一覧: `output_IGX/Instagram_Logs/SystemLogs/{ハッシュタグ一覧|メンション一覧|場所一覧}.md`

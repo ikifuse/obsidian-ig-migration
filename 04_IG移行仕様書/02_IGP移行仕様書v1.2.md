@@ -17,7 +17,6 @@
 *   **状態管理ファイル名**: `migration_state_10_posts.json`
 *   **検証用個別一時出力フォルダ名**: `output_IGP`
 *   **出力先投稿フォルダ名**: `Posts/`
-*   **タイムラインタイトル**: `(期間名) Timeline`
 
 ---
 
@@ -150,16 +149,15 @@ Location Synapseメモには、投稿ごとの `observation_id`、`checkin_id`�
 
 `posts.json` の有効な1レコードにつき、次を対応させる。
 
-* 投稿メモ: `output_IGP/Instagram_Logs/{YYYY_前半|YYYY_後半}/Posts/{post_id}.md`
-* 個別原本: 同期間の `SystemLogs/RawData/{post_id}.json`
-* Feedメディア: 同期間の `Instagram/media/{post_id}_{photo|video}_{連番}.{拡張子}`
-* 期間Timeline: 同期間の `index/timeline.md`
-* 期間Events: 同期間の `SystemLogs/Events/YYYY-MM-DD_Events.jsonl`
-* 共通Synapse: `Instagram_Logs/Synapses/{Tags|Mentions|Locations}/*.md`
-* 共通一覧: `Instagram_Logs/SystemLogs/{ハッシュタグ一覧|メンション一覧|場所一覧}.md`
-* 状態管理: `Instagram_Logs/migration_state_10_posts.json`
+* 投稿メモ: `output_IGP/Instagram_Logs/Posts/{post_id}.md`
+* 個別原本: `SystemLogs/RawData/{post_id}.json`
+* Feedメディア: `media/{post_id}_{photo|video}_{連番}.{拡張子}`
+* 期間Events: `SystemLogs/Events/YYYY-MM-DD_Events.jsonl`
+* 共通Synapse: `Synapses/{Tags|Mentions|Locations}/*.md`
+* 共通一覧: `SystemLogs/{ハッシュタグ一覧|メンション一覧|場所一覧}.md`
+* 状態管理: `migration_state_10_posts.json`
 
-Feedメディアを全期間共通 `Instagram_Logs/media/` へ移してはならない。投稿メモ、RawData、参照メディア、Timeline、Synapse、一覧の対応を崩してはならない。
+Feedメディアを全期間共通 `media/` へ移してはならない。投稿メモ、RawData、参照メディア、Synapse、一覧の対応を崩してはならない。
 
 Location Synapseは空テンプレートだけを出力して完了としてはならない。本仕様2.2.1の情報を1件だけ置き、対応する投稿メモへのWikiリンクを `## 関連投稿` に並べる。
 

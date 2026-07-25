@@ -20,7 +20,6 @@ fix_mojibake = getattr(_mod, "fix_mojibake")
 safe_filename = getattr(_mod, "safe_filename")
 clean_tag_or_mention = getattr(_mod, "clean_tag_or_mention")
 extract_emojis = getattr(_mod, "extract_emojis")
-get_period = getattr(_mod, "get_period")
 _mod = __import__("04_IGS_メディア処理v1_1")
 build_media_index = getattr(_mod, "build_media_index")
 find_media_file = getattr(_mod, "find_media_file")
@@ -49,8 +48,8 @@ def load_state():
             with open(STATE_FILE, "r", encoding="utf-8") as f:
                 return json.load(f)
         except:
-            return {"run_count": 0, "completed_periods": []}
-    return {"run_count": 0, "completed_periods": []}
+            return {"run_count": 0, "completed": False}
+    return {"run_count": 0, "completed": False}
 
 def save_state(state):
     os.makedirs(LOGS_ROOT, exist_ok=True)
@@ -138,7 +137,7 @@ def story_is_complete(md_path, raw_path, post_id, date_iso, expected_media, syna
     )
 
 def main():
-    print("=== Instagram Stories → Obsidian (期間分割あり) v1_1 ===")
+    print("=== Instagram Stories → Obsidian (期間分割なしフラット版) v1_2 ===")
     
     if not os.path.exists(POSTS_JSON_DIR):
         print(f"[致命的エラー] ディレクトリ {POSTS_JSON_DIR} が存在しません。")
@@ -150,7 +149,7 @@ def main():
         return 1
 
     state = load_state()
-    completed_periods = set(state.get("completed_periods", []))
+    is_completed = state.get("completed", False)
     
     os.makedirs(DEST_RAW_DIR, exist_ok=True)
     os.makedirs(DEST_MEDIA_DIR, exist_ok=True)
@@ -181,45 +180,35 @@ def main():
             print(f"[致命的エラー] {os.path.basename(json_file)} の読み込みに失敗しました: {e}")
             return 1
 
-    period_groups = {}
+    posts_to_process = []
     for i, post in enumerate(raw_data):
         post_fixed = fix_mojibake(post)
         ts = get_post_timestamp(post_fixed)
         if ts != 0:
-            period = get_period(ts)
-            if period not in period_groups:
-                period_groups[period] = []
-            period_groups[period].append((i, post_fixed))
+            posts_to_process.append((i, post_fixed))
             
-    if not period_groups:
+    if not posts_to_process:
         print("✅ 処理すべきストーリーデータが存在しません。")
         return 0
 
     build_media_index()
 
-    print(f"\n🚀 処理開始: 合計 {sum(len(v) for v in period_groups.values())}件のストーリーデータ")
+    print(f"\n🚀 処理開始: 合計 {len(posts_to_process)}件のストーリーデータ")
     
     overall_error_count = 0
-    for period in sorted(period_groups.keys()):
-        print(f"\n>> 期間: {period} の処理中... (合計: {len(period_groups[period])}件)")
-        
-        period_dir = os.path.join(LOGS_ROOT, period)
-        stories_dir = os.path.join(period_dir, "Stories")
-        period_index_dir = os.path.join(period_dir, "index")
-        rawdata_dir = os.path.join(period_dir, "SystemLogs", "RawData")
-        os.makedirs(stories_dir, exist_ok=True)
-        os.makedirs(period_index_dir, exist_ok=True)
-        os.makedirs(rawdata_dir, exist_ok=True)
-        
-        success_count = 0
-        skip_count = 0
-        error_count = 0
-        repaired_count = 0
-        timeline_entries = []
+    stories_dir = os.path.join(LOGS_ROOT, "Stories")
+    rawdata_dir = os.path.join(LOGS_ROOT, "SystemLogs", "RawData")
+    os.makedirs(stories_dir, exist_ok=True)
+    os.makedirs(rawdata_dir, exist_ok=True)
+    
+    success_count = 0
+    skip_count = 0
+    error_count = 0
+    repaired_count = 0
 
-        period_groups[period].sort(key=lambda x: get_post_timestamp(x[1]))
+    posts_to_process.sort(key=lambda x: get_post_timestamp(x[1]))
 
-        for original_index, post_fixed in period_groups[period]:
+    for original_index, post_fixed in posts_to_process:
             try:
                 ts = get_post_timestamp(post_fixed)
                 dt = datetime.fromtimestamp(ts, tz=JST)
@@ -401,7 +390,6 @@ def main():
                     geo_lng,
                 ):
                     skip_count += 1
-                    timeline_entries.append(f"- [[{post_id}]] : {caption_preview}")
                     continue
 
                 if os.path.exists(md_filepath):
@@ -481,8 +469,6 @@ def main():
                         out.write("---\n")
                         out.write(" ".join(links) + "\n")
                 
-                timeline_entries.append(f"- [[{post_id}]] : {caption_preview}")
-                
                 success_count += 1
 
             except Exception as e:
@@ -490,39 +476,24 @@ def main():
                 print(f"[警告] 投稿処理エラー (インデックス: {original_index}): {e}")
                 write_event_log("STORY_PROCESSING_ERROR", "ERROR", {"index": original_index, "error": str(e)})
 
-        timeline_filepath = os.path.join(period_index_dir, "timeline.md")
-        with open(timeline_filepath, "w", encoding="utf-8") as f:
-            f.write(f"# {period} Timeline\n\n")
-            if not timeline_entries:
-                f.write("投稿はありません。\n")
-            else:
-                for entry in timeline_entries:
-                    f.write(entry + "\n")
-
-        period_completed = error_count == 0
-        write_event_log("STORY_MIGRATION_PERIOD_COMPLETE", "SYSTEM", {
-            "period": period,
-            "success": success_count,
-            "skip": skip_count,
-            "repaired": repaired_count,
-            "error": error_count,
-            "completed": period_completed,
-            "source_json_files": [os.path.basename(path) for path in json_files],
-        })
-        print(
-            f"   -> 完了判定: {'完了' if period_completed else '未完了'} "
-            f"(生成: {success_count}, 再補修: {repaired_count}, スキップ: {skip_count}, E: {error_count})"
-        )
-
-        if period_completed:
-            completed_periods.add(period)
-        else:
-            completed_periods.discard(period)
-            overall_error_count += error_count
+    is_completed = error_count == 0
+    write_event_log("STORY_MIGRATION_COMPLETE", "SYSTEM", {
+        "success": success_count,
+        "skip": skip_count,
+        "repaired": repaired_count,
+        "error": error_count,
+        "completed": is_completed,
+        "source_json_files": [os.path.basename(path) for path in json_files],
+    })
+    print(
+        f"   -> 完了判定: {'完了' if is_completed else '未完了'} "
+        f"(生成: {success_count}, 再補修: {repaired_count}, スキップ: {skip_count}, E: {error_count})"
+    )
 
     state["run_count"] = state.get("run_count", 0) + 1
     state["last_run"] = datetime.now(JST).isoformat()
-    state["completed_periods"] = sorted(list(completed_periods))
+    state["completed"] = is_completed
+    if "completed_periods" in state: del state["completed_periods"]
     save_state(state)
     
     generate_global_synapse_indexes()

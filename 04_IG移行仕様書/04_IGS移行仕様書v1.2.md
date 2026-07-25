@@ -11,7 +11,7 @@
 1. **type**: `Stories`
 2. **content**: `null` (動画の場合は `"video"`)
 3. **ID prefix**: `IGS`
-4. **出力先フォルダ**: `[期間フォルダ]/Stories/`（例：`YYYY_前半/Stories/`）
+4. **出力先フォルダ**: `output_IGS/Instagram_Logs/Stories/`
 5. **state file名**: `migration_state_09_stories.json`
 6. **メディア保存先**: `Instagram_Logs/media/`（全期間共通の共通メディアフォルダを使用）
 7. **検証用個別一時出力フォルダ名**: `output_IGS`
@@ -63,10 +63,9 @@ IGSは、ハッシュタグ・メンション・位置情報を、IGPで確定�
 
 主入力はInstagramエクスポートの `media/stories*.json` と、そのレコードが参照するメディアとする。`story_interactions` は現在のIGS主処理の入力に混ぜず、将来の関係解析材料として原本のまま保持する。
 
-* Storyメモ: `output_IGS/Instagram_Logs/{YYYY_前半|YYYY_後半}/Stories/{post_id}.md`
-* 個別原本: 同期間の `SystemLogs/RawData/{post_id}.json`
+* Storyメモ: `output_IGS/Instagram_Logs/Stories/{post_id}.md`
+* 個別原本: `SystemLogs/RawData/{post_id}.json`
 * メディア: `output_IGS/Instagram_Logs/media/{post_id}_{photo|video}_{連番}.{拡張子}`
-* 期間Timeline: 同期間の `index/timeline.md`
 * Events: `output_IGS/Instagram_Logs/SystemLogs/Events/YYYY-MM-DD_Events.jsonl`
 * Synapse: `output_IGS/Instagram_Logs/Synapses/{Tags|Mentions|Locations}/*.md`
 * 一覧: `output_IGS/Instagram_Logs/SystemLogs/{ハッシュタグ一覧|メンション一覧|場所一覧}.md`
@@ -78,7 +77,7 @@ IGSは、ハッシュタグ・メンション・位置情報を、IGPで確定�
 
 * 有効時刻を持つ全Storyが生成、明示的除外、技術的失敗のいずれかへ分類される。
 * 各StoryメモにRawDataと参照メディアが対応し、位置座標を含む原本項目を失わない。
-* Timeline、Synapse、一覧、Events、状態管理を含む関連成果物の対応を確認する。
+* Synapse、一覧、Events、状態管理を含む関連成果物の対応を確認する。
 * 各ハッシュタグ・メンションSynapseに情報YAMLが1件だけあり、`## 関連投稿` に対応するStoryメモへのWikiリンクがある。
 * 入力に場所名がある場合は、各Location Synapseに `location_note`、`geo`、`address`、`activity_id`、`source_files`、`note` が1件だけあり、`## 関連投稿` に対応するStoryメモへのWikiリンクがある。場所名がなくGPS座標だけの場合はLocation Synapseを生成せず、Storyメモの `location.geo` に保持する。
 * Synapseに投稿ごとの抽出YAMLとSTART/END管理印がない。

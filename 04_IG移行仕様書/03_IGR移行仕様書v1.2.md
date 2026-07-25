@@ -57,8 +57,7 @@ IGRは、ハッシュタグ・メンション・位置情報を、IGPで確定�
 
 * リールメモ: `output_IGR/Instagram_Logs/Reels/{post_id}.md`
 * 個別原本: `output_IGR/Instagram_Logs/SystemLogs/RawData/Reels/{post_id}.json`
-* メディア: `output_IGR/Instagram_Logs/media/{post_id}_{photo|video}_{連番}.{拡張子}`
-* Timeline: `output_IGR/Instagram_Logs/Reels/Reels_Timeline.md`
+* Reels (Markdown): `output_IGR/Instagram_Logs/Reels/YYYY-MM-DD-HH-MM-SS_IGR_XXXX.md`
 * Events: `output_IGR/Instagram_Logs/SystemLogs/Events/YYYY-MM-DD_Events.jsonl`
 * Synapse: `output_IGR/Instagram_Logs/Synapses/{Tags|Mentions|Locations}/*.md`
 * 一覧: `output_IGR/Instagram_Logs/SystemLogs/{ハッシュタグ一覧|メンション一覧|場所一覧}.md`

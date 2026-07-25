@@ -11,10 +11,6 @@ media = __import__("04_IGP_メディア処理v1_1")
 md = __import__("05_IGP_マークダウン生成v1_1")
 synapse = __import__("06_IGP_シナプス管理v1_1")
 
-def get_period(timestamp):
-    dt = datetime.fromtimestamp(timestamp, tz=config.JST)
-    half = "前半" if dt.month <= 6 else "後半"
-    return f"{dt.year}_{half}"
 
 def load_state():
     if os.path.exists(config.STATE_FILE):
@@ -22,8 +18,8 @@ def load_state():
             with open(config.STATE_FILE, "r", encoding="utf-8") as f:
                 return json.load(f)
         except:
-            return {"completed_periods": []}
-    return {"completed_periods": []}
+            return {"completed": False}
+    return {"completed": False}
 
 def save_state(state):
     os.makedirs(config.LOGS_ROOT, exist_ok=True)
@@ -162,7 +158,7 @@ def is_post_complete(md_filepath, json_filepath, dest_attach_dir, expected_media
     return True
 
 def main():
-    print("=== 10_IG投稿_移行_v1_1 (実データ反映版 / 大元フィード専用プロジェクト) ===")
+    print("=== 10_IG投稿_移行_v1_2 (期間分割なしフラット版 / 大元フィード専用プロジェクト) ===")
     
     print("\n>> ソースメディアディレクトリの存在確認...")
     for idx, media_dir in enumerate(config.SRC_MEDIA_DIRS):
@@ -185,9 +181,7 @@ def main():
         return 1
 
     state = load_state()
-    completed_periods = set(state.get("completed_periods", state.get("completed_years", state.get("completed_chunks", []))))
-
-    print(f"現在の記録上の完了済み半年フォルダ: {list(completed_periods)}")
+    is_completed = state.get("completed", False)
 
     raw_data = []
     print(f">> {os.path.basename(base_posts_json)} を読み込んでいます...")
@@ -204,7 +198,7 @@ def main():
     # メディアインデックスの構築
     media.build_media_index()
 
-    posts_by_period = defaultdict(list)
+    posts_to_process = []
     storage_name_candidates = []
     
     for i, post in enumerate(raw_data):
@@ -215,8 +209,7 @@ def main():
         if ts == 0:
             continue
 
-        target_period = get_period(ts)
-        posts_by_period[target_period].append((i, post_fixed, False))
+        posts_to_process.append((i, post_fixed, False))
 
         caption = txt.choose_caption(extract_captions_from_post(post_fixed, False))
         tag_raw_values, mention_raw_values = txt.extract_tags_and_mentions(caption)
@@ -230,8 +223,6 @@ def main():
                 storage_name_candidates.append(("Synapse/Mention", name, raw))
 
     synapse.prepare_synapse_storage_names(storage_name_candidates)
-        
-    sorted_periods = sorted(posts_by_period.keys())
     
     global_synapses_tags = os.path.join(config.LOGS_ROOT, "Synapses", "Tags")
     global_synapses_mentions = os.path.join(config.LOGS_ROOT, "Synapses", "Mentions")
@@ -240,25 +231,23 @@ def main():
     os.makedirs(global_synapses_mentions, exist_ok=True)
     os.makedirs(global_synapses_locations, exist_ok=True)
 
-    for target_period in sorted_periods:
-        print(f"\n🚀 処理開始: {target_period} ({len(posts_by_period[target_period])}件の投稿)")
+    posts_by_period = {"all": posts_to_process}
+    
+    for target_period in ["all"]:
+        print(f"\n🚀 処理開始: ({len(posts_by_period[target_period])}件の投稿)")
         
-        dest_posts_dir = os.path.join(config.LOGS_ROOT, target_period, "Posts")
-        dest_attach_dir = os.path.join(config.LOGS_ROOT, target_period, "Instagram", "media")
-        period_index_dir = os.path.join(config.LOGS_ROOT, target_period, "index")
-        dest_raw_dir = os.path.join(config.LOGS_ROOT, target_period, "SystemLogs", "RawData")
+        dest_posts_dir = os.path.join(config.LOGS_ROOT, "Posts")
+        dest_attach_dir = os.path.join(config.LOGS_ROOT, "Instagram", "media")
+        dest_raw_dir = os.path.join(config.LOGS_ROOT, "SystemLogs", "RawData")
         
         os.makedirs(dest_posts_dir, exist_ok=True)
         os.makedirs(dest_attach_dir, exist_ok=True)
-        os.makedirs(period_index_dir, exist_ok=True)
         os.makedirs(dest_raw_dir, exist_ok=True)
         
         success_count = 0
         skip_count = 0
         error_count = 0
         repaired_count = 0
-        
-        timeline_entries = []
         
         # ソート（構造Aならtimestamp、構造Bならcreation_timestampを使用）
         posts_by_period[target_period].sort(
@@ -361,7 +350,6 @@ def main():
                         global_synapses_locations,
                         loc_name_raw,
                         post_id,
-                        target_period,
                         "Synapse/Location",
                         location_information=location_information,
                     )
@@ -371,7 +359,6 @@ def main():
                         global_synapses_tags,
                         entry["name"],
                         post_id,
-                        target_period,
                         "Synapse/Tag",
                         raw_value=entry["raw"],
                     )
@@ -380,7 +367,6 @@ def main():
                         global_synapses_mentions,
                         entry["name"],
                         post_id,
-                        target_period,
                         "Synapse/Mention",
                         raw_value=entry["raw"],
                     )
@@ -397,7 +383,6 @@ def main():
                     loc_name_raw,
                 ):
                     skip_count += 1
-                    timeline_entries.append(f"- [[{post_id}]] : {caption_preview}")
                     continue
                 if os.path.exists(md_filepath):
                     repaired_count += 1
@@ -426,7 +411,7 @@ def main():
                             shutil.copy2(src_media_path, dest_media_path)
                             copied_media_names.append(dest_media_filename)
                         else:
-                            synapse.write_event_log(target_period, "MEDIA_NOT_FOUND", "DATA_MISSING", {"post_id": post_id, "uri": uri})
+                            synapse.write_event_log("MEDIA_NOT_FOUND", "DATA_MISSING", {"post_id": post_id, "uri": uri})
                             raise FileNotFoundError(f"Post参照メディアが見つかりません: {uri}")
                     else:
                         copied_media_names.append(dest_media_filename)
@@ -487,48 +472,32 @@ def main():
                         out.write("---\n")
                         out.write(" ".join(links) + "\n")
                 
-                timeline_entries.append(f"- [[{post_id}]] : {caption_preview}")
                 success_count += 1
 
             except Exception as e:
                 error_count += 1
                 print(f"[警告] 投稿処理エラー (インデックス: {i}): {e}")
-                synapse.write_event_log(target_period, "POST_PROCESSING_ERROR", "ERROR", {"index": i, "error": str(e)})
+                synapse.write_event_log("POST_PROCESSING_ERROR", "ERROR", {"index": i, "error": str(e)})
         
-        timeline_filepath = os.path.join(period_index_dir, "timeline.md")
-        with open(timeline_filepath, "w", encoding="utf-8") as f:
-            f.write(f"# {target_period} Timeline\n\n")
-            if not timeline_entries:
-                f.write("投稿はありません。\n")
-            else:
-                for entry in timeline_entries:
-                    f.write(entry + "\n")
-        
-        period_completed = (error_count == 0)
+        is_completed = (error_count == 0)
         synapse.write_event_log(
-            target_period,
-            "PERIOD_COMPLETE",
+            "MIGRATION_COMPLETE",
             "SYSTEM",
             {
                 "success": success_count,
                 "skip": skip_count,
                 "repaired": repaired_count,
                 "error": error_count,
-                "completed": period_completed,
+                "completed": is_completed,
                 "source_json": base_posts_json,
             }
         )
-        print(f"   -> 完了判定: {'完了' if period_completed else '未完了'} (生成: {success_count}, 再補修: {repaired_count}, スキップ: {skip_count}, Error: {error_count})")
+        print(f"   -> 完了判定: {'完了' if is_completed else '未完了'} (生成: {success_count}, 再補修: {repaired_count}, スキップ: {skip_count}, Error: {error_count})")
 
-        if period_completed:
-            completed_periods.add(target_period)
-        elif target_period in completed_periods:
-            completed_periods.remove(target_period)
-        state["completed_periods"] = list(completed_periods)
-        if "completed_years" in state:
-            del state["completed_years"]
-        if "completed_chunks" in state:
-            del state["completed_chunks"]
+        state["completed"] = is_completed
+        if "completed_periods" in state: del state["completed_periods"]
+        if "completed_years" in state: del state["completed_years"]
+        if "completed_chunks" in state: del state["completed_chunks"]
         save_state(state)
         
         synapse.generate_global_synapse_indexes()

@@ -172,8 +172,8 @@ def ensure_generated_identity(filepath, cat_tag, display_name):
         with open(filepath, "w", encoding="utf-8") as f:
             f.write(updated)
 
-def write_event_log(target_period, action, category, details):
-    events_dir = os.path.join(config.LOGS_ROOT, target_period, "SystemLogs", "Events")
+def write_event_log(action, category, details):
+    events_dir = os.path.join(config.LOGS_ROOT, "SystemLogs", "Events")
     os.makedirs(events_dir, exist_ok=True)
     now = datetime.now(config.JST)
     filename = now.strftime("%Y-%m-%d_Events.jsonl")
@@ -189,13 +189,12 @@ def write_event_log(target_period, action, category, details):
         with open(filepath, "a", encoding="utf-8") as f:
             f.write(json.dumps(event_data, ensure_ascii=False) + "\n")
     except Exception as e:
-        print(f"[警告] イベントログ書き込み失敗 ({target_period}): {e}")
+        print(f"[警告] イベントログ書き込み失敗: {e}")
 
 def append_to_period_synapse(
     synapse_dir,
     synapse_name,
     post_id,
-    target_period,
     cat_tag,
     location_information=None,
     raw_value=None,
@@ -234,7 +233,7 @@ def append_to_period_synapse(
     append_related_post(filepath, post_id)
 
     # イベントログの書き込み（一覧生成用のデータソースとして必須）
-    write_event_log(target_period, "SYNAPSE_APPENDED", "SYNAPSE", {
+    write_event_log("SYNAPSE_APPENDED", "SYNAPSE", {
         "synapse": display_name,
         "synapse_file": safe_name,
         "post_id": post_id,
@@ -292,14 +291,8 @@ def generate_global_synapse_indexes():
     }
     canonical_names = load_canonical_synapse_names()
 
-    # 各期間フォルダ下のイベントログを探索
-    for period_dir_name in os.listdir(config.LOGS_ROOT):
-        period_path = os.path.join(config.LOGS_ROOT, period_dir_name)
-        if not os.path.isdir(period_path): continue
-        
-        events_dir = os.path.join(period_path, "SystemLogs", "Events")
-        if not os.path.exists(events_dir): continue
-        
+    events_dir = os.path.join(config.LOGS_ROOT, "SystemLogs", "Events")
+    if os.path.exists(events_dir):
         for event_file in glob.glob(os.path.join(events_dir, "*_Events.jsonl")):
             try:
                 with open(event_file, "r", encoding="utf-8") as f:
