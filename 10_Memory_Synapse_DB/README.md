@@ -4,14 +4,7 @@ Memory Synapse DBは、既存のMarkdownカードを残したまま、人間の�
 
 ## 現在の構成
 
-| 番号 | 内容 | 入口 |
-|---|---|---|
-| 01 | 企画 | `01_Memory_Synapse_DB_企画書v2.1.md` |
-| 02 | 設計 | `02_Memory_Synapse_DB_設計書/00_設計書目次.md` |
-| 03 | 仕様 | `03_Memory_Synapse_DB_仕様書/00_仕様書目次.md` |
-| 04 | 日本語5分割のTypeScript実行コード | `04_Memory_Synapse_DB_実行コード/00_実行コード目次.md` |
-| 05 | 検証用データだけを使うブラウザー確認版 | `05_Memory_Synapse_DB_ブラウザー確認版/index.html` |
-| 06 | Obsidianへフォルダーごと配置できる仮プラグイン | `06_Memory_Synapse_DB_仮プラグイン/README.md` |
+詳細な構成や各ドキュメント・コードへのリンクは **[00_目次.md](00_目次.md)** を参照してください。
 
 ## 安全上の境界
 

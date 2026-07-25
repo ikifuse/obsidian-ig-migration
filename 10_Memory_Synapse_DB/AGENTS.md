@@ -19,12 +19,13 @@
 
 | 工程 | 最初に読むもの | 必要な範囲だけ追加で読むもの |
 |---|---|---|
+| 全般の構造確認 | `00_目次.md` | `../00_目次.md` |
 | 企画 | `../docs/planning-workflow.md`、`01_Memory_Synapse_DB_企画書v2.1.md` | `../01_IG移行企画書v1.0.md`の対象箇所と企画判断の根拠 |
 | 設計 | `docs/design-workflow.md`、`02_Memory_Synapse_DB_設計書/00_設計書目次.md` | 目次から選んだ設計分冊。工程間の境界確認が必要な場合だけ親設計分冊 |
 | 仕様 | `docs/specification-workflow.md`、`03_Memory_Synapse_DB_仕様書/00_仕様書目次.md` | 目次から選んだ対象仕様分冊と対応設計分冊 |
 | 実装・成果物検証 | `docs/implementation-workflow.md`、`03_Memory_Synapse_DB_仕様書/00_仕様書目次.md`、`04_Memory_Synapse_DB_実行コード/00_実行コード目次.md` | 対象仕様分冊、`04_Memory_Synapse_DB_実行コード/TypeScript元コード/`内の対象責任フォルダーにある`00_このフォルダーの役割.md`、対象コード、対象成果物。不一致判断に必要な場合だけ対応設計分冊 |
 | 文書の配置・退役 | `../docs/document-governance.md` | 配置判断に必要な対象資料 |
-| 恒久ルールの追加・修正 | `../docs/rule-addition-criteria.md` | 根拠となる承認済み文書・履歴 |
+| 恒久ルールの追加・修正 | `../docs/rule-addition-criteria.md`、`../docs/information-architecture.md` | 根拠となる承認済み文書・履歴 |
 
 ## 現役正本と比較資料
 
