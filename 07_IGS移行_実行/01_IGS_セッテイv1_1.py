@@ -37,6 +37,6 @@ DEST_RAW_DIR = os.path.join(LOGS_ROOT, "SystemLogs", "RawData")
 DEST_MEDIA_DIR = os.path.join(LOGS_ROOT, "media")
 EVENTS_DIR = os.path.join(LOGS_ROOT, "SystemLogs", "Events")
 
-STATE_FILE = os.path.join(LOGS_ROOT, "migration_state_09_stories.json")
+STATE_FILE = os.path.join(LOGS_ROOT, "SystemLogs", "migration_state_09_stories.json")
 
 JST = timezone(timedelta(hours=+9), 'JST')

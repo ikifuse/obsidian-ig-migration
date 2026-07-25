@@ -237,7 +237,7 @@ def main():
         print(f"\n🚀 処理開始: ({len(posts_by_period[target_period])}件の投稿)")
         
         dest_posts_dir = os.path.join(config.LOGS_ROOT, "Posts")
-        dest_attach_dir = os.path.join(config.LOGS_ROOT, "Instagram", "media")
+        dest_attach_dir = os.path.join(config.LOGS_ROOT, "media")
         dest_raw_dir = os.path.join(config.LOGS_ROOT, "SystemLogs", "RawData")
         
         os.makedirs(dest_posts_dir, exist_ok=True)

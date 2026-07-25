@@ -30,7 +30,7 @@ SRC_MEDIA_DIRS = [
 DEST_VAULT_DIR = resolve_output_dir("output_IGR")
 LOGS_ROOT = os.path.join(DEST_VAULT_DIR, "Instagram_Logs")
 
-STATE_FILE = os.path.join(LOGS_ROOT, "migration_state_08_reels.json")
+STATE_FILE = os.path.join(LOGS_ROOT, "SystemLogs", "migration_state_08_reels.json")
 
 # 出力先ディレクトリ
 DEST_REELS_DIR = os.path.join(LOGS_ROOT, "Reels")

@@ -203,9 +203,6 @@ def main():
     skip_count = 0
     error_count = 0
     repaired_count = 0
-    
-    timeline_entries = []
-    
     for original_index, post_fixed in valid_reels:
         try:
             ts = get_post_timestamp(post_fixed)
@@ -459,23 +456,12 @@ def main():
                     out.write("---\n")
                     out.write(" ".join(links) + "\n")
             
-            timeline_entries.append(f"- [[{post_id}]] : {caption_preview}")
-            
             success_count += 1
 
         except Exception as e:
             error_count += 1
             print(f"[警告] 投稿処理エラー (インデックス: {original_index}): {e}")
             write_event_log("REEL_PROCESSING_ERROR", "ERROR", {"index": original_index, "error": str(e)})
-    
-    timeline_filepath = os.path.join(DEST_REELS_DIR, "Reels_Timeline.md")
-    with open(timeline_filepath, "w", encoding="utf-8") as f:
-        f.write("# Reels Timeline\n\n")
-        if not timeline_entries:
-            f.write("投稿はありません。\n")
-        else:
-            for entry in timeline_entries:
-                f.write(entry + "\n")
     
     completed = error_count == 0
     write_event_log("REELS_MIGRATION_COMPLETE", "SYSTEM", {
