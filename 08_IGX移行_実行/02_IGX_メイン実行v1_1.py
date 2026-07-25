@@ -5,22 +5,34 @@ import re
 import sys
 from datetime import datetime
 
-from IGR_00_セッテイv1_1 import (
-    POSTS_JSON_DIR, STATE_FILE, LOGS_ROOT, DEST_REELS_DIR, DEST_MEDIA_DIR, 
-    DEST_RAW_DIR, GLOBAL_SYNAPSES_TAGS, GLOBAL_SYNAPSES_MENTIONS, 
-    GLOBAL_SYNAPSES_LOCATIONS, JST
-)
-from IGR_02_テキスト処理v1_1 import (
-    safe_filename, fix_mojibake, clean_tag_or_mention, extract_emojis
-)
-from IGR_03_メディア処理v1_1 import (
-    build_media_index, extract_media_recursively, copy_media_file
-)
-from IGR_04_マークダウン生成v1_1 import generate_4layer_yaml
-from IGR_05_シナプス管理v1_1 import (
-    write_event_log, append_to_global_synapse, generate_global_synapse_indexes,
-    resolve_synapse_storage_name, synapse_card_is_complete,
-)
+_mod = __import__("01_IGX_セッテイv1_1")
+POSTS_JSON_DIR = getattr(_mod, "POSTS_JSON_DIR")
+STATE_FILE = getattr(_mod, "STATE_FILE")
+LOGS_ROOT = getattr(_mod, "LOGS_ROOT")
+DEST_RAW_DIR = getattr(_mod, "DEST_RAW_DIR")
+DEST_SALVAGE_DIR = getattr(_mod, "DEST_SALVAGE_DIR")
+DEST_MEDIA_DIR = getattr(_mod, "DEST_MEDIA_DIR")
+GLOBAL_SYNAPSES_TAGS = getattr(_mod, "GLOBAL_SYNAPSES_TAGS")
+GLOBAL_SYNAPSES_MENTIONS = getattr(_mod, "GLOBAL_SYNAPSES_MENTIONS")
+GLOBAL_SYNAPSES_LOCATIONS = getattr(_mod, "GLOBAL_SYNAPSES_LOCATIONS")
+JST = getattr(_mod, "JST")
+_mod = __import__("03_IGX_テキスト処理v1_1")
+fix_mojibake = getattr(_mod, "fix_mojibake")
+safe_filename = getattr(_mod, "safe_filename")
+clean_tag_or_mention = getattr(_mod, "clean_tag_or_mention")
+extract_emojis = getattr(_mod, "extract_emojis")
+_mod = __import__("04_IGX_メディア処理v1_1")
+build_media_index = getattr(_mod, "build_media_index")
+find_media_file = getattr(_mod, "find_media_file")
+extract_media_recursively = getattr(_mod, "extract_media_recursively")
+copy_media_file = getattr(_mod, "copy_media_file")
+_mod = __import__("05_IGX_マークダウン生成v1_1")
+generate_4layer_yaml = getattr(_mod, "generate_4layer_yaml")
+_mod = __import__("06_IGX_シナプス管理v1_1")
+write_event_log = getattr(_mod, "write_event_log")
+append_to_global_synapse = getattr(_mod, "append_to_global_synapse")
+generate_global_synapse_indexes = getattr(_mod, "generate_global_synapse_indexes")
+resolve_synapse_storage_name = getattr(_mod, "resolve_synapse_storage_name")
 
 def get_post_timestamp(post):
     if "timestamp" in post: return post["timestamp"]
@@ -112,96 +124,110 @@ def markdown_identity_matches(path, post_id, date_iso):
         and f'raw_source_path: "[[{post_id}.json]]"' in text
     )
 
-def reel_is_complete(md_path, raw_path, post_id, date_iso, expected_media, synapse_expectations, tags, mentions, links, geo_lat, geo_lng):
+def salvage_is_complete(md_path, raw_path, post_id, date_iso, expected_media, synapse_paths, tags, mentions, links, geo_lat, geo_lng):
     if not os.path.exists(raw_path):
         return False
     if any(not os.path.exists(os.path.join(DEST_MEDIA_DIR, name)) for name in expected_media):
         return False
-    if any(
-        not synapse_card_is_complete(path, cat_tag, display_name, post_id)
-        for path, cat_tag, display_name in synapse_expectations
-    ):
+    if any(path and not os.path.exists(path) for path in synapse_paths):
         return False
     return existing_markdown_matches(
         md_path, post_id, date_iso, tags, mentions, links, geo_lat, geo_lng
     )
 
+def extract_all_posts(data):
+    posts = []
+    if isinstance(data, dict):
+        if "timestamp" in data or "creation_timestamp" in data:
+            posts.append(data)
+        else:
+            for val in data.values():
+                posts.extend(extract_all_posts(val))
+    elif isinstance(data, list):
+        for item in data:
+            posts.extend(extract_all_posts(item))
+    return posts
+
 def main():
-    print("=== Instagram Reels → Obsidian (期間分割なしフラット構造) v1_1 ===")
+    print("=== Instagram Salvage → Obsidian (期間分割なしフラット構造) v1_1 ===")
     
     if not os.path.exists(POSTS_JSON_DIR):
         print(f"[致命的エラー] ディレクトリ {POSTS_JSON_DIR} が存在しません。")
         return 1
 
-    json_files = glob.glob(os.path.join(POSTS_JSON_DIR, "reels*.json"))
+    json_files = glob.glob(os.path.join(POSTS_JSON_DIR, "*.json"))
     if not json_files:
-        print(f"[致命的エラー] {POSTS_JSON_DIR} に reels*.json が見つかりません。")
+        print(f"[致命的エラー] {POSTS_JSON_DIR} に JSONファイルが見つかりません。")
         return 1
+
+    exclude_patterns = ["posts", "stories", "reels"]
+    target_files = []
+    for jf in json_files:
+        basename_lower = os.path.basename(jf).lower()
+        if any(p in basename_lower for p in exclude_patterns):
+            continue
+        target_files.append(jf)
+
+    if not target_files:
+        print("✅ サルベージ対象の独立JSONファイル（IGTV/アーカイブ等）はありません。")
+        return 0
 
     state = load_state()
     
-    os.makedirs(DEST_REELS_DIR, exist_ok=True)
-    os.makedirs(DEST_MEDIA_DIR, exist_ok=True)
     os.makedirs(DEST_RAW_DIR, exist_ok=True)
+    os.makedirs(DEST_SALVAGE_DIR, exist_ok=True)
+    os.makedirs(DEST_MEDIA_DIR, exist_ok=True)
     os.makedirs(GLOBAL_SYNAPSES_TAGS, exist_ok=True)
     os.makedirs(GLOBAL_SYNAPSES_MENTIONS, exist_ok=True)
     os.makedirs(GLOBAL_SYNAPSES_LOCATIONS, exist_ok=True)
 
     raw_data = []
-    print(f">> {len(json_files)} 個のJSONファイル (reels*.json) を結合しています...")
-    for json_file in json_files:
+    print(f">> {len(target_files)} 個のJSONファイルを探索しています...")
+    for json_file in target_files:
         try:
             with open(json_file, "r", encoding="utf-8") as f:
                 data = json.load(f)
-                if isinstance(data, list):
-                    raw_data.extend(data)
-                    print(f"  - {os.path.basename(json_file)}: {len(data)}件読み込み")
-                elif isinstance(data, dict):
-                    if "ig_reels_media" in data:
-                        raw_data.extend(data["ig_reels_media"])
-                        print(f"  - {os.path.basename(json_file)}: {len(data['ig_reels_media'])}件読み込み")
-                    elif "media" in data:
-                        raw_data.extend(data["media"])
-                        print(f"  - {os.path.basename(json_file)}: {len(data['media'])}件読み込み")
-                    else:
-                        print(f"[致命的エラー] 未知のJSON構造です: {os.path.basename(json_file)}")
-                        return 1
+                posts = extract_all_posts(data)
+                if posts:
+                    raw_data.extend((json_file, post) for post in posts)
+                    print(f"  - {os.path.basename(json_file)}: {len(posts)}件のエントリを抽出")
         except Exception as e:
             print(f"[致命的エラー] {os.path.basename(json_file)} の読み込みに失敗しました: {e}")
             return 1
 
-    valid_reels = []
-    for i, post in enumerate(raw_data):
+    valid_posts = []
+    for i, (source_json, post) in enumerate(raw_data):
         post_fixed = fix_mojibake(post)
         ts = get_post_timestamp(post_fixed)
         if ts != 0:
-            valid_reels.append((i, post_fixed))
+            valid_posts.append((i, source_json, post_fixed))
             
-    valid_reels.sort(key=lambda x: get_post_timestamp(x[1]))
+    valid_posts.sort(key=lambda x: get_post_timestamp(x[2]))
     
-    if not valid_reels:
-        print("✅ 処理すべきリールデータが存在しません。")
+    if not valid_posts:
+        print("✅ 処理すべきサルベージエントリが存在しません。")
         return 0
 
     build_media_index()
 
-    print(f"\n🚀 処理開始: 合計 {len(valid_reels)}件のリールデータ")
+    print(f"\n🚀 処理開始: 合計 {len(valid_posts)}件のサルベージデータ")
     
     success_count = 0
     skip_count = 0
     error_count = 0
     repaired_count = 0
+    warning_count = 0
     
     timeline_entries = []
     
-    for original_index, post_fixed in valid_reels:
+    for original_index, source_json, post_fixed in valid_posts:
         try:
             ts = get_post_timestamp(post_fixed)
             dt = datetime.fromtimestamp(ts, tz=JST)
             date_iso = dt.isoformat() 
             file_date_str = dt.strftime("%Y-%m-%d-%H-%M-%S")
-            post_id = f"{file_date_str}_IGR_{original_index+1:03d}"
-            md_filepath = os.path.join(DEST_REELS_DIR, f"{post_id}.md")
+            post_id = f"{file_date_str}_IGX_{original_index+1:03d}"
+            md_filepath = os.path.join(DEST_SALVAGE_DIR, f"{post_id}.md")
             json_filepath = os.path.join(DEST_RAW_DIR, f"{post_id}.json")
 
             write_raw_data(json_filepath, post_fixed)
@@ -216,52 +242,40 @@ def main():
             if not ig_id:
                 ig_id = f"ig_{ts}_{original_index+1}"
 
-            geo_lat = post_fixed.get("latitude", None)
-            geo_lng = post_fixed.get("longitude", None)
-
-            # media 内の要素を走査してフォールバック取得
+            geo_lat = post_fixed.get("latitude")
+            geo_lng = post_fixed.get("longitude")
             if geo_lat is None or geo_lng is None:
-                media_items = post_fixed.get("media", [])
-                if isinstance(media_items, list):
-                    for m_item in media_items:
-                        if not isinstance(m_item, dict): continue
-                        geo_lat = m_item.get("latitude", None)
-                        geo_lng = m_item.get("longitude", None)
+                for media_item in raw_media:
+                    if not isinstance(media_item, dict):
+                        continue
+                    candidate_lat = media_item.get("latitude")
+                    candidate_lng = media_item.get("longitude")
+                    if candidate_lat is not None and candidate_lng is not None:
+                        geo_lat = candidate_lat
+                        geo_lng = candidate_lng
+                        break
+                    metadata = media_item.get("media_metadata", {})
+                    for metadata_key in ("photo_metadata", "video_metadata"):
+                        metadata_value = metadata.get(metadata_key, {})
+                        if not isinstance(metadata_value, dict):
+                            continue
+                        for exif_item in metadata_value.get("exif_data", []):
+                            if not isinstance(exif_item, dict):
+                                continue
+                            if "latitude" in exif_item and "longitude" in exif_item:
+                                geo_lat = exif_item["latitude"]
+                                geo_lng = exif_item["longitude"]
+                                break
                         if geo_lat is not None and geo_lng is not None:
                             break
-                        
-                        # exif_data の探索
-                        metadata = m_item.get("media_metadata", {})
-                        exif_list = []
-                        if "video_metadata" in metadata and isinstance(metadata["video_metadata"], dict):
-                            exif_list = metadata["video_metadata"].get("exif_data", [])
-                        elif "photo_metadata" in metadata and isinstance(metadata["photo_metadata"], dict):
-                            exif_list = metadata["photo_metadata"].get("exif_data", [])
-                        
-                        if isinstance(exif_list, list):
-                            found = False
-                            for exif_item in exif_list:
-                                if isinstance(exif_item, dict) and "latitude" in exif_item and "longitude" in exif_item:
-                                    geo_lat = exif_item["latitude"]
-                                    geo_lng = exif_item["longitude"]
-                                    found = True
-                                    break
-                            if found:
-                                break
+                    if geo_lat is not None and geo_lng is not None:
+                        break
 
             caption = ""
             loc_name = ""
             
-            if "media" in post_fixed and isinstance(post_fixed["media"], list) and len(post_fixed["media"]) > 0:
-                media_titles = []
-                for media_item in post_fixed["media"]:
-                    if not isinstance(media_item, dict):
-                        continue
-                    title = media_item.get("title", "")
-                    if title and title not in media_titles:
-                        media_titles.append(title)
-                if media_titles:
-                    caption = "\n\n".join(media_titles)
+            if "title" in post_fixed:
+                caption = post_fixed["title"]
             
             label_values = post_fixed.get("label_values")
             if isinstance(label_values, list):
@@ -288,9 +302,6 @@ def main():
                 if clean_tag_or_mention(raw)
             ]
             
-            # Instagram usernames use ASCII letters, digits, underscores, and dots.
-            # If Japanese text continues immediately after "@name", treat it as
-            # body text or a mistyped hashtag rather than an account mention.
             raw_mentions = []
             for match in re.finditer(r'@([A-Za-z0-9._]+)', caption):
                 next_char = caption[match.end():match.end() + 1]
@@ -321,48 +332,34 @@ def main():
                 links.append(f"[[{loc_name_safe}]]")
 
             expected_media = expected_media_outputs(post_id, raw_media)
-            synapse_expectations = [
-                (
-                    os.path.join(
-                        GLOBAL_SYNAPSES_TAGS,
-                        f"{resolve_synapse_storage_name(GLOBAL_SYNAPSES_TAGS, entry['name'], 'Synapse/Tag', entry['raw'])}.md",
-                    ),
-                    "Synapse/Tag",
-                    entry["raw"],
+            synapse_paths = [
+                os.path.join(
+                    GLOBAL_SYNAPSES_TAGS,
+                    f"{resolve_synapse_storage_name(GLOBAL_SYNAPSES_TAGS, entry['name'], 'Synapse/Tag', entry['raw'])}.md",
                 )
                 for entry in tag_entries
             ]
-            synapse_expectations.extend(
-                (
-                    os.path.join(
-                        GLOBAL_SYNAPSES_MENTIONS,
-                        f"{resolve_synapse_storage_name(GLOBAL_SYNAPSES_MENTIONS, entry['name'], 'Synapse/Mention', entry['raw'])}.md",
-                    ),
-                    "Synapse/Mention",
-                    entry["raw"],
+            synapse_paths.extend(
+                os.path.join(
+                    GLOBAL_SYNAPSES_MENTIONS,
+                    f"{resolve_synapse_storage_name(GLOBAL_SYNAPSES_MENTIONS, entry['name'], 'Synapse/Mention', entry['raw'])}.md",
                 )
                 for entry in mention_entries
             )
             if loc_name_safe:
-                synapse_expectations.append(
-                    (
-                        os.path.join(GLOBAL_SYNAPSES_LOCATIONS, f"{loc_name_safe}.md"),
-                        "Synapse/Location",
-                        loc_name,
-                    )
-                )
+                synapse_paths.append(os.path.join(GLOBAL_SYNAPSES_LOCATIONS, f"{loc_name_safe}.md"))
 
             caption_preview = caption.replace('\n', ' ')[:30] if caption else "無題"
             if len(caption) > 30:
                 caption_preview += "..."
 
-            if reel_is_complete(
+            if salvage_is_complete(
                 md_filepath,
                 json_filepath,
                 post_id,
                 date_iso,
                 expected_media,
-                synapse_expectations,
+                synapse_paths,
                 tags,
                 mentions,
                 links,
@@ -375,7 +372,7 @@ def main():
 
             if os.path.exists(md_filepath):
                 if not markdown_identity_matches(md_filepath, post_id, date_iso):
-                    raise ValueError(f"既存Reelメモが原本識別情報と一致しません: {md_filepath}")
+                    raise ValueError(f"既存Salvageメモが原本識別情報と一致しません: {md_filepath}")
                 repaired_count += 1
 
             for entry in tag_entries:
@@ -400,18 +397,27 @@ def main():
 
             copied_media_names = []
             seen_uris = set()
+            has_video = False
             for idx, media_item in enumerate(raw_media):
                 uri = media_item.get("uri", "")
                 if not uri or uri in seen_uris: continue
                 seen_uris.add(uri)
+                ext = os.path.splitext(uri)[1].lower()
+                if ext in [".mp4", ".mov", ".m4v"]:
+                    has_video = True
                 
                 copied_name, copied = copy_media_file(uri, post_id, idx, write_event_log)
                 if copied_name:
                     copied_media_names.append(copied_name)
                 elif os.path.splitext(uri)[1].lower() == ".srt":
-                    write_event_log("SUBTITLE_NOT_FOUND", "WARNING", {"post_id": post_id, "uri": uri})
+                    warning_count += 1
+                    write_event_log("SUBTITLE_NOT_FOUND", "WARNING", {
+                        "post_id": post_id,
+                        "source_json": os.path.basename(source_json),
+                        "uri": uri,
+                    })
                 else:
-                    raise FileNotFoundError(f"Reel参照メディアが見つかりません: {uri}")
+                    raise FileNotFoundError(f"Salvage参照メディアが見つかりません: {uri}")
 
             p_info = {
                 "post_id": post_id,
@@ -423,6 +429,7 @@ def main():
                 "loc_name": loc_name_safe,
                 "geo_lat": geo_lat,
                 "geo_lng": geo_lng,
+                "content_type": "video" if has_video else None,
                 "tags_normalized": tags,
                 "mentions": ["@" + m for m in mentions],
                 "links": links,
@@ -437,7 +444,7 @@ def main():
             
             with open(md_filepath, "w", encoding="utf-8") as out:
                 out.write(yaml_header + "\n\n")
-                out.write("[[instagram]]\n\n")
+                out.write("[[Instagram]]\n\n")
                 out.write(f"{caption}\n\n")
                 
                 for m_name in copied_media_names:
@@ -453,12 +460,16 @@ def main():
 
         except Exception as e:
             error_count += 1
-            print(f"[警告] 投稿処理エラー (インデックス: {original_index}): {e}")
-            write_event_log("REEL_PROCESSING_ERROR", "ERROR", {"index": original_index, "error": str(e)})
+            print(f"[警告] サルベージ処理エラー (インデックス: {original_index}): {e}")
+            write_event_log("SALVAGE_PROCESSING_ERROR", "ERROR", {
+                "index": original_index,
+                "source_json": os.path.basename(source_json),
+                "error": str(e),
+            })
     
-    timeline_filepath = os.path.join(DEST_REELS_DIR, "Reels_Timeline.md")
+    timeline_filepath = os.path.join(DEST_SALVAGE_DIR, "Salvage_Timeline.md")
     with open(timeline_filepath, "w", encoding="utf-8") as f:
-        f.write("# Reels Timeline\n\n")
+        f.write("# Salvage Timeline\n\n")
         if not timeline_entries:
             f.write("投稿はありません。\n")
         else:
@@ -466,17 +477,19 @@ def main():
                 f.write(entry + "\n")
     
     completed = error_count == 0
-    write_event_log("REELS_MIGRATION_COMPLETE", "SYSTEM", {
+    write_event_log("SALVAGE_MIGRATION_COMPLETE", "SYSTEM", {
         "success": success_count,
         "skip": skip_count,
         "repaired": repaired_count,
+        "warning": warning_count,
         "error": error_count,
         "completed": completed,
-        "source_json_files": [os.path.basename(path) for path in json_files],
+        "source_json_files": [os.path.basename(path) for path in target_files],
     })
     print(
         f"   -> 完了判定: {'完了' if completed else '未完了'} "
-        f"(生成: {success_count}, 再補修: {repaired_count}, スキップ: {skip_count}, エラー: {error_count})"
+        f"(生成: {success_count}, 再補修: {repaired_count}, スキップ: {skip_count}, "
+        f"警告: {warning_count}, エラー: {error_count})"
     )
 
     state["run_count"] = state.get("run_count", 0) + 1
@@ -487,10 +500,10 @@ def main():
     generate_global_synapse_indexes()
 
     if not completed:
-        print(f"\n[未完了] Reel処理エラーが {error_count} 件あります。")
+        print(f"\n[未完了] Salvage処理エラーが {error_count} 件あります。")
         return 1
 
-    print("\n🎉 リールデータの移行処理が完了しました！")
+    print("\n🎉 サルベージデータの移行処理が完了しました！")
     return 0
 
 if __name__ == "__main__":

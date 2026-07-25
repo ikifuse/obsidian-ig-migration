@@ -1,6 +1,8 @@
 import os
 import shutil
-from IGX_00_セッテイv1_1 import SRC_MEDIA_DIRS, DEST_MEDIA_DIR
+_mod = __import__("01_IGX_セッテイv1_1")
+SRC_MEDIA_DIRS = getattr(_mod, "SRC_MEDIA_DIRS")
+DEST_MEDIA_DIR = getattr(_mod, "DEST_MEDIA_DIR")
 
 MEDIA_INDEX = {}
 

@@ -6,8 +6,8 @@ import hashlib
 import unicodedata
 from datetime import datetime
 from collections import defaultdict
-import IGP_00_セッテイv1_1 as config
-import IGP_02_テキスト処理v1_1 as txt
+config = __import__("01_IGP_セッテイv1_1")
+txt = __import__("03_IGP_テキスト処理v1_1")
 
 ALIAS_RE = re.compile(r'^aliases:\s*\["(.+)"\]\s*$')
 

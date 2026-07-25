@@ -5,21 +5,35 @@ import re
 import sys
 from datetime import datetime
 
-from IGS_00_セッテイv1_1 import (
-    POSTS_JSON_DIR, STATE_FILE, LOGS_ROOT, DEST_RAW_DIR, DEST_MEDIA_DIR, 
-    GLOBAL_SYNAPSES_TAGS, GLOBAL_SYNAPSES_MENTIONS, GLOBAL_SYNAPSES_LOCATIONS, JST
-)
-from IGS_02_テキスト処理v1_1 import (
-    fix_mojibake, safe_filename, clean_tag_or_mention, extract_emojis, get_period
-)
-from IGS_03_メディア処理v1_1 import (
-    build_media_index, find_media_file, extract_media_recursively, copy_media_file
-)
-from IGS_04_マークダウン生成v1_1 import generate_4layer_yaml
-from IGS_05_シナプス管理v1_1 import (
-    write_event_log, append_to_global_synapse, generate_global_synapse_indexes,
-    resolve_synapse_storage_name, synapse_card_is_complete,
-)
+_mod = __import__("01_IGS_セッテイv1_1")
+POSTS_JSON_DIR = getattr(_mod, "POSTS_JSON_DIR")
+STATE_FILE = getattr(_mod, "STATE_FILE")
+LOGS_ROOT = getattr(_mod, "LOGS_ROOT")
+DEST_RAW_DIR = getattr(_mod, "DEST_RAW_DIR")
+DEST_MEDIA_DIR = getattr(_mod, "DEST_MEDIA_DIR")
+GLOBAL_SYNAPSES_TAGS = getattr(_mod, "GLOBAL_SYNAPSES_TAGS")
+GLOBAL_SYNAPSES_MENTIONS = getattr(_mod, "GLOBAL_SYNAPSES_MENTIONS")
+GLOBAL_SYNAPSES_LOCATIONS = getattr(_mod, "GLOBAL_SYNAPSES_LOCATIONS")
+JST = getattr(_mod, "JST")
+_mod = __import__("03_IGS_テキスト処理v1_1")
+fix_mojibake = getattr(_mod, "fix_mojibake")
+safe_filename = getattr(_mod, "safe_filename")
+clean_tag_or_mention = getattr(_mod, "clean_tag_or_mention")
+extract_emojis = getattr(_mod, "extract_emojis")
+get_period = getattr(_mod, "get_period")
+_mod = __import__("04_IGS_メディア処理v1_1")
+build_media_index = getattr(_mod, "build_media_index")
+find_media_file = getattr(_mod, "find_media_file")
+extract_media_recursively = getattr(_mod, "extract_media_recursively")
+copy_media_file = getattr(_mod, "copy_media_file")
+_mod = __import__("05_IGS_マークダウン生成v1_1")
+generate_4layer_yaml = getattr(_mod, "generate_4layer_yaml")
+_mod = __import__("06_IGS_シナプス管理v1_1")
+write_event_log = getattr(_mod, "write_event_log")
+append_to_global_synapse = getattr(_mod, "append_to_global_synapse")
+generate_global_synapse_indexes = getattr(_mod, "generate_global_synapse_indexes")
+resolve_synapse_storage_name = getattr(_mod, "resolve_synapse_storage_name")
+synapse_card_is_complete = getattr(_mod, "synapse_card_is_complete")
 
 def get_post_timestamp(post):
     if "timestamp" in post: return post["timestamp"]

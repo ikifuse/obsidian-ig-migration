@@ -1,11 +1,17 @@
-import os
-import json
 import hashlib
+import json
+import os
 import re
 import unicodedata
 from datetime import datetime
-from IGS_00_セッテイv1_1 import LOGS_ROOT, EVENTS_DIR, JST
-from IGS_02_テキスト処理v1_1 import safe_filename
+
+_mod = __import__("01_IGR_セッテイv1_1")
+EVENTS_DIR = getattr(_mod, "EVENTS_DIR")
+JST = getattr(_mod, "JST")
+LOGS_ROOT = getattr(_mod, "LOGS_ROOT")
+_mod = __import__("03_IGR_テキスト処理v1_1")
+safe_filename = getattr(_mod, "safe_filename")
+
 
 NOTE_KEYS = {
     "Synapse/Tag": "hashtag_note",
@@ -13,34 +19,40 @@ NOTE_KEYS = {
     "Synapse/Location": "location_note",
 }
 FORBIDDEN_CONTENT = {
-    "Synapse/Tag": ("hashtag_extraction:", "IGS_HASHTAG_EXTRACTION"),
-    "Synapse/Mention": ("mention_extraction:", "IGS_MENTION_EXTRACTION"),
-    "Synapse/Location": ("location_observation:", "IGS_LOCATION_OBSERVATION"),
+    "Synapse/Tag": ("hashtag_extraction:", "IGR_HASHTAG_EXTRACTION"),
+    "Synapse/Mention": ("mention_extraction:", "IGR_MENTION_EXTRACTION"),
+    "Synapse/Location": ("location_observation:", "IGR_LOCATION_OBSERVATION"),
 }
 STORAGE_ASSIGNMENTS = {}
 STORAGE_RESERVATIONS = {}
 
+
 def yaml_scalar(value):
     if value is None:
         return "null"
+    if isinstance(value, bool):
+        return "true" if value else "false"
     if isinstance(value, (int, float)):
         return str(value)
     return json.dumps(str(value), ensure_ascii=False)
 
-def read_alias(filepath):
+
+def write_event_log(action, category, details):
+    os.makedirs(EVENTS_DIR, exist_ok=True)
+    now = datetime.now(JST)
+    filepath = os.path.join(EVENTS_DIR, now.strftime("%Y-%m-%d_Events.jsonl"))
+    event_data = {
+        "timestamp": now.isoformat(),
+        "action": action,
+        "category": category,
+        "details": details,
+    }
     try:
-        with open(filepath, "r", encoding="utf-8") as f:
-            for _ in range(6):
-                line = f.readline()
-                match = re.match(r"^aliases:\s*\[(.+)\]\s*$", line.strip())
-                if match:
-                    try:
-                        return json.loads(match.group(1).strip())
-                    except json.JSONDecodeError:
-                        return match.group(1).strip().strip('"')
-    except OSError:
-        return None
-    return None
+        with open(filepath, "a", encoding="utf-8") as f:
+            f.write(json.dumps(event_data, ensure_ascii=False) + "\n")
+    except Exception as e:
+        print(f"[警告] イベントログ書き込み失敗: {e}")
+
 
 def synapse_display_name(synapse_name, cat_tag, raw_value):
     if cat_tag in ("Synapse/Tag", "Synapse/Mention"):
@@ -48,6 +60,27 @@ def synapse_display_name(synapse_name, cat_tag, raw_value):
             raise ValueError(f"{cat_tag}には元表記が必要です: {synapse_name}")
         return raw_value
     return synapse_name
+
+
+def read_alias(filepath):
+    try:
+        with open(filepath, "r", encoding="utf-8") as f:
+            for _ in range(6):
+                line = f.readline()
+                if not line:
+                    break
+                match = re.match(r"^aliases:\s*\[(.+)\]\s*$", line.strip())
+                if not match:
+                    continue
+                scalar = match.group(1).strip()
+                try:
+                    return json.loads(scalar)
+                except json.JSONDecodeError:
+                    return scalar.strip('"')
+    except OSError:
+        return None
+    return None
+
 
 def resolve_synapse_storage_name(synapse_dir, synapse_name, cat_tag, raw_value=None):
     display_name = synapse_display_name(synapse_name, cat_tag, raw_value)
@@ -74,6 +107,7 @@ def resolve_synapse_storage_name(synapse_dir, synapse_name, cat_tag, raw_value=N
     STORAGE_ASSIGNMENTS[assignment_key] = storage_name
     return storage_name
 
+
 def render_synapse_information(cat_tag, display_name, geo_lat=None, geo_lng=None):
     if cat_tag == "Synapse/Tag":
         return f"""```yaml
@@ -81,6 +115,7 @@ hashtag_note:                                 # ハッシュタグを人間が�
   hashtag: {yaml_scalar(display_name)}                   # 投稿から抽出されたハッシュタグ表記
   note: null                                  # 自由メモ
 ```"""
+
     if cat_tag == "Synapse/Mention":
         instagram_name = display_name[1:] if display_name.startswith(("@", "＠")) else display_name
         instagram_url = f"https://www.instagram.com/{instagram_name}/"
@@ -94,8 +129,10 @@ mention_note:                                 # 人・店舗・団体などを�
                                                # @表記から生成したInstagram URL
   note: null                                  # 自由メモ
 ```"""
+
     if cat_tag != "Synapse/Location":
         raise ValueError(f"未対応のSynapseカテゴリです: {cat_tag}")
+
     return f"""```yaml
 location_note:
   location: {yaml_scalar(display_name)}    # Instagramから抽出された場所名
@@ -121,6 +158,7 @@ source_files: []                   # 活動の元ファイル
 
 note: null                         # 元ファイルから分からない人間の記憶
 ```"""
+
 
 def synapse_card_errors(text, cat_tag, display_name, post_id=None):
     """人間入力値を解釈・変更せず、生成責任に属する構造だけを検証する。"""
@@ -186,12 +224,14 @@ def synapse_card_errors(text, cat_tag, display_name, post_id=None):
 
     return errors
 
+
 def validate_existing_synapse(filepath, cat_tag, display_name, post_id=None):
     with open(filepath, "r", encoding="utf-8") as f:
         text = f.read()
     errors = synapse_card_errors(text, cat_tag, display_name, post_id=post_id)
     if errors:
         raise ValueError(f"既存Synapseが現行仕様と一致しません: {filepath} ({'; '.join(errors)})")
+
 
 def synapse_card_is_complete(filepath, cat_tag, display_name, post_id):
     if not os.path.exists(filepath):
@@ -202,6 +242,7 @@ def synapse_card_is_complete(filepath, cat_tag, display_name, post_id):
     except OSError:
         return False
     return not synapse_card_errors(text, cat_tag, display_name, post_id=post_id)
+
 
 def append_related_post(filepath, post_id):
     with open(filepath, "r", encoding="utf-8") as f:
@@ -216,32 +257,26 @@ def append_related_post(filepath, post_id):
     with open(filepath, "w", encoding="utf-8") as f:
         f.write(updated)
 
-def write_event_log(event_type, status, details):
-    systemlogs_dir = os.path.join(LOGS_ROOT, "SystemLogs")
-    events_dir = os.path.join(systemlogs_dir, "Events")
-    os.makedirs(events_dir, exist_ok=True)
-    
-    filename = datetime.now(JST).strftime("%Y-%m-%d_Events.jsonl")
-    log_file = os.path.join(events_dir, filename)
-    
-    log_entry = {
-        "timestamp": datetime.now(JST).isoformat(),
-        "action": event_type,
-        "category": status,
-        "details": details
-    }
-    try:
-        with open(log_file, "a", encoding="utf-8") as f:
-            f.write(json.dumps(log_entry, ensure_ascii=False) + "\n")
-    except Exception as e:
-        print(f"[警告] イベントログ書き込み失敗: {e}")
 
-def append_to_global_synapse(synapse_dir, synapse_name, post_id, cat_tag, raw_value=None, geo_lat=None, geo_lng=None):
+def append_to_global_synapse(
+    synapse_dir,
+    synapse_name,
+    post_id,
+    cat_tag,
+    raw_value=None,
+    geo_lat=None,
+    geo_lng=None,
+):
     display_name = synapse_display_name(synapse_name, cat_tag, raw_value)
-    storage_name = resolve_synapse_storage_name(synapse_dir, synapse_name, cat_tag, raw_value)
+    storage_name = resolve_synapse_storage_name(
+        synapse_dir, synapse_name, cat_tag, raw_value=raw_value
+    )
     filepath = os.path.join(synapse_dir, f"{storage_name}.md")
+
     if not os.path.exists(filepath):
-        information = render_synapse_information(cat_tag, display_name, geo_lat, geo_lng)
+        information = render_synapse_information(
+            cat_tag, display_name, geo_lat=geo_lat, geo_lng=geo_lng
+        )
         with open(filepath, "w", encoding="utf-8") as f:
             f.write("---\n")
             f.write(f"aliases: [{yaml_scalar(display_name)}]\n")
@@ -249,6 +284,7 @@ def append_to_global_synapse(synapse_dir, synapse_name, post_id, cat_tag, raw_va
             f.write("---\n\n")
             f.write(f"# {display_name}\n\n")
             f.write(information + "\n")
+
     validate_existing_synapse(filepath, cat_tag, display_name)
     append_related_post(filepath, post_id)
     validate_existing_synapse(filepath, cat_tag, display_name, post_id=post_id)
@@ -256,25 +292,21 @@ def append_to_global_synapse(synapse_dir, synapse_name, post_id, cat_tag, raw_va
         "synapse": display_name,
         "synapse_file": storage_name,
         "post_id": post_id,
-        "category": cat_tag
+        "category": cat_tag,
     })
+
 
 def generate_global_synapse_indexes():
     print("\n>> 検証用のSynapse候補一覧（インデックス）を生成中...")
     global_systemlogs = os.path.join(LOGS_ROOT, "SystemLogs")
     os.makedirs(global_systemlogs, exist_ok=True)
-    
-    categories_data = {
-        "Synapse/Tag": {},
-        "Synapse/Mention": {},
-        "Synapse/Location": {}
-    }
-    events_dir = os.path.join(LOGS_ROOT, "SystemLogs", "Events")
-    if os.path.exists(events_dir):
-        for filename in os.listdir(events_dir):
+    categories_data = {cat: {} for cat in NOTE_KEYS}
+
+    if os.path.exists(EVENTS_DIR):
+        for filename in os.listdir(EVENTS_DIR):
             if not filename.endswith(".jsonl"):
                 continue
-            filepath = os.path.join(events_dir, filename)
+            filepath = os.path.join(EVENTS_DIR, filename)
             try:
                 with open(filepath, "r", encoding="utf-8") as f:
                     for line in f:
@@ -284,41 +316,47 @@ def generate_global_synapse_indexes():
                         if evt.get("action") != "SYNAPSE_APPENDED":
                             continue
                         details = evt.get("details", {})
-                        synapse_name = details.get("synapse")
-                        synapse_file = details.get("synapse_file")
+                        cat = details.get("category")
                         post_id = details.get("post_id")
-                        cat = details.get("category", "Synapse/Tag")
-                        if synapse_name and post_id and cat in categories_data:
-                            synapse_file = synapse_file or safe_filename(synapse_name)
-                            entry = categories_data[cat].setdefault(
-                                synapse_file, {"name": synapse_name, "posts": set()}
-                            )
-                            entry["name"] = synapse_name
-                            entry["posts"].add(post_id)
+                        display_name = details.get("synapse")
+                        storage_name = details.get("synapse_file")
+                        if cat not in categories_data or not post_id or not display_name:
+                            continue
+                        storage_name = storage_name or safe_filename(display_name)
+                        entry = categories_data[cat].setdefault(
+                            storage_name, {"name": display_name, "posts": set()}
+                        )
+                        entry["name"] = display_name
+                        entry["posts"].add(post_id)
             except Exception as e:
                 print(f"[警告] イベントログ解析エラー ({filepath}): {e}")
 
     output_mapping = {
         "Synapse/Tag": ("ハッシュタグ一覧.md", "ハッシュタグ"),
         "Synapse/Mention": ("メンション一覧.md", "メンション"),
-        "Synapse/Location": ("場所一覧.md", "場所")
+        "Synapse/Location": ("場所一覧.md", "場所"),
+    }
+    dir_mapping = {
+        "Synapse/Tag": os.path.join(LOGS_ROOT, "Synapses", "Tags"),
+        "Synapse/Mention": os.path.join(LOGS_ROOT, "Synapses", "Mentions"),
+        "Synapse/Location": os.path.join(LOGS_ROOT, "Synapses", "Locations"),
     }
 
     for cat_tag, (filename, title) in output_mapping.items():
+        out_filepath = os.path.join(global_systemlogs, filename)
         data_dict = categories_data[cat_tag]
-        out_filepath = os.path.join(global_systemlogs, f"{title}一覧.md")
         with open(out_filepath, "w", encoding="utf-8") as f:
-            f.write(f"# {title}一覧 - ストーリー検証用\n\n")
+            f.write(f"# {title}一覧 - リール検証用\n\n")
             f.write("初期状態で全て採用（`- [x]`）です。除外したい項目は `- [x]` を `- [ ]` にしてください。\n\n")
             sorted_items = sorted(
                 data_dict.items(), key=lambda item: len(item[1]["posts"]), reverse=True
             )
-            for synapse_file, item in sorted_items:
-                name = item["name"]
-                posts = item["posts"]
+            for storage_name, item in sorted_items:
+                alias = read_alias(os.path.join(dir_mapping[cat_tag], f"{storage_name}.md"))
+                name = alias or item["name"]
                 f.write("---\n\n")
-                f.write(f"- [x] [[{synapse_file}|{name}]]\n")
-                f.write(f"出現回数: {len(posts)}回\n\n")
+                f.write(f"- [x] [[{storage_name}|{name}]]\n")
+                f.write(f"出現回数: {len(item['posts'])}回\n\n")
                 f.write("出現投稿:\n")
-                for pid in sorted(list(posts)):
+                for pid in sorted(item["posts"]):
                     f.write(f"  - [[{pid}]]\n")

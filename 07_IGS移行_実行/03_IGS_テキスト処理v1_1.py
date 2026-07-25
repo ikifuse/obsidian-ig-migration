@@ -1,7 +1,8 @@
 import re
 import unicodedata
 from datetime import datetime
-from IGS_00_セッテイv1_1 import JST
+_mod = __import__("01_IGS_セッテイv1_1")
+JST = getattr(_mod, "JST")
 
 def fix_mojibake(data):
     if isinstance(data, str):

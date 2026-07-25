@@ -1,6 +1,6 @@
 import os
 from collections import defaultdict
-import IGP_00_セッテイv1_1 as config
+config = __import__("01_IGP_セッテイv1_1")
 
 MEDIA_INDEX_CACHE = defaultdict(list)
 

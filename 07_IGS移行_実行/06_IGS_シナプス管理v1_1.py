@@ -4,13 +4,22 @@ import hashlib
 import re
 import unicodedata
 from datetime import datetime
-from IGX_00_セッテイv1_1 import LOGS_ROOT, EVENTS_DIR, JST
-from IGX_02_テキスト処理v1_1 import safe_filename
+_mod = __import__("01_IGS_セッテイv1_1")
+LOGS_ROOT = getattr(_mod, "LOGS_ROOT")
+EVENTS_DIR = getattr(_mod, "EVENTS_DIR")
+JST = getattr(_mod, "JST")
+_mod = __import__("03_IGS_テキスト処理v1_1")
+safe_filename = getattr(_mod, "safe_filename")
 
 NOTE_KEYS = {
     "Synapse/Tag": "hashtag_note",
     "Synapse/Mention": "mention_note",
     "Synapse/Location": "location_note",
+}
+FORBIDDEN_CONTENT = {
+    "Synapse/Tag": ("hashtag_extraction:", "IGS_HASHTAG_EXTRACTION"),
+    "Synapse/Mention": ("mention_extraction:", "IGS_MENTION_EXTRACTION"),
+    "Synapse/Location": ("location_observation:", "IGS_LOCATION_OBSERVATION"),
 }
 STORAGE_ASSIGNMENTS = {}
 STORAGE_RESERVATIONS = {}
@@ -117,6 +126,87 @@ source_files: []                   # 活動の元ファイル
 note: null                         # 元ファイルから分からない人間の記憶
 ```"""
 
+def synapse_card_errors(text, cat_tag, display_name, post_id=None):
+    """人間入力値を解釈・変更せず、生成責任に属する構造だけを検証する。"""
+    errors = []
+    note_key = NOTE_KEYS[cat_tag]
+
+    if f"aliases: [{yaml_scalar(display_name)}]" not in text:
+        errors.append("aliasesが元表記と一致しない")
+    if f"tags: [{cat_tag}]" not in text:
+        errors.append("Synapseカテゴリが一致しない")
+    if not re.search(rf"^# {re.escape(display_name)}$", text, flags=re.MULTILINE):
+        errors.append("見出しが元表記と一致しない")
+    if text.count(f"{note_key}:") != 1:
+        errors.append(f"{note_key}が1件ではない")
+
+    if cat_tag == "Synapse/Tag":
+        required_patterns = (
+            rf"^  hashtag:\s*{re.escape(yaml_scalar(display_name))}(?:\s+#.*)?$",
+            r"^  note:\s*.*$",
+        )
+    elif cat_tag == "Synapse/Mention":
+        required_patterns = (
+            rf"^  mention:\s*{re.escape(yaml_scalar(display_name))}(?:\s+#.*)?$",
+            r"^  name:\s*.*$",
+            r"^  phone:\s*.*$",
+            r"^  web:\s*.*$",
+            r"^  note:\s*.*$",
+        )
+    else:
+        required_patterns = (
+            rf"^  location:\s*{re.escape(yaml_scalar(display_name))}(?:\s+#.*)?$",
+            r"^geo:\s*.*$",
+            r"^  lat:\s*.*$",
+            r"^  lng:\s*.*$",
+            r"^  alt:\s*.*$",
+            r"^address:\s*.*$",
+            r"^  full:\s*.*$",
+            r"^  components:\s*.*$",
+            r"^    country:\s*.*$",
+            r"^    prefecture:\s*.*$",
+            r"^    city:\s*.*$",
+            r"^    district:\s*.*$",
+            r"^    street:\s*.*$",
+            r"^    postal_code:\s*.*$",
+            r"^activity_id:\s*.*$",
+            r"^source_files:\s*.*$",
+            r"^note:\s*.*$",
+        )
+
+    for pattern in required_patterns:
+        if not re.search(pattern, text, flags=re.MULTILINE):
+            errors.append(f"必要項目がない: {pattern}")
+
+    for forbidden in FORBIDDEN_CONTENT[cat_tag]:
+        if forbidden in text:
+            errors.append(f"旧形式が残っている: {forbidden}")
+
+    if post_id is not None:
+        if text.count("## 関連投稿") != 1:
+            errors.append("関連投稿見出しが1件ではない")
+        if f"[[{post_id}]]" not in text:
+            errors.append(f"関連投稿に{post_id}がない")
+
+    return errors
+
+def validate_existing_synapse(filepath, cat_tag, display_name, post_id=None):
+    with open(filepath, "r", encoding="utf-8") as f:
+        text = f.read()
+    errors = synapse_card_errors(text, cat_tag, display_name, post_id=post_id)
+    if errors:
+        raise ValueError(f"既存Synapseが現行仕様と一致しません: {filepath} ({'; '.join(errors)})")
+
+def synapse_card_is_complete(filepath, cat_tag, display_name, post_id):
+    if not os.path.exists(filepath):
+        return False
+    try:
+        with open(filepath, "r", encoding="utf-8") as f:
+            text = f.read()
+    except OSError:
+        return False
+    return not synapse_card_errors(text, cat_tag, display_name, post_id=post_id)
+
 def append_related_post(filepath, post_id):
     with open(filepath, "r", encoding="utf-8") as f:
         text = f.read()
@@ -163,11 +253,9 @@ def append_to_global_synapse(synapse_dir, synapse_name, post_id, cat_tag, raw_va
             f.write("---\n\n")
             f.write(f"# {display_name}\n\n")
             f.write(information + "\n")
-    with open(filepath, "r", encoding="utf-8") as f:
-        existing_text = f.read()
-    if f"{NOTE_KEYS[cat_tag]}:" not in existing_text:
-        raise ValueError(f"既存Synapseが現行仕様と一致しません: {filepath}")
+    validate_existing_synapse(filepath, cat_tag, display_name)
     append_related_post(filepath, post_id)
+    validate_existing_synapse(filepath, cat_tag, display_name, post_id=post_id)
     write_event_log("SYNAPSE_APPENDED", "SYNAPSE", {
         "synapse": display_name,
         "synapse_file": storage_name,
@@ -224,7 +312,7 @@ def generate_global_synapse_indexes():
         data_dict = categories_data[cat_tag]
         out_filepath = os.path.join(global_systemlogs, f"{title}一覧.md")
         with open(out_filepath, "w", encoding="utf-8") as f:
-            f.write(f"# {title}一覧 - サルベージ検証用\n\n")
+            f.write(f"# {title}一覧 - ストーリー検証用\n\n")
             f.write("初期状態で全て採用（`- [x]`）です。除外したい項目は `- [x]` を `- [ ]` にしてください。\n\n")
             sorted_items = sorted(
                 data_dict.items(), key=lambda item: len(item[1]["posts"]), reverse=True

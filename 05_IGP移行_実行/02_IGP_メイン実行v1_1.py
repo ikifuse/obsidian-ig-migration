@@ -5,11 +5,11 @@ from datetime import datetime
 from collections import defaultdict
 import sys
 
-import IGP_00_セッテイv1_1 as config
-import IGP_02_テキスト処理v1_1 as txt
-import IGP_03_メディア処理v1_1 as media
-import IGP_04_マークダウン生成v1_1 as md
-import IGP_05_シナプス管理v1_1 as synapse
+config = __import__("01_IGP_セッテイv1_1")
+txt = __import__("03_IGP_テキスト処理v1_1")
+media = __import__("04_IGP_メディア処理v1_1")
+md = __import__("05_IGP_マークダウン生成v1_1")
+synapse = __import__("06_IGP_シナプス管理v1_1")
 
 def get_period(timestamp):
     dt = datetime.fromtimestamp(timestamp, tz=config.JST)
