@@ -270,15 +270,7 @@ README内で概要を確認する場合は、以下の項目を押すと、リ�
 
 </details>
 
-<details>
-<summary>06_Memory_Synapse_DB_仕様書v1.2.md</summary>
 
-- [文書を開く](04_IG移行仕様書/06_Memory_Synapse_DB_仕様書v1.2.md)
-- Memory Synapse DBとの接続条件
-- 入出力と操作
-- データ保護と検証
-
-</details>
 
 </details>
 
