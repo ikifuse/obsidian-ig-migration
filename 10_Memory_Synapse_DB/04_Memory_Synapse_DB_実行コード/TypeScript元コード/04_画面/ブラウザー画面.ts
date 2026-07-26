@@ -1,4 +1,7 @@
-import { 初期状態を作る as createInitialState } from "../03_データ入出力/ブラウザー内データ";
+import {
+  初期状態を作る as createInitialState,
+  検証用検査結果一覧 as browserInspectionResults
+} from "../03_データ入出力/ブラウザー内データ";
 import { 検証用親工程ログ一覧 as parentLogs } from "../03_データ入出力/検証用親工程ログ";
 import {
   SystemLogの項目一覧 as systemLogEntries,
@@ -31,11 +34,13 @@ type DialogState =
   | { type: "merge"; sourceId: string; receiverId: string; selectedBigId?: string }
   | { type: "change-big"; oldBigId: string; selectedBigId?: string; selectedMode?: DisplayMode }
   | { type: "split-big"; oldBigId: string; splitId: string; selectedBigId?: string; selectedMode?: DisplayMode }
+  | { type: "split-card"; bigCardId: string; splitId: string }
   | { type: "handwritten"; cardId: string; confirm: boolean }
   | { type: "dissolve"; bigCardId: string }
   | null;
 
 type CardStatusFilter = "single" | "big" | "merged";
+type KnowledgeSnapshot = { bigCardId: string | null; memberIds: string[] };
 
 let state = createInitialState();
 let selectedCardId: string | null = null;
@@ -199,10 +204,15 @@ function renderTreeFolder(name: string, depth: number): string {
 
 function renderGridTab(): string {
   const allCards = Object.values(state.cards);
-  const shownCards = filteredCards(allCards);
+  const knowledgeCards = allCards.filter((card) => cardStatus(card.id) !== "merged");
+  const filterSource = statusFilters.has("merged") ? allCards : knowledgeCards;
+  const shownCards = filteredCards(filterSource);
   return `<div class="grid-view-container">
     <header class="grid-toolbar">
-      <h1>Memory Synapse DB (リンク一覧)</h1>
+      <div class="grid-heading">
+        <h1>Memory Synapse DB (リンク一覧)</h1>
+        <p class="drag-help"><span aria-hidden="true">⠿</span> カードを別のカードへドラッグして融合</p>
+      </div>
       <section class="filter-panel" aria-label="カードの絞り込み">
         <input class="filter-search" data-filter-search type="search" value="${escapeHtml(searchQuery)}" placeholder="カードを検索">
         <div class="filter-row">
@@ -220,7 +230,7 @@ function renderGridTab(): string {
         </div>
         <div class="filter-summary">
           <button class="filter-clear" data-action="clear-card-filters">絞り込み解除</button>
-          <span>全${allCards.length}件中${shownCards.length}件を表示</span>
+          <span>全${knowledgeCards.length}件中${shownCards.length}件を表示</span>
         </div>
       </section>
     </header>
@@ -241,12 +251,21 @@ function cardStatus(cardId: string): CardStatusFilter {
 function filteredCards(cards: Card[]): Card[] {
   const query = searchQuery.trim().toLocaleLowerCase("ja");
   return cards.filter((card) => {
-    if (query && !`${card.name} ${Object.values(card.source).flat().join(" ")}`.toLocaleLowerCase("ja").includes(query)) return false;
-    if (kindFilters.size > 0 && !kindFilters.has(card.kind)) return false;
+    const unitCards = cardStatus(card.id) === "merged" ? [card] : cardsInKnowledgeUnit(card);
+    if (query && !unitCards.some((unitCard) => mergeCandidateSearchText(unitCard).includes(query))) return false;
+    if (kindFilters.size > 0 && !unitCards.some((unitCard) => kindFilters.has(unitCard.kind))) return false;
     if (statusFilters.size > 0 && !statusFilters.has(cardStatus(card.id))) return false;
-    if (handwrittenOnly && !card.handwritten) return false;
+    if (handwrittenOnly && !unitCards.some((unitCard) => Boolean(unitCard.handwritten))) return false;
     return true;
   });
+}
+
+function cardsInKnowledgeUnit(card: Card): Card[] {
+  const group = groupForCard(state, card.id);
+  if (!group) return [card];
+  return groupCardIds(group)
+    .map((id) => state.cards[id])
+    .filter((item): item is Card => Boolean(item));
 }
 
 function renderSystemLogFileView(systemLogId: SystemLogId): string {
@@ -289,9 +308,12 @@ function renderRightSidebarContent(): string {
   }
   if (selectedLogFile) {
     const log = parentLogs[selectedLogFile];
-    const relatedCards = log
-      ? log.relatedCardIds.map((cardId) => state.cards[cardId]).filter((card): card is Card => Boolean(card))
+    const relatedCardIds = log
+      ? [...new Set(log.relatedCardIds.map((cardId) => groupForCard(state, cardId)?.bigCardId ?? cardId))]
       : [];
+    const relatedCards = relatedCardIds
+      .map((cardId) => state.cards[cardId])
+      .filter((card): card is Card => Boolean(card));
     if (relatedCards.length === 0) return '<div class="empty">関連するMemory Synapseはありません。</div>';
 
     return `<div style="margin-bottom:16px;">
@@ -376,9 +398,18 @@ function renderLogFileView(filename: string): string {
 
 function renderCardTile(card: Card): string {
   const status = statusFor(card.id);
-  return `<button class="card-tile ${card.id === selectedCardId ? "selected" : ""}" draggable="true" data-card-id="${card.id}">
-    <div class="card-title"><strong>${escapeHtml(card.name)}</strong><span class="pill kind-${card.kind}">${KIND_LABEL[card.kind]}</span></div>
-    <div class="meta"><span class="${status.className}">${escapeHtml(status.label)}</span><span>関連投稿 ${card.relatedPosts.length}件</span>${card.handwritten ? "<span>手書きあり</span>" : ""}</div>
+  const group = groupForCard(state, card.id);
+  const unitCards = cardStatus(card.id) === "merged" ? [card] : cardsInKnowledgeUnit(card);
+  const relatedPostCount = new Set(unitCards.flatMap((unitCard) => unitCard.relatedPosts)).size;
+  const hasHandwritten = unitCards.some((unitCard) => Boolean(unitCard.handwritten));
+  const displayName = group?.bigCardId === card.id
+    && group.displayMode === "handwritten"
+    && card.handwritten?.displayName
+      ? card.handwritten.displayName
+      : card.name;
+  return `<button class="card-tile ${card.id === selectedCardId ? "selected" : ""}" draggable="true" data-card-id="${card.id}" title="別のカードへドラッグして融合" aria-label="${escapeHtml(displayName)}。別のカードへドラッグして融合できます">
+    <div class="card-title"><span class="card-name"><span class="drag-handle" aria-hidden="true">⠿</span><strong>${escapeHtml(displayName)}</strong></span><span class="pill kind-${card.kind}">${KIND_LABEL[card.kind]}</span></div>
+    <div class="meta"><span class="${status.className}">${escapeHtml(status.label)}</span><span>関連投稿 ${relatedPostCount}件</span>${hasHandwritten ? "<span>手書きあり</span>" : ""}</div>
   </button>`;
 }
 
@@ -390,8 +421,13 @@ function renderSelected(card: Card): string {
   const mode = group?.displayMode ?? (card.handwritten ? "handwritten" : "source");
   const mainCard = group ? bigCard : card;
   const showHandwritten = mode === "handwritten" && Boolean(mainCard.handwritten);
+  const singleSource = !group && showHandwritten
+    ? `<section class="source-details"><div class="eyebrow">移行時点の個別カード情報</div>${renderCardFields(card.source)}${renderRelatedPosts(card)}</section>`
+    : "";
 
-  return `${renderHero(mainCard, showHandwritten)}
+  return `${renderCurrentLocation(card)}
+    ${renderInspectionIssues(card)}
+    ${renderHero(mainCard, showHandwritten)}${singleSource}
     <div class="actions">
       <button class="btn primary" data-action="start-merge" data-card-id="${card.id}">融合へ追加</button>
       <button class="btn" data-action="handwritten" data-card-id="${card.id}">手書き</button>
@@ -402,19 +438,55 @@ function renderSelected(card: Card): string {
     ${group ? renderReceptacle(group.bigCardId) : ""}`;
 }
 
+function renderCurrentLocation(card: Card): string {
+  const group = groupForCard(state, card.id);
+  if (!group) {
+    return `<section class="current-location" aria-label="選択中カードの現在地">
+      <span class="current-location-label">現在地</span>
+      <strong>単独カード</strong>
+      <span>どの融合グループにも所属していません</span>
+    </section>`;
+  }
+  const bigCard = state.cards[group.bigCardId];
+  const groupName = bigCard?.handwritten?.displayName || bigCard?.name || group.bigCardId;
+  const role = card.id === group.bigCardId ? "大きなカード" : "構成員";
+  return `<section class="current-location" aria-label="選択中カードの現在地">
+    <span class="current-location-label">現在地</span>
+    <span>融合グループ「${escapeHtml(groupName)}」</span>
+    <span class="location-arrow">→</span>
+    <span>大きなカード：<strong>${escapeHtml(bigCard?.name ?? group.bigCardId)}</strong></span>
+    <span class="location-arrow">→</span>
+    <span>このカードの役割：<strong>${role}</strong></span>
+  </section>`;
+}
+
+function renderInspectionIssues(card: Card): string {
+  const result = browserInspectionResults.find((item) => item.cardId === card.id);
+  if (!result) return "";
+  const allRows: Array<[string, number]> = [
+    ["Wikiリンク切れ", result.brokenWikiLinks],
+    ["複数所属の疑い", result.suspectedMultipleMemberships],
+    ["管理見出しの形式不正", result.malformedManagedHeadings]
+  ];
+  const rows = allRows.filter(([, count]) => count > 0);
+  if (rows.length === 0) return "";
+  return `<section class="inspection-issues" aria-label="検査で見つかった問題">
+    <div class="inspection-heading">検査で問題が見つかりました</div>
+    ${rows.map(([label, count]) => `<div class="inspection-row"><span>${label}</span><strong>${count}件</strong></div>`).join("")}
+    <button class="btn" data-action="open-inspection-target" data-card-id="${escapeHtml(result.targetCardId)}">対象ファイルを開く</button>
+  </section>`;
+}
+
 function renderHero(card: Card, handwritten: boolean): string {
-  const values = handwritten && card.handwritten
+  const values: Array<[string, string]> = handwritten && card.handwritten
     ? noteFields(card.handwritten)
-    : Object.entries(card.source).map(([key, value]) => [key, Array.isArray(value) ? value.join("、") : value]);
+    : Object.entries(card.source).map(([key, value]) => [key, Array.isArray(value) ? value.join("、") : String(value ?? "")]);
   return `<article class="hero">
     <div class="eyebrow">${handwritten ? "手書き・補正後" : "移行時点の個別カード情報"}</div>
     <h2>${escapeHtml(handwritten && card.handwritten?.displayName ? card.handwritten.displayName : card.name)}</h2>
     <span class="pill kind-${card.kind}">${KIND_LABEL[card.kind]}</span>
-    <dl class="field-grid">${values.filter(([, value]) => String(value).trim()).map(([key, value]) => `<div class="field"><dt>${escapeHtml(key)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}</dl>
-    <div class="post-links">${card.relatedPosts.map((post) => {
-      const filename = post.replace(/^\[\[/, "").replace(/\]\]$/, "").replace(/\\.md$/, "");
-      return `<span class="post-link" data-action="select-log" data-log-id="${filename}" style="cursor:pointer; color:var(--text-accent); text-decoration:underline;">${escapeHtml(post)}</span>`;
-    }).join(" ")}</div>
+    ${renderFieldValues(values)}
+    ${renderRelatedPosts(card)}
   </article>`;
 }
 
@@ -428,10 +500,38 @@ function renderReceptacle(bigCardId: string): string {
       const compact = id === bigCardId && group.displayMode === "source";
       return `<article class="member ${compact ? "active-source" : ""}">
         <header><div><span class="pill kind-${card.kind}">${KIND_LABEL[card.kind]}</span> <strong>${escapeHtml(card.name)}</strong></div><button class="btn" data-action="split" data-card-id="${id}" data-big-id="${bigCardId}">このカードを分離</button></header>
-        ${compact ? `<div class="compact">上に表示中・関連投稿 ${card.relatedPosts.length}件</div>` : `<div class="compact">${escapeHtml(Object.values(card.source).flat().join(" / "))}${card.handwritten ? " / 手書き情報あり" : ""} / 関連投稿 ${card.relatedPosts.length}件</div>`}
+        ${compact
+          ? `<div class="compact">上に表示中・関連投稿 ${card.relatedPosts.length}件</div>`
+          : `${renderCardFields(card.source)}
+            ${card.handwritten && id !== bigCardId ? `<div class="member-section-label">手書き情報</div>${renderFieldValues(noteFields(card.handwritten))}` : ""}
+            ${renderRelatedPosts(card)}`}
       </article>`;
     }).join("")}
   </section>`;
+}
+
+function renderCardFields(source: Card["source"]): string {
+  return renderFieldValues(
+    Object.entries(source).map(([key, value]) => [
+      key,
+      Array.isArray(value) ? value.join("、") : String(value ?? "")
+    ])
+  );
+}
+
+function renderFieldValues(values: Array<[string, string]>): string {
+  const fields = values.filter(([, value]) => value.trim());
+  return fields.length === 0
+    ? '<div class="compact">表示できる情報はありません。</div>'
+    : `<dl class="field-grid">${fields.map(([key, value]) => `<div class="field"><dt>${escapeHtml(key)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}</dl>`;
+}
+
+function renderRelatedPosts(card: Card): string {
+  const links = card.relatedPosts.map((post) => {
+    const filename = post.replace(/^\[\[/, "").replace(/\]\]$/, "").replace(/\\.md$/, "");
+    return `<span class="post-link" data-action="select-log" data-log-id="${escapeHtml(filename)}" style="cursor:pointer; color:var(--text-accent); text-decoration:underline;">${escapeHtml(post)}</span>`;
+  }).join(" ");
+  return `<div class="member-section-label">関連投稿（${card.relatedPosts.length}件）</div><div class="post-links">${links || '<span class="compact">関連投稿なし</span>'}</div>`;
 }
 
 function noteFields(note: HandwrittenNote): Array<[string, string]> {
@@ -452,9 +552,23 @@ function renderDialog(): string {
   if (dialog.type === "merge") return renderMergeDialog(dialog.sourceId, dialog.receiverId, dialog.selectedBigId);
   if (dialog.type === "change-big") return renderBigChoiceDialog(dialog.oldBigId, undefined, dialog.selectedBigId, dialog.selectedMode);
   if (dialog.type === "split-big") return renderBigChoiceDialog(dialog.oldBigId, dialog.splitId, dialog.selectedBigId, dialog.selectedMode);
+  if (dialog.type === "split-card") return renderSplitCardDialog(dialog.bigCardId, dialog.splitId);
   if (dialog.type === "handwritten") return renderHandwrittenDialog(dialog.cardId, dialog.confirm);
   const group = state.groups[dialog.bigCardId];
-  return dialogFrame("融合をすべて解体しますか？", `<p>${group ? groupCardIds(group).map((id) => escapeHtml(state.cards[id]?.name ?? id)).join("、") : ""}</p><div class="notice">個別カード、カテゴリ固有情報、関連投稿、手書き情報は削除しません。</div>`, "解体する", "confirm-dissolve");
+  if (!group) return "";
+  const after = groupCardIds(group).map((id) => snapshotForSingle(id));
+  return dialogFrame(
+    "融合をすべて解体しますか？",
+    renderOperationComparison(
+      [snapshotForGroup(group.bigCardId)],
+      after,
+      [group.bigCardId],
+      ["全個別カード", "カテゴリ固有情報", "関連投稿", "手書き情報"],
+      "はい。直前操作として元に戻せます。"
+    ),
+    "解体する",
+    "confirm-dissolve"
+  );
 }
 
 function renderMergeTargetDialog(targetDialog: Extract<DialogState, { type: "select-merge-target" }>): string {
@@ -529,10 +643,49 @@ function renderMergeCandidate(card: Card): string {
 
 function renderMergeDialog(sourceId: string, receiverId: string, selectedBigId?: string): string {
   const rec = recommendBigCard(state, sourceId, receiverId);
-  const choices = rec.candidateIds.map((id) => choiceHtml(id, selectedBigId, rec.recommendedIds.includes(id))).join("");
-  const changedGroups = new Set(rec.candidateIds.map((id) => groupForCard(state, id)?.bigCardId).filter(Boolean));
-  const effect = `更新案: 選択した大きなカードへMemory Synapseを設定。旧大きなカード${changedGroups.size ? ` ${[...changedGroups].join("、")}` : "なし"}から管理見出しだけを除去。`;
-  return dialogFrame("大きなカードはどれにしますか？", `<div class="notice">${escapeHtml(rec.reason)}</div>${choices}<p class="summary">融合後: ${rec.candidateIds.map((id) => state.cards[id]?.name ?? id).join(" → ")}\n${escapeHtml(effect)}</p>`, "融合する", "confirm-merge", !selectedBigId);
+  const currentBigIds = new Set(
+    rec.candidateIds
+      .map((id) => groupForCard(state, id)?.bigCardId)
+      .filter((id): id is string => Boolean(id))
+  );
+  const choices = rec.candidateIds
+    .map((id) => choiceHtml(id, selectedBigId, rec.recommendedIds.includes(id), currentBigIds.has(id)))
+    .join("");
+  const changedFileIds = new Set<string>([
+    ...currentBigIds,
+    ...(selectedBigId ? [selectedBigId] : [])
+  ]);
+  const currentBigNames = currentBigIds.size > 0
+    ? [...currentBigIds].map((id) => state.cards[id]?.name ?? id).join("、")
+    : "なし";
+  const changedFiles = changedFileIds.size > 0
+    ? [...changedFileIds].map((id) => {
+        const card = state.cards[id];
+        return card ? `${cardFilename(card)}.md` : `${id}.md`;
+      }).join("、")
+    : "大きなカードを選択すると表示します";
+  const currentUnits = uniqueSnapshotsForCards([sourceId, receiverId]);
+  const afterUnits = selectedBigId
+    ? [{ bigCardId: selectedBigId, memberIds: rec.candidateIds }]
+    : [];
+  return dialogFrame(
+    "大きなカードはどれにしますか？",
+    `<div class="notice">${escapeHtml(rec.reason)}</div>
+    <p><strong>現在の大きなカード:</strong> ${escapeHtml(currentBigNames)}</p>
+    ${choices}
+    ${renderOperationComparison(
+      currentUnits,
+      afterUnits,
+      [...changedFileIds],
+      ["個別カード", "カテゴリ固有情報", "関連投稿", "手書き情報"],
+      "はい。直前操作として元に戻せます。",
+      selectedBigId ? undefined : "大きなカードを選択すると操作後と変更ファイルを表示します。"
+    )}
+    <span class="visually-hidden">変更されるMarkdownファイル: ${escapeHtml(changedFiles)}</span>`,
+    "融合する",
+    "confirm-merge",
+    !selectedBigId
+  );
 }
 
 function renderBigChoiceDialog(oldBigId: string, splitId?: string, selectedBigId?: string, selectedMode?: DisplayMode): string {
@@ -548,13 +701,60 @@ function renderBigChoiceDialog(oldBigId: string, splitId?: string, selectedBigId
       : `<div class="notice">手書き情報がないため、元の個別カード情報を表示します。</div>`
     : "";
   const disabled = !selectedBigId || (hasHandwritten && !selectedMode);
-  return dialogFrame(splitId ? "残す大きなカードはどれにしますか？" : "新しい大きなカードを選んでください", ids.map((id) => choiceHtml(id, selectedBigId, recommended.includes(id))).join("") + modeChoice, splitId ? "分離する" : "変更する", splitId ? "confirm-split-big" : "confirm-change-big", disabled);
+  const currentBigNotice = `<div class="notice">現在の大きなカード: ${escapeHtml(state.cards[oldBigId]?.name ?? oldBigId)}。種類の優先順位（Mention → Location → Tag）による推奨は変更できます。</div>`;
+  const comparison = renderOperationComparison(
+    [snapshotForGroup(oldBigId)],
+    selectedBigId ? [{ bigCardId: selectedBigId, memberIds: ids }] : [],
+    selectedBigId ? [...new Set([oldBigId, selectedBigId])] : [],
+    ["全個別カード", "カテゴリ固有情報", "関連投稿", "各カードの手書き情報"],
+    "はい。直前操作として元に戻せます。",
+    selectedBigId ? undefined : "大きなカードを選択すると操作後と変更ファイルを表示します。"
+  );
+  return dialogFrame(
+    splitId ? "残す大きなカードはどれにしますか？" : "新しい大きなカードを選んでください",
+    currentBigNotice + ids.map((id) => choiceHtml(id, selectedBigId, recommended.includes(id), id === oldBigId)).join("") + modeChoice + comparison,
+    splitId ? "分離する" : "変更する",
+    splitId ? "confirm-split-big" : "confirm-change-big",
+    disabled
+  );
 }
 
-function choiceHtml(id: string, selectedId: string | undefined, recommended: boolean): string {
+function choiceHtml(id: string, selectedId: string | undefined, recommended: boolean, currentBig = false): string {
   const card = state.cards[id];
   if (!card) return "";
-  return `<label class="choice ${recommended ? "recommended" : ""}"><input type="radio" name="big-card" value="${id}" ${selectedId === id ? "checked" : ""}><span><strong>${escapeHtml(card.name)}</strong> <span class="pill kind-${card.kind}">${KIND_LABEL[card.kind]}</span><small>${recommended ? "推奨候補・選択後も変更できます" : "選択可能"}</small></span></label>`;
+  const labels = [
+    currentBig ? "現在の大きなカード" : "",
+    recommended ? "推奨候補" : "",
+    "選択可能"
+  ].filter(Boolean);
+  return `<label class="choice ${recommended ? "recommended" : ""}"><input type="radio" name="big-card" value="${id}" ${selectedId === id ? "checked" : ""}><span><strong>${escapeHtml(card.name)}</strong> <span class="pill kind-${card.kind}">${KIND_LABEL[card.kind]}</span><small>${escapeHtml(labels.join("・"))}</small></span></label>`;
+}
+
+function renderSplitCardDialog(bigCardId: string, splitId: string): string {
+  const group = state.groups[bigCardId];
+  const split = state.cards[splitId];
+  if (!group || !split) return "";
+  const remaining = groupCardIds(group).filter((id) => id !== splitId);
+  const endsFusion = remaining.length === 1;
+  const after = endsFusion
+    ? [snapshotForSingle(remaining[0] ?? ""), snapshotForSingle(splitId)]
+    : [{ bigCardId, memberIds: remaining }, snapshotForSingle(splitId)];
+  return dialogFrame(
+    `${split.name}を分離しますか？`,
+    `<p><strong>分離するカード:</strong> ${escapeHtml(split.name)} <span class="pill kind-${split.kind}">${KIND_LABEL[split.kind]}</span></p>
+    <p><strong>分離後:</strong> ${endsFusion
+      ? `残る${escapeHtml(state.cards[remaining[0] ?? ""]?.name ?? "")}も単独カードへ戻り、融合状態を終了します。`
+      : `${escapeHtml(split.name)}だけが単独カードへ戻り、残る融合関係は維持します。`}</p>
+    ${renderOperationComparison(
+      [snapshotForGroup(bigCardId)],
+      after,
+      [bigCardId],
+      ["分離するカードのファイル", "カテゴリ固有情報", "関連投稿", "手書き情報"],
+      "はい。直前操作として元に戻せます。"
+    )}`,
+    "分離する",
+    "confirm-split-card"
+  );
 }
 
 function renderHandwrittenDialog(cardId: string, confirm: boolean): string {
@@ -562,7 +762,25 @@ function renderHandwrittenDialog(cardId: string, confirm: boolean): string {
   if (!card) return "";
   if (confirm) {
     const note = readNoteFromDraft();
-    return dialogFrame("手書き情報の保存内容を確認してください", `<p><strong>変更対象:</strong> ${escapeHtml(card.name)} の「手書き情報」</p><pre class="summary">${escapeHtml(JSON.stringify(note, null, 2))}</pre><div class="notice">ブラウザー内の検証状態だけを変更します。実ファイルには書き込みません。</div>`, "保存", "confirm-handwritten");
+    const group = groupForCard(state, cardId);
+    const currentSnapshot = group ? snapshotForGroup(group.bigCardId) : snapshotForSingle(cardId);
+    return dialogFrame(
+      "手書き情報の保存内容を確認してください",
+      `<div class="handwritten-comparison">
+        <div><h3>現在の手書き情報</h3><pre class="summary">${escapeHtml(JSON.stringify(card.handwritten ?? EMPTY_NOTE, null, 2))}</pre></div>
+        <div><h3>操作後の手書き情報</h3><pre class="summary">${escapeHtml(JSON.stringify(note, null, 2))}</pre></div>
+      </div>
+      ${renderOperationComparison(
+        [currentSnapshot],
+        [currentSnapshot],
+        [cardId],
+        ["個別カードの元情報", "カテゴリ固有情報", "関連投稿", "他カードの手書き情報"],
+        "はい。直前操作として元に戻せます。"
+      )}
+      <div class="notice">ブラウザー内の検証状態だけを変更します。実ファイルには書き込みません。</div>`,
+      "保存",
+      "confirm-handwritten"
+    );
   }
   const note = card.handwritten ?? structuredClone(EMPTY_NOTE);
   return dialogFrame("手書き情報", `<form id="handwritten-form" class="form-grid">${input("displayName", "表示名", note.displayName)}${input("aliases", "別名（1行1件）", note.aliases.join("\n"), true)}${input("name", "名称", note.name)}${input("phone", "電話（1行1件）", note.phone.join("\n"), true)}${input("web", "Web等（1行1件）", note.web.join("\n"), true)}${input("lat", "緯度", note.geo.lat)}${input("lng", "経度", note.geo.lng)}${input("alt", "高度", note.geo.alt)}${input("full", "住所全文", note.address.full, false, true)}${input("country", "国", note.address.country)}${input("prefecture", "都道府県", note.address.prefecture)}${input("city", "市区町村", note.address.city)}${input("district", "地区", note.address.district)}${input("street", "番地等", note.address.street)}${input("postalCode", "郵便番号", note.address.postalCode)}${input("note", "自由メモ", note.note, true, true)}</form>`, "保存内容を確認", "review-handwritten");
@@ -574,6 +792,81 @@ function input(name: string, label: string, value: string, textarea = false, spa
 
 function dialogFrame(title: string, content: string, confirmLabel: string, action: string, disabled = false): string {
   return `<div class="dialog-backdrop" role="presentation"><section class="dialog" role="dialog" aria-modal="true" aria-label="${escapeHtml(title)}"><header><h2>${escapeHtml(title)}</h2></header><div class="dialog-content">${content}</div><footer><button class="btn" data-action="cancel-dialog">キャンセル</button><button class="btn primary" data-action="${action}" ${disabled ? "disabled" : ""}>${escapeHtml(confirmLabel)}</button></footer></section></div>`;
+}
+
+function snapshotForGroup(bigCardId: string): KnowledgeSnapshot {
+  const group = state.groups[bigCardId];
+  return group
+    ? { bigCardId, memberIds: groupCardIds(group) }
+    : snapshotForSingle(bigCardId);
+}
+
+function snapshotForSingle(cardId: string): KnowledgeSnapshot {
+  return { bigCardId: null, memberIds: cardId ? [cardId] : [] };
+}
+
+function uniqueSnapshotsForCards(cardIds: string[]): KnowledgeSnapshot[] {
+  const seen = new Set<string>();
+  const snapshots: KnowledgeSnapshot[] = [];
+  for (const cardId of cardIds) {
+    const group = groupForCard(state, cardId);
+    const key = group ? `group:${group.bigCardId}` : `single:${cardId}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    snapshots.push(group ? snapshotForGroup(group.bigCardId) : snapshotForSingle(cardId));
+  }
+  return snapshots;
+}
+
+function renderOperationComparison(
+  current: KnowledgeSnapshot[],
+  after: KnowledgeSnapshot[],
+  changedCardIds: string[],
+  unchangedInformation: string[],
+  undoText: string,
+  afterPlaceholder?: string
+): string {
+  const renderSide = (label: string, snapshots: KnowledgeSnapshot[], placeholder?: string) => `
+    <section class="comparison-side">
+      <h3>${label}</h3>
+      ${snapshots.length > 0
+        ? snapshots.map((snapshot) => renderSnapshot(snapshot)).join("")
+        : `<p class="comparison-placeholder">${escapeHtml(placeholder ?? "操作内容を選択すると表示します。")}</p>`}
+    </section>`;
+  const changedFiles = changedCardIds.length > 0
+    ? changedCardIds.map((id) => {
+        const card = state.cards[id];
+        return card ? `${cardFilename(card)}.md` : `${id}.md`;
+      })
+    : ["操作内容を選択すると表示します"];
+  return `<section class="operation-comparison" aria-label="操作前後の比較">
+    <div class="comparison-columns">
+      ${renderSide("現在", current)}
+      <div class="comparison-arrow" aria-hidden="true">→</div>
+      ${renderSide("操作後", after, afterPlaceholder)}
+    </div>
+    <dl class="impact-list">
+      <div><dt>変更するファイル</dt><dd>${changedFiles.map((file) => `<span>${escapeHtml(file)}</span>`).join("")}</dd></div>
+      <div><dt>変更しない情報</dt><dd>${unchangedInformation.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}</dd></div>
+      <div><dt>元に戻せるか</dt><dd>${escapeHtml(undoText)}</dd></div>
+    </dl>
+  </section>`;
+}
+
+function renderSnapshot(snapshot: KnowledgeSnapshot): string {
+  const names = snapshot.memberIds.map((id) => state.cards[id]?.name ?? id);
+  if (!snapshot.bigCardId) {
+    return `<div class="snapshot-card">
+      <div><span>大きなカード</span><strong>なし（単独）</strong></div>
+      <div><span>構成員</span><strong>${snapshot.memberIds.length}枚</strong></div>
+      <p>${escapeHtml(names.join("、"))}</p>
+    </div>`;
+  }
+  return `<div class="snapshot-card">
+    <div><span>大きなカード</span><strong>${escapeHtml(state.cards[snapshot.bigCardId]?.name ?? snapshot.bigCardId)}</strong></div>
+    <div><span>構成員</span><strong>${snapshot.memberIds.length}枚</strong></div>
+    <p>${escapeHtml(names.join("、"))}</p>
+  </div>`;
 }
 
 let handwrittenDraft: HandwrittenNote | null = null;
@@ -604,8 +897,7 @@ function setNotice(message: string, type: typeof noticeType): void { notice = me
 
 function openMerge(sourceId: string, receiverId: string): void {
   if (sourceId === receiverId) { setNotice("同じカード同士は融合できません。", "error"); return; }
-  const rec = recommendBigCard(state, sourceId, receiverId);
-  dialog = { type: "merge", sourceId, receiverId, selectedBigId: rec.recommendedIds.length === 1 ? rec.recommendedIds[0] : undefined };
+  dialog = { type: "merge", sourceId, receiverId };
   render();
 }
 
@@ -634,10 +926,21 @@ function bindEvents(): void {
       selectedSystemLogId = null;
       render();
     });
-    el.addEventListener("dragstart", () => { draggedCardId = el.dataset.cardId ?? null; });
+    el.addEventListener("dragstart", (event) => {
+      draggedCardId = el.dataset.cardId ?? null;
+      el.classList.add("dragging");
+      if (event.dataTransfer && draggedCardId) {
+        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.setData("text/plain", draggedCardId);
+      }
+    });
     el.addEventListener("dragover", (event) => { event.preventDefault(); el.classList.add("drag-over"); });
     el.addEventListener("dragleave", () => el.classList.remove("drag-over"));
     el.addEventListener("drop", (event) => { event.preventDefault(); el.classList.remove("drag-over"); const receiver = el.dataset.cardId; if (draggedCardId && receiver) openMerge(draggedCardId, receiver); draggedCardId = null; });
+    el.addEventListener("dragend", () => {
+      draggedCardId = null;
+      document.querySelectorAll(".card-tile.dragging, .card-tile.drag-over").forEach((card) => card.classList.remove("dragging", "drag-over"));
+    });
   });
   document.querySelectorAll<HTMLInputElement>('input[name="big-card"]').forEach((radio) => radio.addEventListener("change", () => {
     if (!dialog) return;
@@ -667,6 +970,14 @@ function handleAction(action: string, data: DOMStringMap): void {
   }
   if (action === "select-log" && data.logId) { selectedLogFile = data.logId; selectedCardId = null; selectedSystemLogId = null; render(); return; }
   if (action === "select-card" && data.cardId) { selectedCardId = data.cardId; selectedLogFile = null; selectedSystemLogId = null; render(); return; }
+  if (action === "open-inspection-target" && data.cardId) {
+    selectedCardId = data.cardId;
+    selectedLogFile = null;
+    selectedSystemLogId = null;
+    gridTabOpen = false;
+    render();
+    return;
+  }
   if (action === "select-system-log" && data.systemLogId) {
     const systemLogId = data.systemLogId as SystemLogId;
     if (systemLogs.some((item) => item.id === systemLogId)) {
@@ -758,7 +1069,19 @@ function handleAction(action: string, data: DOMStringMap): void {
   if (action === "source-mode" && data.cardId) { apply(setDisplayMode(state, data.cardId, "source")); return; }
   if (action === "change-big" && data.cardId) { dialog = { type: "change-big", oldBigId: data.cardId }; render(); return; }
   if (action === "confirm-change-big" && dialog?.type === "change-big" && dialog.selectedBigId) { apply(changeBigCard(state, dialog.oldBigId, dialog.selectedBigId, dialog.selectedMode ?? "source")); return; }
-  if (action === "split" && data.cardId && data.bigId) { const group = state.groups[data.bigId]; if (!group) return; if (data.cardId === data.bigId && group.memberIds.length >= 2) { dialog = { type: "split-big", oldBigId: data.bigId, splitId: data.cardId }; render(); } else if (confirm(`${state.cards[data.cardId]?.name ?? data.cardId}だけを分離しますか？`)) apply(splitCard(state, data.bigId, data.cardId)); return; }
+  if (action === "split" && data.cardId && data.bigId) {
+    const group = state.groups[data.bigId];
+    if (!group) return;
+    dialog = data.cardId === data.bigId && group.memberIds.length >= 2
+      ? { type: "split-big", oldBigId: data.bigId, splitId: data.cardId }
+      : { type: "split-card", bigCardId: data.bigId, splitId: data.cardId };
+    render();
+    return;
+  }
+  if (action === "confirm-split-card" && dialog?.type === "split-card") {
+    apply(splitCard(state, dialog.bigCardId, dialog.splitId));
+    return;
+  }
   if (action === "confirm-split-big" && dialog?.type === "split-big" && dialog.selectedBigId) {
     const result = splitCard(state, dialog.oldBigId, dialog.splitId, dialog.selectedBigId);
     const nextGroup = result.state.groups[dialog.selectedBigId];

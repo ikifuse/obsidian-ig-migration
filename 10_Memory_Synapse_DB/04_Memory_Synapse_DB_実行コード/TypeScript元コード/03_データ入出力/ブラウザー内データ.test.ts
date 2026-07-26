@@ -1,13 +1,16 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { 初期状態を作る as createInitialState } from "./ブラウザー内データ";
+import {
+  初期状態を作る as createInitialState,
+  検証用検査結果一覧 as browserInspectionResults
+} from "./ブラウザー内データ";
 import { 検証用親工程ログ一覧 as parentLogs } from "./検証用親工程ログ";
 import {
   SystemLogの項目一覧 as systemLogEntries,
   検証用SystemLog一覧 as systemLogs
 } from "./検証用SystemLogs";
 
-test("検証用カードはMention・Location・Tag各30枚を単独状態で開始する", () => {
+test("検証用カードは各30枚と融合済みグループ二組を含む", () => {
   const state = createInitialState();
   const cards = Object.values(state.cards);
   const kinds = { mention: 0, location: 0, tag: 0 };
@@ -16,7 +19,21 @@ test("検証用カードはMention・Location・Tag各30枚を単独状態で開
 
   assert.equal(cards.length, 90);
   assert.deepEqual(kinds, { mention: 30, location: 30, tag: 30 });
-  assert.deepEqual(state.groups, {});
+  assert.equal(Object.keys(state.groups).length, 2);
+  assert.deepEqual(state.groups["location-ユニバーサル・スタジオ・ジャパン"]?.memberIds, ["location-USJ"]);
+  assert.deepEqual(state.groups["tag-#生ビール"]?.memberIds, ["tag-#ハイボール"]);
+});
+
+test("検査表示用サンプルは実在する検証カードを対象にし、問題件数を持つ", () => {
+  const state = createInitialState();
+  assert.equal(browserInspectionResults.length, 1);
+  const result = browserInspectionResults[0];
+  assert.ok(result);
+  assert.ok(state.cards[result.cardId]);
+  assert.ok(state.cards[result.targetCardId]);
+  assert.equal(result.brokenWikiLinks, 2);
+  assert.equal(result.suspectedMultipleMemberships, 1);
+  assert.equal(result.malformedManagedHeadings, 1);
 });
 
 test("Tagはスポーツ用品と居酒屋メニューを15件ずつ含む", () => {

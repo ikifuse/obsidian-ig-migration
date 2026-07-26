@@ -1,5 +1,27 @@
 import type { 融合状態 } from "../01_データ構造/融合グループ";
 
+export type ブラウザー検査結果 = {
+  cardId: string;
+  brokenWikiLinks: number;
+  suspectedMultipleMemberships: number;
+  malformedManagedHeadings: number;
+  targetCardId: string;
+};
+
+/**
+ * 問題がある場合だけ表示する検査欄を確認するための、ブラウザー専用サンプル。
+ * 実際のVaultや通常の融合状態には混ぜず、自動修復も行わない。
+ */
+export const 検証用検査結果一覧: ブラウザー検査結果[] = [
+  {
+    cardId: "mention-@piccolo",
+    brokenWikiLinks: 2,
+    suspectedMultipleMemberships: 1,
+    malformedManagedHeadings: 1,
+    targetCardId: "mention-@piccolo"
+  }
+];
+
 export function 初期状態を作る(): 融合状態 {
   return {
     cards: {
@@ -1604,6 +1626,17 @@ export function 初期状態を作る(): 融合状態 {
     ]
   }
 },
-    groups: {}
+    groups: {
+      "location-ユニバーサル・スタジオ・ジャパン": {
+        bigCardId: "location-ユニバーサル・スタジオ・ジャパン",
+        memberIds: ["location-USJ"],
+        displayMode: "source"
+      },
+      "tag-#生ビール": {
+        bigCardId: "tag-#生ビール",
+        memberIds: ["tag-#ハイボール"],
+        displayMode: "source"
+      }
+    }
   };
 }
