@@ -194,27 +194,29 @@ function renderGridTab(): string {
   const allCards = Object.values(state.cards);
   const shownCards = filteredCards(allCards);
   return `<div class="grid-view-container">
-    <section class="filter-panel" aria-label="カードの絞り込み">
-      <input class="filter-search" data-filter-search type="search" value="${escapeHtml(searchQuery)}" placeholder="カードを検索">
-      <div class="filter-row">
-        <span class="filter-label">種類</span>
-        ${filterButton("Tag", "toggle-kind-filter", "tag", kindFilters.has("tag"))}
-        ${filterButton("Mention", "toggle-kind-filter", "mention", kindFilters.has("mention"))}
-        ${filterButton("Location", "toggle-kind-filter", "location", kindFilters.has("location"))}
-      </div>
-      <div class="filter-row">
-        <span class="filter-label">状態</span>
-        ${filterButton("単独", "toggle-status-filter", "single", statusFilters.has("single"))}
-        ${filterButton("大きなカード", "toggle-status-filter", "big", statusFilters.has("big"))}
-        ${filterButton("融合済み", "toggle-status-filter", "merged", statusFilters.has("merged"))}
-        ${filterButton("手書きあり", "toggle-handwritten-filter", "handwritten", handwrittenOnly)}
-      </div>
-      <div class="filter-summary">
-        <button class="filter-clear" data-action="clear-card-filters">絞り込み解除</button>
-        <span>全${allCards.length}件中${shownCards.length}件を表示</span>
-      </div>
-    </section>
-    <h1 style="font-size: 1.8em; margin: 0 0 24px;">Memory Synapse DB (リンク一覧)</h1>
+    <header class="grid-toolbar">
+      <h1>Memory Synapse DB (リンク一覧)</h1>
+      <section class="filter-panel" aria-label="カードの絞り込み">
+        <input class="filter-search" data-filter-search type="search" value="${escapeHtml(searchQuery)}" placeholder="カードを検索">
+        <div class="filter-row">
+          <span class="filter-label">種類</span>
+          ${filterButton("Tag", "toggle-kind-filter", "tag", kindFilters.has("tag"))}
+          ${filterButton("Mention", "toggle-kind-filter", "mention", kindFilters.has("mention"))}
+          ${filterButton("Location", "toggle-kind-filter", "location", kindFilters.has("location"))}
+        </div>
+        <div class="filter-row">
+          <span class="filter-label">状態</span>
+          ${filterButton("単独", "toggle-status-filter", "single", statusFilters.has("single"))}
+          ${filterButton("大きなカード", "toggle-status-filter", "big", statusFilters.has("big"))}
+          ${filterButton("融合済み", "toggle-status-filter", "merged", statusFilters.has("merged"))}
+          ${filterButton("手書きあり", "toggle-handwritten-filter", "handwritten", handwrittenOnly)}
+        </div>
+        <div class="filter-summary">
+          <button class="filter-clear" data-action="clear-card-filters">絞り込み解除</button>
+          <span>全${allCards.length}件中${shownCards.length}件を表示</span>
+        </div>
+      </section>
+    </header>
     <div class="card-list">${shownCards.map(renderCardTile).join("") || '<div class="empty">条件に一致するカードがありません。</div>'}</div>
   </div>`;
 }

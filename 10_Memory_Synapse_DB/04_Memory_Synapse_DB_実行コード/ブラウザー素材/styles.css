@@ -74,7 +74,9 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px
 
 /* Grid View (Center Pane) */
 .grid-view-container { width: 100%; max-width: 1200px; }
-.filter-panel { display: grid; gap: 12px; margin-bottom: 24px; padding: 16px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg-panel); }
+.grid-toolbar { display: grid; grid-template-columns: max-content minmax(0, 1fr); align-items: start; gap: 24px; margin-bottom: 24px; }
+.grid-toolbar h1 { margin: 8px 0 0; white-space: nowrap; font-size: 1.8em; }
+.filter-panel { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg-panel); }
 .filter-search { width: 100%; border: 1px solid var(--line); border-radius: 6px; background: var(--bg-app); color: var(--text-main); padding: 9px 12px; }
 .filter-search::placeholder { color: var(--text-muted); }
 .filter-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
@@ -82,9 +84,14 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px
 .filter-button, .filter-clear { border: 1px solid var(--line); border-radius: 999px; background: var(--bg-app); color: var(--text-main); padding: 6px 12px; font-size: 0.85em; }
 .filter-button:hover, .filter-clear:hover { border-color: var(--accent); background: var(--bg-hover); }
 .filter-button.active { border-color: var(--accent); background: var(--accent); color: #fff; }
-.filter-summary { display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--text-muted); font-size: 0.85em; }
+.filter-summary { display: flex; align-items: center; gap: 12px; margin-left: auto; color: var(--text-muted); font-size: 0.85em; }
 .filter-clear { border-radius: 6px; }
 .card-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+
+@media (max-width: 1100px) {
+  .grid-toolbar { grid-template-columns: 1fr; }
+  .grid-toolbar h1 { white-space: normal; }
+}
 
 /* Legacy Panel/Dialog CSS for Synapse DB features */
 .card-tile { width: 100%; text-align: left; color: var(--text-main); background: var(--bg-app); border: 1px solid var(--line); border-radius: 8px; padding: 12px; transition: transform .15s, border-color .15s; }
