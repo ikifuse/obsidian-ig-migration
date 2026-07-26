@@ -29,7 +29,7 @@ Instagramからエクスポートした約10年分の記録を、原本を失わ
 
 GitHub上では、以下の項目を押すと、リポジトリの構成から各文書の内容へ順番に展開できます。
 
-[▶ ブラウザーでプロジェクト全体マップを開く](https://ikifuse.github.io/obsidian-ig-migration/%E3%83%9E%E3%82%A4%E3%83%B3%E3%83%89%E3%83%9E%E3%83%83%E3%83%97/)
+[▶ ブラウザーでプロジェクト全体マップを開く](https://ikifuse.github.io/obsidian-ig-migration/%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E5%9C%B0%E5%9B%B3/)
 
 ## 🧪 現在の検証対象をブラウザーで開く
 
