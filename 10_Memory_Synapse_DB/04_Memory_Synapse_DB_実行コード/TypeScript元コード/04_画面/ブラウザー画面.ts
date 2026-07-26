@@ -28,6 +28,8 @@ type DialogState =
   | { type: "dissolve"; bigCardId: string }
   | null;
 
+type CardStatusFilter = "single" | "big" | "merged";
+
 let state = createInitialState();
 let selectedCardId: string | null = null;
 let selectedLogFile: string | null = null;
@@ -38,6 +40,10 @@ let notice = "検証用データだけを使用しています。再読込でも
 let noticeType: "normal" | "success" | "error" = "normal";
 let draggedCardId: string | null = null;
 let gridTabOpen: boolean = false;
+let searchQuery = "";
+let handwrittenOnly = false;
+const kindFilters = new Set<Card["kind"]>();
+const statusFilters = new Set<CardStatusFilter>();
 let expandedFolders = new Set<string>(["Instagram_Logs", "Posts", "Reels", "Stories", "Synapses", "Locations", "Mentions", "Tags", "SystemLogs"]);
 
 const appElement = document.querySelector<HTMLDivElement>("#app");
@@ -185,10 +191,53 @@ function renderTreeFolder(name: string, depth: number): string {
 }
 
 function renderGridTab(): string {
+  const allCards = Object.values(state.cards);
+  const shownCards = filteredCards(allCards);
   return `<div class="grid-view-container">
     <h1 style="font-size: 1.8em; margin-bottom: 24px;">Memory Synapse DB (リンク一覧)</h1>
-    <div class="card-list">${Object.values(state.cards).map(renderCardTile).join("")}</div>
+    <section class="filter-panel" aria-label="カードの絞り込み">
+      <input class="filter-search" data-filter-search type="search" value="${escapeHtml(searchQuery)}" placeholder="カードを検索">
+      <div class="filter-row">
+        <span class="filter-label">種類</span>
+        ${filterButton("Tag", "toggle-kind-filter", "tag", kindFilters.has("tag"))}
+        ${filterButton("Mention", "toggle-kind-filter", "mention", kindFilters.has("mention"))}
+        ${filterButton("Location", "toggle-kind-filter", "location", kindFilters.has("location"))}
+      </div>
+      <div class="filter-row">
+        <span class="filter-label">状態</span>
+        ${filterButton("単独", "toggle-status-filter", "single", statusFilters.has("single"))}
+        ${filterButton("大きなカード", "toggle-status-filter", "big", statusFilters.has("big"))}
+        ${filterButton("融合済み", "toggle-status-filter", "merged", statusFilters.has("merged"))}
+        ${filterButton("手書きあり", "toggle-handwritten-filter", "handwritten", handwrittenOnly)}
+      </div>
+      <div class="filter-summary">
+        <button class="filter-clear" data-action="clear-card-filters">絞り込み解除</button>
+        <span>全${allCards.length}件中${shownCards.length}件を表示</span>
+      </div>
+    </section>
+    <div class="card-list">${shownCards.map(renderCardTile).join("") || '<div class="empty">条件に一致するカードがありません。</div>'}</div>
   </div>`;
+}
+
+function filterButton(label: string, action: string, value: string, active: boolean): string {
+  return `<button class="filter-button ${active ? "active" : ""}" data-action="${action}" data-filter-value="${value}" aria-pressed="${active}">${label}</button>`;
+}
+
+function cardStatus(cardId: string): CardStatusFilter {
+  const group = groupForCard(state, cardId);
+  if (!group) return "single";
+  return group.bigCardId === cardId ? "big" : "merged";
+}
+
+function filteredCards(cards: Card[]): Card[] {
+  const query = searchQuery.trim().toLocaleLowerCase("ja");
+  return cards.filter((card) => {
+    if (query && !`${card.name} ${Object.values(card.source).flat().join(" ")}`.toLocaleLowerCase("ja").includes(query)) return false;
+    if (kindFilters.size > 0 && !kindFilters.has(card.kind)) return false;
+    if (statusFilters.size > 0 && !statusFilters.has(cardStatus(card.id))) return false;
+    if (handwrittenOnly && !card.handwritten) return false;
+    return true;
+  });
 }
 
 function renderSystemLogFileView(systemLogId: SystemLogId): string {
@@ -481,6 +530,14 @@ function openMerge(sourceId: string, receiverId: string): void {
 }
 
 function bindEvents(): void {
+  const searchInput = document.querySelector<HTMLInputElement>("[data-filter-search]");
+  searchInput?.addEventListener("input", () => {
+    searchQuery = searchInput.value;
+    render();
+    const nextInput = document.querySelector<HTMLInputElement>("[data-filter-search]");
+    nextInput?.focus();
+    nextInput?.setSelectionRange(searchQuery.length, searchQuery.length);
+  });
   document.querySelectorAll<HTMLElement>("[data-card-id].card-tile").forEach((el) => {
     el.addEventListener("click", () => {
       selectedCardId = el.dataset.cardId ?? selectedCardId;
@@ -532,10 +589,46 @@ function handleAction(action: string, data: DOMStringMap): void {
     }
     return;
   }
+  if (action === "toggle-kind-filter" && data.filterValue) {
+    const kind = data.filterValue as Card["kind"];
+    if (kindFilters.has(kind)) kindFilters.delete(kind);
+    else kindFilters.add(kind);
+    render();
+    return;
+  }
+  if (action === "toggle-status-filter" && data.filterValue) {
+    const status = data.filterValue as CardStatusFilter;
+    if (statusFilters.has(status)) statusFilters.delete(status);
+    else statusFilters.add(status);
+    render();
+    return;
+  }
+  if (action === "toggle-handwritten-filter") { handwrittenOnly = !handwrittenOnly; render(); return; }
+  if (action === "clear-card-filters") {
+    searchQuery = "";
+    handwrittenOnly = false;
+    kindFilters.clear();
+    statusFilters.clear();
+    render();
+    return;
+  }
   if (action === "open-tab-grid") { gridTabOpen = true; render(); return; }
   if (action === "open-tab-log") { gridTabOpen = false; render(); return; }
   if (action === "cancel-dialog") { dialog = null; handwrittenDraft = null; setNotice("キャンセルしました。状態は変更していません。", "normal"); return; }
-  if (action === "reset") { state = createInitialState(); history.初期化する(); selectedCardId = null; selectedLogFile = null; selectedSystemLogId = null; gridTabOpen = false; setNotice("初期状態へ戻しました。", "success"); return; }
+  if (action === "reset") {
+    state = createInitialState();
+    history.初期化する();
+    selectedCardId = null;
+    selectedLogFile = null;
+    selectedSystemLogId = null;
+    gridTabOpen = false;
+    searchQuery = "";
+    handwrittenOnly = false;
+    kindFilters.clear();
+    statusFilters.clear();
+    setNotice("初期状態へ戻しました。", "success");
+    return;
+  }
   if (action === "undo") { const previous = history.直前へ戻す(); if (previous) { state = previous; setNotice("直前の操作前へ戻しました。", "success"); } return; }
   if (action === "multi-test") { const invalid = createInvalidMultiMembershipState(state); const errors = validateState(invalid); setNotice(`書き込み前検証で停止しました。状態は変更していません。\n${errors.join("\n")}`, "error"); return; }
   if (action === "start-merge" && data.cardId) { const target = prompt("融合先カードのIDを入力してください:\n" + Object.values(state.cards).filter((card) => card.id !== data.cardId).map((card) => `${card.id}: ${card.name}`).join("\n")); if (target && state.cards[target]) openMerge(data.cardId, target); return; }
