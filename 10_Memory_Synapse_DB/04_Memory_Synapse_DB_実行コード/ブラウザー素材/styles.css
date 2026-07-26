@@ -136,6 +136,16 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px
 .dialog header h2 { margin: 0; font-size: 1.1em; }
 .dialog-content { padding: 16px; }
 .dialog footer { display: flex; justify-content: flex-end; gap: 8px; padding: 16px; border-top: 1px solid var(--line); }
+.merge-target-dialog { width: min(820px, 100%); }
+.merge-source { display: flex; align-items: center; gap: 8px; padding: 12px; border: 1px solid var(--accent); border-radius: 8px; background: var(--bg-app); }
+.merge-source > span:first-child { color: var(--text-muted); font-size: 0.85em; }
+.merge-step-arrow { color: var(--text-muted); text-align: center; padding: 6px; }
+.merge-filter-panel { margin: 0; }
+.merge-candidate-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; max-height: 42vh; overflow-y: auto; padding-right: 4px; }
+.merge-candidate { display: grid; gap: 6px; text-align: left; color: var(--text-main); background: var(--bg-app); border: 1px solid var(--line); border-radius: 8px; padding: 12px; }
+.merge-candidate:hover { border-color: var(--accent); background: var(--bg-hover); }
+.merge-candidate-main { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.merge-candidate-alias, .merge-candidate-meta { color: var(--text-muted); font-size: 0.8em; }
 .choice { display: flex; gap: 12px; align-items: flex-start; border: 1px solid var(--line); padding: 12px; border-radius: 8px; margin-top: 8px; cursor: pointer; }
 .choice:hover { background: var(--bg-hover); }
 .choice.recommended { border-color: var(--accent-2); }
@@ -148,3 +158,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px
 .notice { padding: 12px; border-radius: 8px; background: var(--bg-hover); color: var(--text-muted); font-size: 0.9em; margin-bottom: 16px; }
 .notice.success { border-left: 4px solid var(--accent-2); }
 .notice.error { border-left: 4px solid var(--danger); color: var(--danger); }
+
+@media (max-width: 720px) {
+  .merge-candidate-list { grid-template-columns: 1fr; }
+}

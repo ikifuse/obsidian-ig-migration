@@ -21,6 +21,13 @@ import { カードを融合する as mergeCards, 大きなカードを推奨す�
 import { ブラウザー操作履歴 } from "../02_操作処理/元に戻す";
 
 type DialogState =
+  | {
+      type: "select-merge-target";
+      sourceId: string;
+      search: string;
+      kindFilters: Card["kind"][];
+      statusFilters: CardStatusFilter[];
+    }
   | { type: "merge"; sourceId: string; receiverId: string; selectedBigId?: string }
   | { type: "change-big"; oldBigId: string; selectedBigId?: string; selectedMode?: DisplayMode }
   | { type: "split-big"; oldBigId: string; splitId: string; selectedBigId?: string; selectedMode?: DisplayMode }
@@ -441,12 +448,83 @@ function noteFields(note: HandwrittenNote): Array<[string, string]> {
 
 function renderDialog(): string {
   if (!dialog) return "";
+  if (dialog.type === "select-merge-target") return renderMergeTargetDialog(dialog);
   if (dialog.type === "merge") return renderMergeDialog(dialog.sourceId, dialog.receiverId, dialog.selectedBigId);
   if (dialog.type === "change-big") return renderBigChoiceDialog(dialog.oldBigId, undefined, dialog.selectedBigId, dialog.selectedMode);
   if (dialog.type === "split-big") return renderBigChoiceDialog(dialog.oldBigId, dialog.splitId, dialog.selectedBigId, dialog.selectedMode);
   if (dialog.type === "handwritten") return renderHandwrittenDialog(dialog.cardId, dialog.confirm);
   const group = state.groups[dialog.bigCardId];
   return dialogFrame("融合をすべて解体しますか？", `<p>${group ? groupCardIds(group).map((id) => escapeHtml(state.cards[id]?.name ?? id)).join("、") : ""}</p><div class="notice">個別カード、カテゴリ固有情報、関連投稿、手書き情報は削除しません。</div>`, "解体する", "confirm-dissolve");
+}
+
+function renderMergeTargetDialog(targetDialog: Extract<DialogState, { type: "select-merge-target" }>): string {
+  const sourceCard = state.cards[targetDialog.sourceId];
+  if (!sourceCard) return "";
+  const sourceGroup = groupForCard(state, targetDialog.sourceId);
+  const sourceGroupIds = new Set(sourceGroup ? groupCardIds(sourceGroup) : [targetDialog.sourceId]);
+  const query = targetDialog.search.trim().toLocaleLowerCase("ja");
+  const candidates = Object.values(state.cards).filter((card) => {
+    if (sourceGroupIds.has(card.id)) return false;
+    if (targetDialog.kindFilters.length > 0 && !targetDialog.kindFilters.includes(card.kind)) return false;
+    if (targetDialog.statusFilters.length > 0 && !targetDialog.statusFilters.includes(cardStatus(card.id))) return false;
+    return !query || mergeCandidateSearchText(card).includes(query);
+  });
+  const allCandidateCount = Object.keys(state.cards).length - sourceGroupIds.size;
+
+  return `<div class="dialog-backdrop" role="presentation">
+    <section class="dialog merge-target-dialog" role="dialog" aria-modal="true" aria-label="融合先候補を選択">
+      <header><h2>融合先候補を選択</h2></header>
+      <div class="dialog-content">
+        <div class="merge-source"><span>選択中</span><strong>${escapeHtml(sourceCard.name)}</strong><span class="pill kind-${sourceCard.kind}">${KIND_LABEL[sourceCard.kind]}</span></div>
+        <div class="merge-step-arrow">↓</div>
+        <section class="filter-panel merge-filter-panel" aria-label="融合先候補の絞り込み">
+          <input class="filter-search" data-merge-search type="search" value="${escapeHtml(targetDialog.search)}" placeholder="名前・別名・関連投稿を検索">
+          <div class="filter-row">
+            <span class="filter-label">種類</span>
+            ${mergeFilterButton("Tag", "toggle-merge-kind-filter", "tag", targetDialog.kindFilters.includes("tag"))}
+            ${mergeFilterButton("Mention", "toggle-merge-kind-filter", "mention", targetDialog.kindFilters.includes("mention"))}
+            ${mergeFilterButton("Location", "toggle-merge-kind-filter", "location", targetDialog.kindFilters.includes("location"))}
+          </div>
+          <div class="filter-row">
+            <span class="filter-label">状態</span>
+            ${mergeFilterButton("単独", "toggle-merge-status-filter", "single", targetDialog.statusFilters.includes("single"))}
+            ${mergeFilterButton("大きなカード", "toggle-merge-status-filter", "big", targetDialog.statusFilters.includes("big"))}
+            ${mergeFilterButton("融合済み", "toggle-merge-status-filter", "merged", targetDialog.statusFilters.includes("merged"))}
+          </div>
+          <div class="filter-summary"><span>全${allCandidateCount}件中${candidates.length}件を表示</span></div>
+        </section>
+        <div class="merge-step-arrow">↓</div>
+        <div class="merge-candidate-list">
+          ${candidates.map(renderMergeCandidate).join("") || '<div class="empty">条件に一致する候補がありません。</div>'}
+        </div>
+      </div>
+      <footer><button class="btn" data-action="cancel-dialog">キャンセル</button></footer>
+    </section>
+  </div>`;
+}
+
+function mergeFilterButton(label: string, action: string, value: string, active: boolean): string {
+  return `<button class="filter-button ${active ? "active" : ""}" data-action="${action}" data-filter-value="${value}" aria-pressed="${active}">${label}</button>`;
+}
+
+function mergeCandidateSearchText(card: Card): string {
+  return [
+    card.name,
+    ...Object.values(card.source).flat().map(String),
+    card.handwritten?.displayName ?? "",
+    ...(card.handwritten?.aliases ?? []),
+    ...card.relatedPosts
+  ].join(" ").toLocaleLowerCase("ja");
+}
+
+function renderMergeCandidate(card: Card): string {
+  const aliases = [card.handwritten?.displayName ?? "", ...(card.handwritten?.aliases ?? [])].filter(Boolean);
+  const status = statusFor(card.id);
+  return `<button class="merge-candidate" data-action="select-merge-target" data-card-id="${escapeHtml(card.id)}">
+    <span class="merge-candidate-main"><strong>${escapeHtml(card.name)}</strong><span class="pill kind-${card.kind}">${KIND_LABEL[card.kind]}</span></span>
+    ${aliases.length > 0 ? `<span class="merge-candidate-alias">別名: ${escapeHtml(aliases.join("、"))}</span>` : ""}
+    <span class="merge-candidate-meta">${escapeHtml(status.label)}・関連投稿 ${card.relatedPosts.length}件</span>
+  </button>`;
 }
 
 function renderMergeDialog(sourceId: string, receiverId: string, selectedBigId?: string): string {
@@ -540,6 +618,15 @@ function bindEvents(): void {
     nextInput?.focus();
     nextInput?.setSelectionRange(searchQuery.length, searchQuery.length);
   });
+  const mergeSearchInput = document.querySelector<HTMLInputElement>("[data-merge-search]");
+  mergeSearchInput?.addEventListener("input", () => {
+    if (dialog?.type !== "select-merge-target") return;
+    dialog.search = mergeSearchInput.value;
+    render();
+    const nextInput = document.querySelector<HTMLInputElement>("[data-merge-search]");
+    nextInput?.focus();
+    nextInput?.setSelectionRange(dialog.search.length, dialog.search.length);
+  });
   document.querySelectorAll<HTMLElement>("[data-card-id].card-tile").forEach((el) => {
     el.addEventListener("click", () => {
       selectedCardId = el.dataset.cardId ?? selectedCardId;
@@ -614,6 +701,27 @@ function handleAction(action: string, data: DOMStringMap): void {
     render();
     return;
   }
+  if (action === "toggle-merge-kind-filter" && data.filterValue && dialog?.type === "select-merge-target") {
+    const kind = data.filterValue as Card["kind"];
+    dialog.kindFilters = dialog.kindFilters.includes(kind)
+      ? dialog.kindFilters.filter((value) => value !== kind)
+      : [...dialog.kindFilters, kind];
+    render();
+    return;
+  }
+  if (action === "toggle-merge-status-filter" && data.filterValue && dialog?.type === "select-merge-target") {
+    const status = data.filterValue as CardStatusFilter;
+    dialog.statusFilters = dialog.statusFilters.includes(status)
+      ? dialog.statusFilters.filter((value) => value !== status)
+      : [...dialog.statusFilters, status];
+    render();
+    return;
+  }
+  if (action === "select-merge-target" && data.cardId && dialog?.type === "select-merge-target") {
+    const sourceId = dialog.sourceId;
+    openMerge(sourceId, data.cardId);
+    return;
+  }
   if (action === "open-tab-grid") { gridTabOpen = true; render(); return; }
   if (action === "open-tab-log") { gridTabOpen = false; render(); return; }
   if (action === "cancel-dialog") { dialog = null; handwrittenDraft = null; setNotice("キャンセルしました。状態は変更していません。", "normal"); return; }
@@ -633,7 +741,17 @@ function handleAction(action: string, data: DOMStringMap): void {
   }
   if (action === "undo") { const previous = history.直前へ戻す(); if (previous) { state = previous; setNotice("直前の操作前へ戻しました。", "success"); } return; }
   if (action === "multi-test") { const invalid = createInvalidMultiMembershipState(state); const errors = validateState(invalid); setNotice(`書き込み前検証で停止しました。状態は変更していません。\n${errors.join("\n")}`, "error"); return; }
-  if (action === "start-merge" && data.cardId) { const target = prompt("融合先カードのIDを入力してください:\n" + Object.values(state.cards).filter((card) => card.id !== data.cardId).map((card) => `${card.id}: ${card.name}`).join("\n")); if (target && state.cards[target]) openMerge(data.cardId, target); return; }
+  if (action === "start-merge" && data.cardId) {
+    dialog = {
+      type: "select-merge-target",
+      sourceId: data.cardId,
+      search: "",
+      kindFilters: [],
+      statusFilters: []
+    };
+    render();
+    return;
+  }
   if (action === "handwritten" && data.cardId) { dialog = { type: "handwritten", cardId: data.cardId, confirm: false }; render(); return; }
   if (action === "review-handwritten" && dialog?.type === "handwritten") { handwrittenDraft = readNoteFromForm(); dialog.confirm = true; render(); return; }
   if (action === "confirm-handwritten" && dialog?.type === "handwritten") { apply(saveHandwritten(state, dialog.cardId, readNoteFromDraft())); handwrittenDraft = null; return; }
