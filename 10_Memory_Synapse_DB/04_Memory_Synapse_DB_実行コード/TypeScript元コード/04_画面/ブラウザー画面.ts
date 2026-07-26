@@ -1,5 +1,10 @@
 import { 初期状態を作る as createInitialState } from "../03_データ入出力/ブラウザー内データ";
 import { 検証用親工程ログ一覧 as parentLogs } from "../03_データ入出力/検証用親工程ログ";
+import {
+  SystemLogの項目一覧 as systemLogEntries,
+  検証用SystemLog一覧 as systemLogs,
+  type 検証用SystemLogID as SystemLogId
+} from "../03_データ入出力/検証用SystemLogs";
 import type { カード as Card } from "../01_データ構造/カード";
 import { カード種類表示名 as KIND_LABEL } from "../01_データ構造/カード";
 import type { 手書き情報 as HandwrittenNote } from "../01_データ構造/手書き情報";
@@ -26,6 +31,7 @@ type DialogState =
 let state = createInitialState();
 let selectedCardId: string | null = null;
 let selectedLogFile: string | null = null;
+let selectedSystemLogId: SystemLogId | null = null;
 let dialog: DialogState = null;
 const history = new ブラウザー操作履歴();
 let notice = "検証用データだけを使用しています。再読込でも初期状態へ戻ります。";
@@ -78,12 +84,20 @@ function render(): void {
       </div>
       <div class="obsidian-center">
         <div class="tab-bar">
-          <div class="tab ${!gridTabOpen ? 'active' : ''}" data-action="open-tab-log">${escapeHtml(selectedLogFile || selectedCardId || "無題")}</div>
+          <div class="tab ${!gridTabOpen ? 'active' : ''}" data-action="open-tab-log">${escapeHtml(selectedLogFile || selectedCardId || systemLogs.find((item) => item.id === selectedSystemLogId)?.filename || "無題")}</div>
           <div class="tab ${gridTabOpen ? 'active' : ''}" data-action="open-tab-grid">リンク一覧</div>
           <div class="tab">+</div>
         </div>
         <div class="center-content">
-          ${gridTabOpen ? renderGridTab() : (selectedLogFile ? renderLogFileView(selectedLogFile) : (selectedCard ? renderCardView(selectedCard as Card) : '<div class="empty">左サイドバーからLogファイルまたはSynapseカードを選択してください。</div>'))}
+          ${gridTabOpen
+            ? renderGridTab()
+            : selectedSystemLogId
+              ? renderSystemLogFileView(selectedSystemLogId)
+              : selectedLogFile
+                ? renderLogFileView(selectedLogFile)
+                : selectedCard
+                  ? renderCardView(selectedCard as Card)
+                  : '<div class="empty">左サイドバーからLogファイル、SystemLogまたはSynapseカードを選択してください。</div>'}
         </div>
       </div>
       <div class="obsidian-sidebar-right">
@@ -140,9 +154,11 @@ function renderTreeFolder(name: string, depth: number): string {
       }
     } else if (name === "SystemLogs") {
       const fileIndent = `padding-left: ${16 + (depth + 1) * 16 + 16}px;`;
-      html += `<div class="tree-item" style="${fileIndent}">ハッシュタグ一覧</div>`;
-      html += `<div class="tree-item" style="${fileIndent}">メンション一覧</div>`;
-      html += `<div class="tree-item" style="${fileIndent}">場所一覧</div>`;
+      html += systemLogs.map((systemLog) =>
+        `<div class="tree-item ${systemLog.id === selectedSystemLogId ? 'active' : ''}" style="${fileIndent}" data-action="select-system-log" data-system-log-id="${systemLog.id}">
+          ${escapeHtml(systemLog.filename)}
+        </div>`
+      ).join("");
     } else if (name === "Synapses") {
       html += renderTreeFolder("Locations", depth + 1);
       html += renderTreeFolder("Mentions", depth + 1);
@@ -172,6 +188,39 @@ function renderGridTab(): string {
   return `<div class="grid-view-container">
     <h1 style="font-size: 1.8em; margin-bottom: 24px;">Memory Synapse DB (リンク一覧)</h1>
     <div class="card-list">${Object.values(state.cards).map(renderCardTile).join("")}</div>
+  </div>`;
+}
+
+function renderSystemLogFileView(systemLogId: SystemLogId): string {
+  const systemLog = systemLogs.find((item) => item.id === systemLogId);
+  if (!systemLog) return '<div class="empty">対応する検証用SystemLogが見つかりません。</div>';
+  const entries = systemLogEntries(state, systemLogId);
+
+  return `<div class="log-view" style="color: var(--text-main);">
+    <h1 style="font-size: 1.8em; margin-bottom: 16px;">${escapeHtml(systemLog.title)} - IGC統合</h1>
+    <p>初期状態で全て採用（<code>- [x]</code>）です。除外したい項目は <code>- [x]</code> を <code>- [ ]</code> にしてください。</p>
+    <hr style="border:0; border-top:1px solid var(--line); margin:20px 0;">
+    ${entries.map((entry) => `
+      <section style="margin:0 0 24px;">
+        <div>- [x]
+          <span class="post-link" data-action="select-card" data-card-id="${escapeHtml(entry.card.id)}" style="cursor:pointer; color:var(--text-accent); text-decoration:underline;">
+            ${escapeHtml(entry.wikiLink)}
+          </span>
+        </div>
+        <p style="margin:8px 0;">出現回数: ${entry.relatedPostIds.length}回</p>
+        <div>出現投稿:</div>
+        <div style="padding-left:24px;">
+          ${entry.relatedPostIds.map((postId) => `
+            <div style="margin:6px 0;">-
+              <span class="post-link" data-action="select-log" data-log-id="${escapeHtml(postId)}" style="cursor:pointer; color:var(--text-accent); text-decoration:underline;">
+                ${escapeHtml(`[[${postId}]]`)}
+              </span>
+            </div>
+          `).join("")}
+        </div>
+      </section>
+      <hr style="border:0; border-top:1px solid var(--line); margin:20px 0;">
+    `).join("")}
   </div>`;
 }
 
@@ -436,6 +485,7 @@ function bindEvents(): void {
     el.addEventListener("click", () => {
       selectedCardId = el.dataset.cardId ?? selectedCardId;
       selectedLogFile = null; // メイン画面もカード表示に切り替えるためにログ選択を解除
+      selectedSystemLogId = null;
       render();
     });
     el.addEventListener("dragstart", () => { draggedCardId = el.dataset.cardId ?? null; });
@@ -469,12 +519,23 @@ function handleAction(action: string, data: DOMStringMap): void {
     render();
     return;
   }
-  if (action === "select-log" && data.logId) { selectedLogFile = data.logId; selectedCardId = null; render(); return; }
-  if (action === "select-card" && data.cardId) { selectedCardId = data.cardId; selectedLogFile = null; render(); return; }
+  if (action === "select-log" && data.logId) { selectedLogFile = data.logId; selectedCardId = null; selectedSystemLogId = null; render(); return; }
+  if (action === "select-card" && data.cardId) { selectedCardId = data.cardId; selectedLogFile = null; selectedSystemLogId = null; render(); return; }
+  if (action === "select-system-log" && data.systemLogId) {
+    const systemLogId = data.systemLogId as SystemLogId;
+    if (systemLogs.some((item) => item.id === systemLogId)) {
+      selectedSystemLogId = systemLogId;
+      selectedCardId = null;
+      selectedLogFile = null;
+      gridTabOpen = false;
+      render();
+    }
+    return;
+  }
   if (action === "open-tab-grid") { gridTabOpen = true; render(); return; }
   if (action === "open-tab-log") { gridTabOpen = false; render(); return; }
   if (action === "cancel-dialog") { dialog = null; handwrittenDraft = null; setNotice("キャンセルしました。状態は変更していません。", "normal"); return; }
-  if (action === "reset") { state = createInitialState(); history.初期化する(); selectedCardId = null; selectedLogFile = null; gridTabOpen = false; setNotice("初期状態へ戻しました。", "success"); return; }
+  if (action === "reset") { state = createInitialState(); history.初期化する(); selectedCardId = null; selectedLogFile = null; selectedSystemLogId = null; gridTabOpen = false; setNotice("初期状態へ戻しました。", "success"); return; }
   if (action === "undo") { const previous = history.直前へ戻す(); if (previous) { state = previous; setNotice("直前の操作前へ戻しました。", "success"); } return; }
   if (action === "multi-test") { const invalid = createInvalidMultiMembershipState(state); const errors = validateState(invalid); setNotice(`書き込み前検証で停止しました。状態は変更していません。\n${errors.join("\n")}`, "error"); return; }
   if (action === "start-merge" && data.cardId) { const target = prompt("融合先カードのIDを入力してください:\n" + Object.values(state.cards).filter((card) => card.id !== data.cardId).map((card) => `${card.id}: ${card.name}`).join("\n")); if (target && state.cards[target]) openMerge(data.cardId, target); return; }

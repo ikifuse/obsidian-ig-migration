@@ -2,6 +2,10 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { 初期状態を作る as createInitialState } from "./ブラウザー内データ";
 import { 検証用親工程ログ一覧 as parentLogs } from "./検証用親工程ログ";
+import {
+  SystemLogの項目一覧 as systemLogEntries,
+  検証用SystemLog一覧 as systemLogs
+} from "./検証用SystemLogs";
 
 test("検証用カードはMention・Location・Tag各30枚を単独状態で開始する", () => {
   const state = createInitialState();
@@ -40,6 +44,28 @@ test("親工程形式の検証用ログはPost・Reel・Story各30件ある", ()
   assert.equal(logs.filter((log) => log.type === "Feed").length, 30);
   assert.equal(logs.filter((log) => log.type === "Reels").length, 30);
   assert.equal(logs.filter((log) => log.type === "Stories").length, 30);
+});
+
+test("SystemLogs三ファイルに全検証カードと出現投稿が入っている", () => {
+  const state = createInitialState();
+  const entries = systemLogs.flatMap((systemLog) => systemLogEntries(state, systemLog.id));
+
+  assert.deepEqual(
+    systemLogs.map((systemLog) => [systemLog.filename, systemLogEntries(state, systemLog.id).length]),
+    [
+      ["ハッシュタグ一覧.md", 30],
+      ["メンション一覧.md", 30],
+      ["場所一覧.md", 30]
+    ]
+  );
+  assert.deepEqual(new Set(entries.map((entry) => entry.card.id)), new Set(Object.keys(state.cards)));
+  for (const entry of entries) {
+    assert.equal(entry.relatedPostIds.length, entry.card.relatedPosts.length);
+    assert.ok(entry.wikiLink.startsWith("[[Instagram_Logs/Synapses/"));
+    for (const postId of entry.relatedPostIds) {
+      assert.ok(parentLogs[postId], `${entry.card.id}: SystemLogから存在しない投稿を参照しています`);
+    }
+  }
 });
 
 test("キャプションは原文で、抽出対象と末尾Wikiリンクを分離している", () => {
