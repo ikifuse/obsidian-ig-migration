@@ -194,7 +194,6 @@ function renderGridTab(): string {
   const allCards = Object.values(state.cards);
   const shownCards = filteredCards(allCards);
   return `<div class="grid-view-container">
-    <h1 style="font-size: 1.8em; margin-bottom: 24px;">Memory Synapse DB (リンク一覧)</h1>
     <section class="filter-panel" aria-label="カードの絞り込み">
       <input class="filter-search" data-filter-search type="search" value="${escapeHtml(searchQuery)}" placeholder="カードを検索">
       <div class="filter-row">
@@ -215,6 +214,7 @@ function renderGridTab(): string {
         <span>全${allCards.length}件中${shownCards.length}件を表示</span>
       </div>
     </section>
+    <h1 style="font-size: 1.8em; margin: 0 0 24px;">Memory Synapse DB (リンク一覧)</h1>
     <div class="card-list">${shownCards.map(renderCardTile).join("") || '<div class="empty">条件に一致するカードがありません。</div>'}</div>
   </div>`;
 }

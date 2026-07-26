@@ -259,7 +259,6 @@ ${r.join(`
         </div>`).join("")}else if(n==="Synapses")e+=f("Locations",a+1),e+=f("Mentions",a+1),e+=f("Tags",a+1);else if(n==="Locations"||n==="Mentions"||n==="Tags"){let d=n.toLowerCase().replace(/s$/,""),c=Object.values(l.cards).filter(k=>k.kind===d),_=`padding-left: ${16+(a+1)*16+16}px;`;c.length>0?e+=c.map(k=>`<div class="tree-item ${k.id===w?"active":""}" style="${_}" data-action="select-card" data-card-id="${k.id}">
             ${s(d0(k))}.md
           </div>`).join(""):e+=`<div class="tree-item" style="${_} color: var(--text-muted);">(\u7A7A)</div>`}else{let d=`padding-left: ${16+(a+1)*16+16}px;`;e+=`<div class="tree-item" style="${d} color: var(--text-muted);">(\u7A7A)</div>`}}return e}function k0(){let n=Object.values(l.cards),a=G0(n);return`<div class="grid-view-container">
-    <h1 style="font-size: 1.8em; margin-bottom: 24px;">Memory Synapse DB (\u30EA\u30F3\u30AF\u4E00\u89A7)</h1>
     <section class="filter-panel" aria-label="\u30AB\u30FC\u30C9\u306E\u7D5E\u308A\u8FBC\u307F">
       <input class="filter-search" data-filter-search type="search" value="${s(C)}" placeholder="\u30AB\u30FC\u30C9\u3092\u691C\u7D22">
       <div class="filter-row">
@@ -280,6 +279,7 @@ ${r.join(`
         <span>\u5168${n.length}\u4EF6\u4E2D${a.length}\u4EF6\u3092\u8868\u793A</span>
       </div>
     </section>
+    <h1 style="font-size: 1.8em; margin: 0 0 24px;">Memory Synapse DB (\u30EA\u30F3\u30AF\u4E00\u89A7)</h1>
     <div class="card-list">${a.map(c0).join("")||'<div class="empty">\u6761\u4EF6\u306B\u4E00\u81F4\u3059\u308B\u30AB\u30FC\u30C9\u304C\u3042\u308A\u307E\u305B\u3093\u3002</div>'}</div>
   </div>`}function R(n,a,t,i){return`<button class="filter-button ${i?"active":""}" data-action="${a}" data-filter-value="${t}" aria-pressed="${i}">${n}</button>`}function w0(n){let a=G(l,n);return a?a.bigCardId===n?"big":"merged":"single"}function G0(n){let a=C.trim().toLocaleLowerCase("ja");return n.filter(t=>!(a&&!`${t.name} ${Object.values(t.source).flat().join(" ")}`.toLocaleLowerCase("ja").includes(a)||S.size>0&&!S.has(t.kind)||b.size>0&&!b.has(w0(t.id))||T&&!t.handwritten))}function h0(n){let a=z.find(i=>i.id===n);if(!a)return'<div class="empty">\u5BFE\u5FDC\u3059\u308B\u691C\u8A3C\u7528SystemLog\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093\u3002</div>';let t=Y(l,n);return`<div class="log-view" style="color: var(--text-main);">
     <h1 style="font-size: 1.8em; margin-bottom: 16px;">${s(a.title)} - IGC\u7D71\u5408</h1>
