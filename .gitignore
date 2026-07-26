@@ -10,6 +10,9 @@ output_IGR/
 output_IGP/
 output_IGC/
 
+# 廃止済みの旧Obsidian投入用ステージング領域
+Ready_for_Obsidian/
+
 # 旧ローカル運用名の出力先。互換のため除外を維持
 ikifuse_IGX_out/
 ikifuse_IGS_out/
