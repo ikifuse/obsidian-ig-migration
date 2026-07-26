@@ -1,0 +1,9 @@
+{
+  "id": "memory-synapse-db",
+  "name": "Memory Synapse DB",
+  "version": "0.0.1",
+  "minAppVersion": "1.5.0",
+  "description": "Experimental read-only prototype for evaluating large Markdown and Wiki-link collections.",
+  "author": "ikifuse",
+  "isDesktopOnly": false
+}

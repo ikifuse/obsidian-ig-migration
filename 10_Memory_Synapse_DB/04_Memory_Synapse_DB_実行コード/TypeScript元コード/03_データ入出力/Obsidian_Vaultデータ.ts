@@ -1,50 +1,141 @@
 import type { App, TFile } from "obsidian";
-import type { カード種類 } from "../01_データ構造/カード";
+import type { カード, カード種類 } from "../01_データ構造/カード";
+import type { 融合グループ } from "../01_データ構造/融合グループ";
 import { 対象ルートを整理する } from "../05_共通処理/入力値整理";
 import type { カード読取結果, 読み取ったカード } from "./カード入出力";
-import { Wikiリンク数を数える } from "./Markdown解析";
+import { Wikiリンク数を数える, YAMLブロックを抽出する, YAMLブロックを置換する, 最初のYAMLブロックを抽出する, 関連投稿を抽出する } from "./Markdown解析";
 
-export interface Vaultから読み取ったカード extends 読み取ったカード {
+export type ParseYamlFn = (text: string) => any;
+export type StringifyYamlFn = (obj: any) => string;
+
+export function extractMemorySynapse(markdown: string, parseYaml: ParseYamlFn): any {
+  const yamlText = YAMLブロックを抽出する(markdown, "Memory Synapse");
+  if (!yamlText) return null;
+  try { return parseYaml(yamlText)?.memory_synapse ?? null; } catch { return null; }
+}
+
+export function extractHandwrittenNote(markdown: string, parseYaml: ParseYamlFn): any {
+  const yamlText = YAMLブロックを抽出する(markdown, "手書き情報");
+  if (!yamlText) return null;
+  try { return parseYaml(yamlText)?.memory_synapse_note ?? null; } catch { return null; }
+}
+
+export function updateMemorySynapse(markdown: string, data: any, stringifyYaml: StringifyYamlFn): string {
+  if (data === null) return YAMLブロックを置換する(markdown, "Memory Synapse", null);
+  return YAMLブロックを置換する(markdown, "Memory Synapse", stringifyYaml({ memory_synapse: data }).trim());
+}
+
+export function updateHandwrittenNote(markdown: string, data: any, stringifyYaml: StringifyYamlFn): string {
+  if (data === null) return YAMLブロックを置換する(markdown, "手書き情報", null);
+  return YAMLブロックを置換する(markdown, "手書き情報", stringifyYaml({ memory_synapse_note: data }).trim());
+}
+
+export interface FileUpdate {
   file: TFile;
+  memorySynapse?: any;
+  handwrittenNote?: any;
+}
+
+export async function processTransaction(
+  app: App,
+  updates: FileUpdate[],
+  stringifyYaml: StringifyYamlFn
+): Promise<void> {
+  const snapshots = await Promise.all(
+    updates.map(async (u) => ({ file: u.file, content: await app.vault.read(u.file) }))
+  );
+
+  try {
+    for (const update of updates) {
+      await app.vault.process(update.file, (data) => {
+        let result = data;
+        if (update.memorySynapse !== undefined) {
+          result = updateMemorySynapse(result, update.memorySynapse, stringifyYaml);
+        }
+        if (update.handwrittenNote !== undefined) {
+          result = updateHandwrittenNote(result, update.handwrittenNote, stringifyYaml);
+        }
+        return result;
+      });
+    }
+  } catch (error) {
+    for (const snap of snapshots) {
+      try {
+        await app.vault.modify(snap.file, snap.content);
+      } catch (e) {
+        console.error(`Rollback failed for ${snap.file.path}`, e);
+      }
+    }
+    throw new Error(`書き込み失敗のためロールバックしました: ${error}`);
+  }
+}
+
+export interface Vaultから読み取ったカード extends 読み取ったカード, カード {
+  file: TFile;
+}
+
+export interface Obsidian読取結果 extends カード読取結果<Vaultから読み取ったカード> {
+  groups: Record<string, 融合グループ>;
+  cardsById: Record<string, Vaultから読み取ったカード>;
 }
 
 export async function Synapsesを読み取る(
   app: App,
-  targetRoot: string
-): Promise<カード読取結果<Vaultから読み取ったカード>> {
-  const started = performance.now();
+  targetRoot: string,
+  parseYaml: ParseYamlFn
+): Promise<Obsidian読取結果> {
+  const startMs = performance.now();
   const root = 対象ルートを整理する(targetRoot);
-  const allMarkdown = app.vault.getMarkdownFiles();
-  const targets = allMarkdown.flatMap((file) => {
-    const kind = パスからカード種類を判定する(file.path, root);
-    return kind ? [{ file, kind }] : [];
-  });
+  const files = app.vault.getMarkdownFiles();
+  let totalWikiLinks = 0;
   const cards: Vaultから読み取ったカード[] = [];
-  const batchSize = 50;
+  const cardsById: Record<string, Vaultから読み取ったカード> = {};
+  const groups: Record<string, 融合グループ> = {};
+  const counts = { mention: 0, location: 0, tag: 0 };
 
-  for (let offset = 0; offset < targets.length; offset += batchSize) {
-    const batch = targets.slice(offset, offset + batchSize);
-    const scanned = await Promise.all(batch.map(async ({ file, kind }) => {
-      const contents = await app.vault.cachedRead(file);
-      return {
-        file,
-        path: file.path,
-        basename: file.basename,
-        kind,
-        wikiLinkCount: Wikiリンク数を数える(contents)
-      };
-    }));
-    cards.push(...scanned);
+  for (const file of files) {
+    if (!root || file.path.startsWith(root + "/")) {
+      const kind = パスからカード種類を判定する(file.path, root);
+      if (kind) {
+        const text = await app.vault.cachedRead(file);
+        const links = Wikiリンク数を数える(text);
+        totalWikiLinks += links;
+        counts[kind]++;
+
+        const id = `${kind}-${file.basename}`;
+        let source = {};
+        const baseYamlText = 最初のYAMLブロックを抽出する(text);
+        if (baseYamlText) {
+          try { source = parseYaml(baseYamlText) || {}; } catch (e) { /* ignore */ }
+        }
+
+        const relatedPosts = 関連投稿を抽出する(text);
+        const memorySynapse = extractMemorySynapse(text, parseYaml);
+        const handwritten = extractHandwrittenNote(text, parseYaml);
+
+        const card: Vaultから読み取ったカード = {
+          file, path: file.path, basename: file.basename, kind, wikiLinkCount: links,
+          id, name: file.basename, source, relatedPosts, handwritten
+        };
+        cards.push(card);
+        cardsById[id] = card;
+
+        if (memorySynapse?.members && Array.isArray(memorySynapse.members)) {
+          groups[id] = {
+            bigCardId: id,
+            memberIds: memorySynapse.members,
+            displayMode: memorySynapse.display_mode === "handwritten" ? "handwritten" : "source"
+          };
+        }
+      }
+    }
   }
 
-  const counts: Record<カード種類, number> = { mention: 0, location: 0, tag: 0 };
-  for (const card of cards) counts[card.kind] += 1;
   return {
-    cards,
-    counts,
-    elapsedMs: performance.now() - started,
-    totalMarkdownFiles: allMarkdown.length,
-    totalWikiLinks: cards.reduce((total, card) => total + card.wikiLinkCount, 0),
+    cards, cardsById, groups, counts,
+    elapsedMs: performance.now() - startMs,
+    totalMarkdownFiles: files.length,
+    totalWikiLinks,
     approximateHeapMb: JSヒープ概算を読む()
   };
 }

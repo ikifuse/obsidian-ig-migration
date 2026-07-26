@@ -6,7 +6,7 @@ import { copyFile, mkdir } from "node:fs/promises";
 const production = process.argv[2] === "production";
 const banner = "/* TypeScriptから生成されたファイルです。元コードは04_Memory_Synapse_DB_実行コードを参照してください。 */";
 const browserOutput = "../05_Memory_Synapse_DB_ブラウザー確認版";
-const pluginOutput = "../06_Memory_Synapse_DB_仮プラグイン/memory-synapse-db";
+const pluginOutput = "../08_Memory_Synapse_DB_正式プラグイン/memory-synapse-db";
 
 await Promise.all([
   mkdir(browserOutput, { recursive: true }),
