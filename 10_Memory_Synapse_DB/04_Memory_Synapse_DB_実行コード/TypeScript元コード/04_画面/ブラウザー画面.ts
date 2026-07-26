@@ -1,4 +1,5 @@
 import { 初期状態を作る as createInitialState } from "../03_データ入出力/ブラウザー内データ";
+import { 検証用親工程ログ一覧 as parentLogs } from "../03_データ入出力/検証用親工程ログ";
 import type { カード as Card } from "../01_データ構造/カード";
 import { カード種類表示名 as KIND_LABEL } from "../01_データ構造/カード";
 import type { 手書き情報 as HandwrittenNote } from "../01_データ構造/手書き情報";
@@ -23,12 +24,15 @@ type DialogState =
   | null;
 
 let state = createInitialState();
-let selectedCardId = "mention-cafe";
+let selectedCardId: string | null = null;
+let selectedLogFile: string | null = null;
 let dialog: DialogState = null;
 const history = new ブラウザー操作履歴();
 let notice = "検証用データだけを使用しています。再読込でも初期状態へ戻ります。";
 let noticeType: "normal" | "success" | "error" = "normal";
 let draggedCardId: string | null = null;
+let gridTabOpen: boolean = false;
+let expandedFolders = new Set<string>(["Instagram_Logs", "Posts", "Reels", "Stories", "Synapses", "Locations", "Mentions", "Tags", "SystemLogs"]);
 
 const appElement = document.querySelector<HTMLDivElement>("#app");
 if (!appElement) throw new Error("#app was not found");
@@ -52,50 +56,216 @@ function statusFor(cardId: string): { label: string; className: string } {
 }
 
 function render(): void {
-  const selected = state.cards[selectedCardId];
+  const selectedCard = selectedCardId ? state.cards[selectedCardId] : null;
   app.innerHTML = `
     <div class="app-shell">
-      <header class="topbar">
-        <div class="brand">
-          <h1>Memory Synapse DB <span class="pill">BROWSER PROTOTYPE</span></h1>
-          <p>実Vault・output_IGC・外部ネットワークを使用しない確認画面</p>
+      <div class="obsidian-ribbon">
+        <span class="ribbon-action" title="戻る">◀</span>
+        <span class="ribbon-action" title="進む">▶</span>
+        <span class="ribbon-action" title="検索">🔍</span>
+        <span class="ribbon-action" title="タグ">🏷</span>
+        <span class="ribbon-action" title="メンション">@</span>
+        <span class="ribbon-action" title="場所">📍</span>
+        <div style="flex:1;"></div>
+        <button class="ribbon-action" data-action="reset" title="初期状態へ戻す">🔄</button>
+        <button class="ribbon-action" data-action="undo" title="元に戻す" ${history.件数() === 0 ? "disabled" : ""}>↩</button>
+      </div>
+      <div class="obsidian-sidebar-left">
+        <div class="sidebar-header">エクスプローラー</div>
+        <div class="explorer-tree">
+          ${renderTreeFolder("Instagram_Logs", 0)}
         </div>
-        <div class="toolbar">
-          <button class="btn" data-action="undo" ${history.件数() === 0 ? "disabled" : ""}>元に戻す</button>
-          <button class="btn" data-action="multi-test">多重所属を試す</button>
-          <button class="btn danger" data-action="reset">初期状態へ戻す</button>
+      </div>
+      <div class="obsidian-center">
+        <div class="tab-bar">
+          <div class="tab ${!gridTabOpen ? 'active' : ''}" data-action="open-tab-log">${escapeHtml(selectedLogFile || selectedCardId || "無題")}</div>
+          <div class="tab ${gridTabOpen ? 'active' : ''}" data-action="open-tab-grid">リンク一覧</div>
+          <div class="tab">+</div>
         </div>
-      </header>
-      <main class="layout">
-        <section class="panel">
-          <div class="panel-head"><h2>1. カード一覧</h2><p>カードを別カードへドラッグして融合を開始できます。</p></div>
-          <div class="panel-body card-list">${Object.values(state.cards).map(renderCardTile).join("")}</div>
-        </section>
-        <section class="panel">
-          <div class="panel-head"><h2>2. 選択中のカードと受け皿</h2><p>表示内容と操作の意味を確認します。</p></div>
-          <div class="panel-body">${selected ? renderSelected(selected) : '<div class="empty">カードを選択してください。</div>'}</div>
-        </section>
-        <aside class="panel guide">
-          <div class="panel-head"><h2>3. 確認状況</h2><p>操作結果と仕様ケースの案内</p></div>
-          <div class="panel-body">
-            <div class="notice ${noticeType === "normal" ? "" : noticeType}">${escapeHtml(notice)}</div>
-            <div class="case-list">
-              ${[
-                ["B-01〜04", "種類別の推奨と手動変更"],
-                ["B-05〜06", "四枚・グループ同士の平坦な融合"],
-                ["B-07〜08", "通常表示と手書き表示"],
-                ["B-09〜11", "構成員・大きなカードの分離"],
-                ["B-12〜13", "元に戻す・キャンセル"],
-                ["B-14", "多重所属を検出して不実行"]
-              ].map(([id, label]) => `<div class="case"><strong>${id}</strong><span>${label}</span></div>`).join("")}
-            </div>
-          </div>
-        </aside>
-      </main>
+        <div class="center-content">
+          ${gridTabOpen ? renderGridTab() : (selectedLogFile ? renderLogFileView(selectedLogFile) : (selectedCard ? renderCardView(selectedCard as Card) : '<div class="empty">左サイドバーからLogファイルまたはSynapseカードを選択してください。</div>'))}
+        </div>
+      </div>
+      <div class="obsidian-sidebar-right">
+        <div class="sidebar-right-header">
+          <h2>Memory Synapse</h2>
+          <button class="btn-open-grid" data-action="open-tab-grid">🔗 リンク一覧を開く</button>
+        </div>
+        <div class="panel-body">
+          <div class="notice ${noticeType === "normal" ? "" : noticeType}">${escapeHtml(notice)}</div>
+          ${renderRightSidebarContent()}
+        </div>
+      </div>
       ${renderDialog()}
     </div>`;
   bindEvents();
 }
+
+function getLogFiles(): { posts: string[], reels: string[], stories: string[] } {
+  const logs = Object.values(parentLogs);
+  return {
+    posts: logs.filter((log) => log.type === "Feed").map((log) => log.id).sort().reverse(),
+    reels: logs.filter((log) => log.type === "Reels").map((log) => log.id).sort().reverse(),
+    stories: logs.filter((log) => log.type === "Stories").map((log) => log.id).sort().reverse(),
+  };
+}
+
+function cardFilename(card: Card): string {
+  return card.kind === "tag" ? card.name.replace(/^#/, "") : card.name;
+}
+
+function renderTreeFolder(name: string, depth: number): string {
+  const isExpanded = expandedFolders.has(name);
+  const indent = `padding-left: ${16 + depth * 16}px;`;
+  let html = `<div class="tree-item" style="${indent}" data-action="toggle-folder" data-folder="${escapeHtml(name)}">
+    <span style="width:16px; display:inline-block; text-align:center; color: var(--text-muted);">${isExpanded ? "▼" : "▶"}</span> ${escapeHtml(name)}
+  </div>`;
+
+  if (isExpanded) {
+    const logs = getLogFiles();
+    if (name === "Instagram_Logs") {
+      html += renderTreeFolder("media", depth + 1);
+      html += renderTreeFolder("Posts", depth + 1);
+      html += renderTreeFolder("Reels", depth + 1);
+      html += renderTreeFolder("Stories", depth + 1);
+      html += renderTreeFolder("Synapses", depth + 1);
+      html += renderTreeFolder("SystemLogs", depth + 1);
+    } else if (name === "Posts" || name === "Reels" || name === "Stories") {
+      const files = name === "Posts" ? logs.posts : name === "Reels" ? logs.reels : logs.stories;
+      const fileIndent = `padding-left: ${16 + (depth + 1) * 16 + 16}px;`;
+      if (files.length > 0) {
+        html += files.map(f => `<div class="tree-item ${f === selectedLogFile ? 'active' : ''}" style="${fileIndent}" data-action="select-log" data-log-id="${f}">${escapeHtml(f)}.md</div>`).join("");
+      } else {
+        html += `<div class="tree-item" style="${fileIndent} color: var(--text-muted);">(空)</div>`;
+      }
+    } else if (name === "SystemLogs") {
+      const fileIndent = `padding-left: ${16 + (depth + 1) * 16 + 16}px;`;
+      html += `<div class="tree-item" style="${fileIndent}">ハッシュタグ一覧</div>`;
+      html += `<div class="tree-item" style="${fileIndent}">メンション一覧</div>`;
+      html += `<div class="tree-item" style="${fileIndent}">場所一覧</div>`;
+    } else if (name === "Synapses") {
+      html += renderTreeFolder("Locations", depth + 1);
+      html += renderTreeFolder("Mentions", depth + 1);
+      html += renderTreeFolder("Tags", depth + 1);
+    } else if (name === "Locations" || name === "Mentions" || name === "Tags") {
+      const kind = name.toLowerCase().replace(/s$/, "");
+      const cards = Object.values(state.cards).filter(c => c.kind === kind);
+      const fileIndent = `padding-left: ${16 + (depth + 1) * 16 + 16}px;`;
+      if (cards.length > 0) {
+        html += cards.map(c =>
+          `<div class="tree-item ${c.id === selectedCardId ? 'active' : ''}" style="${fileIndent}" data-action="select-card" data-card-id="${c.id}">
+            ${escapeHtml(cardFilename(c))}.md
+          </div>`
+        ).join("");
+      } else {
+        html += `<div class="tree-item" style="${fileIndent} color: var(--text-muted);">(空)</div>`;
+      }
+    } else {
+      const fileIndent = `padding-left: ${16 + (depth + 1) * 16 + 16}px;`;
+      html += `<div class="tree-item" style="${fileIndent} color: var(--text-muted);">(空)</div>`;
+    }
+  }
+  return html;
+}
+
+function renderGridTab(): string {
+  return `<div class="grid-view-container">
+    <h1 style="font-size: 1.8em; margin-bottom: 24px;">Memory Synapse DB (リンク一覧)</h1>
+    <div class="card-list">${Object.values(state.cards).map(renderCardTile).join("")}</div>
+  </div>`;
+}
+
+function renderRightSidebarContent(): string {
+  if (selectedCardId) {
+    const card = state.cards[selectedCardId];
+    if (card) return renderSelected(card);
+  }
+  if (selectedLogFile) {
+    const log = parentLogs[selectedLogFile];
+    const relatedCards = log
+      ? log.relatedCardIds.map((cardId) => state.cards[cardId]).filter((card): card is Card => Boolean(card))
+      : [];
+    if (relatedCards.length === 0) return '<div class="empty">関連するMemory Synapseはありません。</div>';
+
+    return `<div style="margin-bottom:16px;">
+        <h3>関連するMemory Synapse (${relatedCards.length}件)</h3>
+      </div>
+      <div class="card-list">
+        ${relatedCards.map(renderCardTile).join("")}
+      </div>`;
+  }
+  return "";
+}
+
+function renderCardView(card: Card): string {
+  return `<div class="log-view" style="color: var(--text-main);">
+    <h1 style="font-size: 1.8em; margin-bottom: 24px;">${escapeHtml(cardFilename(card))}.md</h1>
+    <div class="properties-block">
+      <div style="color: var(--text-muted); font-size: 12px; margin-bottom: 8px;">プロパティ</div>
+      <div class="properties-grid">
+        <div class="prop-key">id</div><div>${escapeHtml(card.id)}</div>
+        <div class="prop-key">source</div><div>instagram</div>
+        <div class="prop-key">type</div><div>${escapeHtml(KIND_LABEL[card.kind])}</div>
+        <div class="prop-key">name</div><div>${escapeHtml(card.name)}</div>
+      </div>
+    </div>
+    <div class="log-content">
+      <p>このカードは ${escapeHtml(card.name)} に関する情報です。<br>
+      関連する投稿（クリックでログ本文へ移動）:</p>
+      <div class="post-links" style="margin-top:16px;">
+        ${card.relatedPosts.map((post) => {
+          const filename = post.replace(/^\[\[/, "").replace(/\]\]$/, "").replace(/\\.md$/, "");
+          return `<span class="post-link" data-action="select-log" data-log-id="${filename}" style="cursor:pointer; color:var(--text-accent); text-decoration:underline;">${escapeHtml(post)}</span>`;
+        }).join(" ")}
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderLogFileView(filename: string): string {
+  const log = parentLogs[filename];
+  if (!log) return '<div class="empty">対応する検証用ログが見つかりません。</div>';
+
+  const tags = log.tags.length > 0 ? log.tags.join(", ") : "[]";
+  const mentions = log.mentions.length > 0 ? log.mentions.join(", ") : "[]";
+  const locationName = log.location.raw ?? "null";
+  const geo = log.location.geo.lat === null || log.location.geo.lng === null
+    ? "null"
+    : `${log.location.geo.lat}, ${log.location.geo.lng}`;
+  const media = log.media
+    .map((name) => `<p style="margin:16px 0;">${escapeHtml(`![[${name}]]`)}</p>`)
+    .join("");
+  const footerLinks = log.links.map((link) => {
+    if (!link.cardId) return `<span>${escapeHtml(link.wiki)}</span>`;
+    return `<span class="post-link" data-action="select-card" data-card-id="${escapeHtml(link.cardId)}" style="cursor:pointer; color:var(--text-accent);">${escapeHtml(link.wiki)}</span>`;
+  }).join(" ");
+
+  return `<div class="log-view" style="color: var(--text-main);">
+    <h1 style="font-size: 1.8em; margin-bottom: 24px;">${escapeHtml(filename)}.md</h1>
+    <div class="properties-block">
+      <div style="color: var(--text-muted); font-size: 12px; margin-bottom: 8px;">プロパティ</div>
+      <div class="properties-grid">
+        <div class="prop-key">source</div><div>${escapeHtml(log.source)}</div>
+        <div class="prop-key">type</div><div>${escapeHtml(log.type)}</div>
+        <div class="prop-key">content</div><div>${escapeHtml(log.content ?? "null")}</div>
+        <div class="prop-key">date</div><div>${escapeHtml(log.date)}</div>
+        <div class="prop-key">tags</div><div>${escapeHtml(tags)}</div>
+        <div class="prop-key">mentions</div><div>${escapeHtml(mentions)}</div>
+        <div class="prop-key">location.raw</div><div>${escapeHtml(locationName)}</div>
+        <div class="prop-key">location.geo</div><div>${escapeHtml(geo)}</div>
+        <div class="prop-key">raw_source_path</div><div>${escapeHtml(log.rawSourcePath)}</div>
+      </div>
+    </div>
+    <div class="log-content">
+      <p>${escapeHtml("[[instagram]]")}</p>
+      <p style="line-height:1.8; white-space:pre-wrap;">${escapeHtml(log.caption)}</p>
+      ${media}
+      <hr style="border:0; border-top:1px solid var(--line); margin:20px 0;">
+      <div class="post-links">${footerLinks}</div>
+    </div>
+  </div>`;
+}
+
 
 function renderCardTile(card: Card): string {
   const status = statusFor(card.id);
@@ -134,7 +304,10 @@ function renderHero(card: Card, handwritten: boolean): string {
     <h2>${escapeHtml(handwritten && card.handwritten?.displayName ? card.handwritten.displayName : card.name)}</h2>
     <span class="pill kind-${card.kind}">${KIND_LABEL[card.kind]}</span>
     <dl class="field-grid">${values.filter(([, value]) => String(value).trim()).map(([key, value]) => `<div class="field"><dt>${escapeHtml(key)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}</dl>
-    <div class="post-links">${card.relatedPosts.map((post) => `<span class="post-link">${escapeHtml(post)}</span>`).join("")}</div>
+    <div class="post-links">${card.relatedPosts.map((post) => {
+      const filename = post.replace(/^\[\[/, "").replace(/\]\]$/, "").replace(/\\.md$/, "");
+      return `<span class="post-link" data-action="select-log" data-log-id="${filename}" style="cursor:pointer; color:var(--text-accent); text-decoration:underline;">${escapeHtml(post)}</span>`;
+    }).join(" ")}</div>
   </article>`;
 }
 
@@ -260,7 +433,11 @@ function openMerge(sourceId: string, receiverId: string): void {
 
 function bindEvents(): void {
   document.querySelectorAll<HTMLElement>("[data-card-id].card-tile").forEach((el) => {
-    el.addEventListener("click", () => { selectedCardId = el.dataset.cardId ?? selectedCardId; render(); });
+    el.addEventListener("click", () => {
+      selectedCardId = el.dataset.cardId ?? selectedCardId;
+      selectedLogFile = null; // メイン画面もカード表示に切り替えるためにログ選択を解除
+      render();
+    });
     el.addEventListener("dragstart", () => { draggedCardId = el.dataset.cardId ?? null; });
     el.addEventListener("dragover", (event) => { event.preventDefault(); el.classList.add("drag-over"); });
     el.addEventListener("dragleave", () => el.classList.remove("drag-over"));
@@ -286,8 +463,18 @@ function bindEvents(): void {
 }
 
 function handleAction(action: string, data: DOMStringMap): void {
+  if (action === "toggle-folder" && data.folder) {
+    if (expandedFolders.has(data.folder)) expandedFolders.delete(data.folder);
+    else expandedFolders.add(data.folder);
+    render();
+    return;
+  }
+  if (action === "select-log" && data.logId) { selectedLogFile = data.logId; selectedCardId = null; render(); return; }
+  if (action === "select-card" && data.cardId) { selectedCardId = data.cardId; selectedLogFile = null; render(); return; }
+  if (action === "open-tab-grid") { gridTabOpen = true; render(); return; }
+  if (action === "open-tab-log") { gridTabOpen = false; render(); return; }
   if (action === "cancel-dialog") { dialog = null; handwrittenDraft = null; setNotice("キャンセルしました。状態は変更していません。", "normal"); return; }
-  if (action === "reset") { state = createInitialState(); history.初期化する(); selectedCardId = "mention-cafe"; setNotice("初期状態へ戻しました。", "success"); return; }
+  if (action === "reset") { state = createInitialState(); history.初期化する(); selectedCardId = null; selectedLogFile = null; gridTabOpen = false; setNotice("初期状態へ戻しました。", "success"); return; }
   if (action === "undo") { const previous = history.直前へ戻す(); if (previous) { state = previous; setNotice("直前の操作前へ戻しました。", "success"); } return; }
   if (action === "multi-test") { const invalid = createInvalidMultiMembershipState(state); const errors = validateState(invalid); setNotice(`書き込み前検証で停止しました。状態は変更していません。\n${errors.join("\n")}`, "error"); return; }
   if (action === "start-merge" && data.cardId) { const target = prompt("融合先カードのIDを入力してください:\n" + Object.values(state.cards).filter((card) => card.id !== data.cardId).map((card) => `${card.id}: ${card.name}`).join("\n")); if (target && state.cards[target]) openMerge(data.cardId, target); return; }
