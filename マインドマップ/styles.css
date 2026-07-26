@@ -965,6 +965,10 @@ html > body {
   background: color-mix(in srgb, var(--viz-series-1) 18%, var(--card));
 }
 
+#project-vertical-hybrid-flow .mind-node[data-kind="navigation"] {
+  background: color-mix(in srgb, var(--viz-series-5) 13%, var(--card));
+}
+
 #project-vertical-hybrid-flow .mind-node[data-kind="guard"] {
   width: 270px;
   background: color-mix(in srgb, var(--viz-series-5) 20%, var(--card));

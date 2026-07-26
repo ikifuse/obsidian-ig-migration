@@ -1,14 +1,36 @@
+const createMigrationExecutionView = (prefix, label) => ({
+  title: `${prefix}_${label}移行_実行｜実行コード`,
+  toc: "00_コード構成",
+  tocEntries: [
+    { label: `01_${prefix}_セッテイv1_1.py`, children: ["環境変数、定数、入力・出力パスの設定を管理"] },
+    { label: `02_${prefix}_メイン実行v1_1.py`, children: ["メイン処理のオーケストレーション（エントリポイント）"] },
+    { label: `03_${prefix}_テキスト処理v1_1.py`, children: ["本文の抽出、解析、タグの処理"] },
+    { label: `04_${prefix}_メディア処理v1_1.py`, children: ["画像や動画のコピーとリンク生成"] },
+    { label: `05_${prefix}_マークダウン生成v1_1.py`, children: ["最終的なMarkdownテキストの組み立て"] },
+    { label: `06_${prefix}_シナプス管理v1_1.py`, children: ["Wikiリンクの生成やシナプス構造の構築"] }
+  ],
+  branches: []
+});
+
 const views = {
         index: {
           title: "00_目次.md｜プロジェクト全体の最上位案内板",
           branches: [
-            ["案内", [
-              "01_IG移行企画書v1.0.md",
-              "02_IG移行設計書",
-              "04_IG移行仕様書",
-              "05〜08_各移行実行フォルダ",
-              "09_IGC統合",
-              "10_Memory_Synapse_DB"
+            ["トップレベルの物理案内", [
+              { label: "01_IG移行企画書v1.0.md", children: ["プロジェクト全体の目的・理由・到達点を定める最上位文書"] },
+              { label: "02_IG移行設計書", children: ["入口：00_設計書目次", "現役設計6冊"] },
+              { label: "03_継続中の判断材料・引継ぎ", children: ["入口：00_このフォルダーの役割", "実データ解析・未確定判断・現役引継ぎ"] },
+              { label: "04_IG移行仕様書", children: ["入口：00_仕様書目次", "共通・IGP・IGR・IGS・IGX仕様"] },
+              { label: "05_IGP移行_実行", children: ["入口：00_コード構成", "通常投稿の移行実行"] },
+              { label: "06_IGR移行_実行", children: ["入口：00_コード構成", "リールの移行実行"] },
+              { label: "07_IGS移行_実行", children: ["入口：00_コード構成", "ストーリーの移行実行"] },
+              { label: "08_IGX移行_実行", children: ["入口：00_コード構成", "欠損サルベージ・現在保留"] },
+              { label: "09_IGC統合", children: ["入口：00_IGC統合目次", "企画・設計・仕様・実行コード"] },
+              { label: "10_Memory_Synapse_DB", children: ["入口：00_目次", "独立した後続プロジェクト"] },
+              { label: "docs", children: ["入口：00_ワークフロー一覧", "進め方・停止条件・文書保全・情報設計"] },
+              { label: "tools", children: ["再利用する補助ツール"] },
+              { label: "マインドマップ", children: ["現在地・判断経路・文書構造のブラウザー版地図"] },
+              { label: "99_完了済み参考資料", children: ["退役済み資料を残すローカル専用領域"] }
             ]]
           ]
         },
@@ -288,6 +310,15 @@ const views = {
         },
         design: {
           title: "02_IG移行設計書｜第二の脳を成立させる全体設計",
+          toc: "00_設計書目次",
+          tocEntries: [
+            "01_設計目的・対象範囲・基本原則.md",
+            "02_システム全体構成・責任境界.md",
+            "03_データ構造・原本保持設計.md",
+            "04_データ取得・変換・出力設計.md",
+            "05_リンク・意味ネットワーク設計.md",
+            "06_検証・運用・保全・拡張設計.md"
+          ],
           branches: [
             ["設計目的・対象範囲・基本原則", [
               { label: "設計が実現するもの", children: [
@@ -557,6 +588,14 @@ const views = {
         },
         spec: {
           title: "04_IG移行仕様書｜入力・処理・出力・例外・完了条件",
+          toc: "00_仕様書目次",
+          tocEntries: [
+            "01_IG移行共通仕様書v1.2.md",
+            "02_IGP移行仕様書v1.2.md",
+            "03_IGR移行仕様書v1.2.md",
+            "04_IGS移行仕様書v1.2.md",
+            "05_IGX移行仕様書v1.2.md"
+          ],
           branches: [
             ["システム共通仕様", [
               { label: "一方向パイプライン", children: [
@@ -885,8 +924,43 @@ const views = {
             ]]
           ]
         },
+        handoff: {
+          title: "03_継続中の判断材料・引継ぎ｜確定前の情報を隔離する場所",
+          toc: "00_このフォルダーの役割",
+          branches: [
+            ["このフォルダーに置くもの", [
+              "まだ議論・研究を続けたい課題と方向性",
+              "途中で止まった作業の引継ぎ",
+              "MetaエクスポートJSONを解析して得た記録",
+              "次の作業者が目的を失わないための補足"
+            ]],
+            ["正本との境界", [
+              "企画 → 設計 → 仕様 → 実行コードの正本順序を変えない",
+              "未確定情報を設計・仕様・コードの確定事項として自動採用しない",
+              "検証または議論を経て明示された判断だけを現役本文へ反映する"
+            ]],
+            ["読むときの注意", [
+              "古い資料は内容と基準日を確認する",
+              "現役引継ぎは現在地・停止理由・次に続ける内容を確認する",
+              "分割前設計書は復元・監査・旧仕様対応確認だけに使う"
+            ]]
+          ]
+        },
+        igp: createMigrationExecutionView("IGP", "通常投稿"),
+        igr: createMigrationExecutionView("IGR", "リール"),
+        igs: createMigrationExecutionView("IGS", "ストーリー"),
+        igx: {
+          ...createMigrationExecutionView("IGX", "欠損サルベージ"),
+          branches: [
+            ["現在の状態", [
+              "現在のプロジェクト完走条件から除外",
+              "保留中・未稼働",
+              "IGP・IGR・IGSの正式成果物を変更しない"
+            ]]
+          ]
+        },
         rules: {
-          title: "AGENTS.md ＋ docs｜判断・工程・承認・保全",
+          title: "AGENTS.md｜AI行動規範とコンテキスト地図",
           branches: [
             ["判断の土台（AGENTS.md）", [
               { label: "何を基準に判断するか", children: [
@@ -919,34 +993,6 @@ const views = {
                 "配置・退役時はdocument-governanceへ進む"
               ] }
             ]],
-            ["工程別の進め方（workflow docs）", [
-              { label: "企画工程", children: [
-                "目的・理由・対象範囲・到達点を扱う",
-                "承認済み条件と仮メモを分ける",
-                "成立性に問題があれば複数案を比較する",
-                "設計へ渡す前にオーナー確認で止まる"
-              ] },
-              { label: "設計工程", children: [
-                "承認済み企画を固定条件として受け取る",
-                "必要な設計分冊だけを読む",
-                "構造・責任・境界・保持条件をサンドバッグ検証する",
-                "仕様へ渡す内容を分離する",
-                "仕様へ渡す前にオーナー確認で止まる"
-              ] },
-              { label: "仕様工程", children: [
-                "確認済み設計を開始条件とする",
-                "対象仕様と対応設計を確認する",
-                "入出力・型・保存先・処理順・例外を確定する",
-                "未確定部分を推測で補わない",
-                "実装へ渡す前にオーナー確認で止まる"
-              ] },
-              { label: "実装・成果物検証（AGENTS.mdが入口）", children: [
-                "対象仕様書を基準にする",
-                "対象コードと対象成果物だけを読む",
-                "コード・仕様・成果物の不一致を分類する",
-                "コード変更と成果物再生成は別に承認を得る"
-              ] }
-            ]],
             ["止まる・戻る・承認する", [
               { label: "進む流れ", children: [
                 "企画 → 設計",
@@ -971,34 +1017,60 @@ const views = {
                 "オーナーが確認するまで次工程へ進まない",
                 "承認は指定された対象と工程にだけ適用する"
               ] }
+            ]]
+          ]
+        },
+        docs: {
+          title: "docs｜ワークフロー・情報設計・文書保全",
+          toc: "00_ワークフロー一覧",
+          tocEntries: [
+            { label: "information-architecture.md", children: ["README・AGENTS・00_入口・docsの責任分離", "構造変更と内容変更の分離"] },
+            { label: "document-governance.md", children: ["文書の配置・ライフサイクル・退役基準"] },
+            { label: "planning-workflow.md", children: ["企画工程の進め方と停止条件"] },
+            { label: "design-workflow.md", children: ["設計工程の進め方と停止条件"] },
+            { label: "specification-workflow.md", children: ["仕様工程の進め方と停止条件"] },
+            { label: "implementation-workflow.md", children: ["実装・成果物検証の進め方と停止条件"] },
+            { label: "rule-addition-criteria.md", children: ["恒久ルールの追加・修正基準"] }
+          ],
+          branches: [
+            ["工程別の進め方", [
+              { label: "企画工程", children: ["目的・理由・対象範囲・到達点を扱う", "設計へ渡す前にオーナー確認で止まる"] },
+              { label: "設計工程", children: ["承認済み企画を固定条件として受け取る", "仕様へ渡す前にオーナー確認で止まる"] },
+              { label: "仕様工程", children: ["確認済み設計を開始条件とする", "実装へ渡す前にオーナー確認で止まる"] },
+              { label: "実装・成果物検証", children: ["対象仕様書を基準にする", "コード変更と成果物再生成は別に承認を得る"] }
             ]],
-            ["文書とルールを保全する（governance docs）", [
-              { label: "文書・資料をどこへ置くか", children: [
-                "未完了の調査・未確定判断・現役引継ぎは03",
-                "再利用する補助ツールはtools",
-                "役割を終えた資料は完了済み参考資料",
-                "公開版は原本を変えず別に作る",
-                "配置判断が必要なときだけdocument-governanceを使う"
-              ] },
-              { label: "文書を退役するとき", children: [
-                "対象・理由・関連資料への影響を確認",
-                "置き換え先または役割を終えた理由を記録",
-                "原則として削除せず完了済み参考資料へ移す",
-                "削除は対象と方法が明示された場合だけ行う"
-              ] },
-              { label: "恒久ルールを追加・修正するとき", children: [
-                "繰り返し必要なプロジェクト固有ルールか確認",
-                "既存ルールとの重複・曖昧さを確認",
-                "機械的に防げる場合は自動化を優先",
-                "一時的な進捗・引継ぎを恒久化しない",
-                "必要なときだけrule-addition-criteriaを使う",
-                "変更理由と影響を示し、承認後に反映する"
-              ] }
+            ["文書とルールを保全する", [
+              { label: "文書・資料をどこへ置くか", children: ["未完了の調査・未確定判断・現役引継ぎは03", "再利用する補助ツールはtools", "役割を終えた資料は99"] },
+              { label: "文書を退役するとき", children: ["対象・理由・影響を確認", "原則として削除せず99へ移す"] },
+              { label: "恒久ルールを追加・修正するとき", children: ["既存ルールとの重複を確認", "一時的な進捗を恒久化しない", "承認後に反映する"] }
             ]]
           ]
         },
         igc: {
           title: "09_IGC統合｜IGC統合",
+          toc: "00_IGC統合目次",
+          tocEntries: [
+            { label: "01_IGC統合企画書v1.0.md", children: ["IGC工程の目的・理由・到達点"] },
+            { label: "02_IGC統合設計書v1.0.md", children: ["IGC工程の構造・責任・境界"] },
+            { label: "03_IGC統合仕様書", children: [
+              { label: "00_仕様書目次", children: [
+                "01_役割・入力形式.md",
+                "02_統合・出力形式.md",
+                "03_異常処理・検証・安全更新.md",
+                "04_実行結果・コード構成・対象外.md"
+              ] }
+            ] },
+            { label: "04_IGC統合実行", children: [
+              { label: "00_コード構成", children: [
+                "01_IGC_メイン実行v1_0.py",
+                "02_IGC_入力解析v1_0.py",
+                "03_IGC_データ統合v1_0.py",
+                "04_IGC_品質検証v1_0.py",
+                "05_IGC_安全置換v1_0.py"
+              ] }
+            ] },
+            { label: "AGENTS.md", children: ["IGC工程専用の行動規範と読み込みルーター"] }
+          ],
           branches: [
             ["目的・今回の完了条件", [
               { label: "三系統をObsidian投入前に整理", children: [
@@ -1251,6 +1323,44 @@ const views = {
         },
         memory: {
           title: "10_Memory_Synapse_DB｜Memory Synapse DB",
+          toc: "00_目次",
+          tocEntries: [
+            { label: "01_Memory_Synapse_DB_企画書v2.1.md", children: ["独立した後続プロジェクトの目的・理由・到達点"] },
+            { label: "02_Memory_Synapse_DB_設計書", children: [
+              { label: "00_設計書目次", children: [
+                "01_目的・入力・データ保護.md",
+                "02_大きなカード・受け皿・融合.md",
+                "03_表示・手書き・分離.md",
+                "04_確認環境・実装環境.md"
+              ] }
+            ] },
+            { label: "03_Memory_Synapse_DB_仕様書", children: [
+              { label: "00_仕様書目次", children: [
+                "01_役割・対象データ.md",
+                "02_個別カード・融合状態.md",
+                "03_表示・手書き情報.md",
+                "04_融合・分離・取消・復旧.md",
+                "05_ブラウザー確認・Obsidian実装・実物検証.md"
+              ] }
+            ] },
+            { label: "04_Memory_Synapse_DB_実行コード", children: [
+              { label: "00_実行コード目次", children: [
+                { label: "TypeScript元コード", children: [
+                  { label: "01_データ構造", children: ["00_このフォルダーの役割.md"] },
+                  { label: "02_操作処理", children: ["00_このフォルダーの役割.md"] },
+                  { label: "03_データ入出力", children: ["00_このフォルダーの役割.md"] },
+                  { label: "04_画面", children: ["00_このフォルダーの役割.md"] },
+                  { label: "05_共通処理", children: ["00_このフォルダーの役割.md"] }
+                ] },
+                "99_ビルド・検証方法.md"
+              ] }
+            ] },
+            { label: "05_Memory_Synapse_DB_ブラウザー確認版", children: ["検証用データだけを使うブラウザー確認版"] },
+            { label: "06_Memory_Synapse_DB_仮プラグイン", children: ["Obsidianへ配置する読み取り専用の仮プラグイン"] },
+            { label: "docs", children: ["Memory Synapse DB専用の開発ワークフロー"] },
+            { label: "AGENTS.md", children: ["Memory Synapse DB専用の行動規範とルーター"] },
+            { label: "README.md", children: ["外部向け概要・窓口"] }
+          ],
           branches: [
             ["目的・現在の完走点", [
               { label: "第二の脳としての目的", children: [
@@ -1775,27 +1885,27 @@ const views = {
       let activeStageId = null;
 
       const stages = [
-        { id: "index", label: "00_目次", note: "プロジェクト全体の案内板", x: 70, y: MAIN_Y - 130, kind: "guard", viewId: "index", series: 1 },
-        { id: "readme", label: "README", note: "入口・全体の読み方", x: 70, y: MAIN_Y, kind: "entry", viewId: "readme", series: 1 },
+        { id: "readme", label: "README", note: "人間向けの公開窓口", x: 70, y: MAIN_Y - 260, kind: "entry", viewId: "readme", series: 1 },
+        { id: "index", label: "00_目次", note: "人間・AI共通の全体案内", x: 365, y: MAIN_Y - 260, kind: "navigation", viewId: "index", series: 1 },
+        { id: "handoff", label: "03_判断材料・引継ぎ", note: "未確定情報と現役引継ぎ", x: 660, y: MAIN_Y - 260, kind: "navigation", viewId: "handoff", series: 6 },
+        { id: "docs", label: "docs", note: "ワークフロー・情報設計・保全", x: 955, y: MAIN_Y - 260, kind: "navigation", viewId: "docs", series: 5 },
         { id: "idea", label: "一つのアイデア", note: "個人の文脈を第二の脳へ", x: 345, y: MAIN_Y, kind: "idea", series: 1 },
         { id: "plan", label: "01_IG移行企画書", note: "目的・理由・完走点", x: 620, y: MAIN_Y, kind: "stage", viewId: "plan", series: 2 },
         { id: "design", label: "02_IG移行設計書", note: "構造・責任・境界", x: 895, y: MAIN_Y, kind: "stage", viewId: "design", series: 3 },
         { id: "spec", label: "04_IG移行仕様書", note: "実装可能な条件へ", x: 1170, y: MAIN_Y, kind: "stage", viewId: "spec", series: 4 },
-        { id: "igp", label: "05_IGP移行_実行", note: "通常投稿", x: 1465, y: MAIN_Y - 140, kind: "parallel", series: 3 },
-        { id: "igr", label: "06_IGR移行_実行", note: "リール", x: 1465, y: MAIN_Y - 40, kind: "parallel", series: 3 },
-        { id: "igs", label: "07_IGS移行_実行", note: "ストーリー", x: 1465, y: MAIN_Y + 60, kind: "parallel", series: 3 },
-        { id: "igx", label: "08_IGX移行_実行", note: "現在の完走条件から除外", x: 1465, y: MAIN_Y + 195, kind: "excluded", series: 6 },
+        { id: "igp", label: "05_IGP移行_実行", note: "通常投稿", x: 1465, y: MAIN_Y - 140, kind: "parallel", viewId: "igp", series: 3 },
+        { id: "igr", label: "06_IGR移行_実行", note: "リール", x: 1465, y: MAIN_Y - 40, kind: "parallel", viewId: "igr", series: 3 },
+        { id: "igs", label: "07_IGS移行_実行", note: "ストーリー", x: 1465, y: MAIN_Y + 60, kind: "parallel", viewId: "igs", series: 3 },
+        { id: "igx", label: "08_IGX移行_実行", note: "現在の完走条件から除外", x: 1465, y: MAIN_Y + 195, kind: "excluded", viewId: "igx", series: 6 },
         { id: "igc", label: "09_IGC統合", note: "05・06・07を集約", x: 1760, y: MAIN_Y - 40, kind: "stage", viewId: "igc", series: 5 },
         { id: "import", label: "親プロジェクト完成", note: "最終パッケージを実物確認", x: 2055, y: MAIN_Y - 40, kind: "owner", series: 4 },
         { id: "memory", label: "10_Memory_Synapse_DB", note: "独立した後続プロジェクト", x: 2350, y: MAIN_Y - 40, kind: "stage", viewId: "memory", series: 6 },
         { id: "goal", label: "Obsidianで育てる第二の脳", note: "人間とAIが理解できる知識基盤", x: 2645, y: MAIN_Y - 40, kind: "goal", series: 1 },
-        { id: "rules", label: "AGENTS.md ＋ docs", note: "全工程の判断・承認・停止条件", x: 620, y: MAIN_Y - 260, kind: "guard", viewId: "rules", series: 5 }
+        { id: "rules", label: "AGENTS.md", note: "AI行動規範・承認・読込ルーター", x: 620, y: MAIN_Y - 260, kind: "guard", viewId: "rules", series: 5 }
       ];
 
       const stageById = new Map(stages.map((stage) => [stage.id, stage]));
       const flowEdges = [
-        ["index", "readme", "flow"],
-        ["readme", "idea", "flow"],
         ["idea", "plan", "flow"],
         ["plan", "design", "flow"],
         ["design", "spec", "flow"],

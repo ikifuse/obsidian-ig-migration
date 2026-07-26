@@ -29,8 +29,11 @@
       }
 
       function buildDetailForest(viewId, series, stageId) {
-        return views[viewId].branches.map(([label, children], index) => {
-          const id = `detail-${viewId}-${index}`;
+        const view = views[viewId];
+        const branchNodes = view.branches.map(([label, children], index) => {
+          const id = view.toc
+            ? `detail-${viewId}-branch-${index}`
+            : `detail-${viewId}-${index}`;
           return {
             id,
             label,
@@ -39,6 +42,22 @@
             stageId
           };
         });
+        if (!view.toc) return branchNodes;
+
+        const tocId = `detail-${viewId}-0`;
+        const tocEntries = semanticChildren(
+          view.tocEntries ?? [],
+          `${tocId}-entry`,
+          series,
+          stageId
+        );
+        return [{
+          id: tocId,
+          label: view.toc,
+          children: [...tocEntries, ...branchNodes],
+          series,
+          stageId
+        }];
       }
 
       function visibleDetailChildren(node) {
@@ -468,10 +487,10 @@
       const V_ROW_GAP = 72;
       const V_CLOSED_ROW_HEIGHT = 152;
       const verticalDetailLayouts = [];
+      const navigationStageIds = new Set(["readme", "index", "handoff", "docs", "rules"]);
 
       const verticalRows = [
-        ["index"],
-        ["readme"],
+        ["readme", "index", "handoff", "docs"],
         ["idea"],
         ["plan"],
         ["design"],
@@ -560,7 +579,12 @@
             if (detail) rowHeight = Math.max(rowHeight, detail.totalHeight + 70);
           });
           const centerY = cursorY + rowHeight / 2;
-          if (row[0] === "igp") {
+          if (row[0] === "readme") {
+            stageById.get("readme").x = V_SPINE_X - 640;
+            stageById.get("index").x = V_SPINE_X - 320;
+            stageById.get("handoff").x = V_SPINE_X;
+            stageById.get("docs").x = V_SPINE_X + 320;
+          } else if (row[0] === "igp") {
             stageById.get("igp").x = V_SPINE_X - 320;
             stageById.get("igr").x = V_SPINE_X;
             stageById.get("igs").x = V_SPINE_X + 320;
@@ -576,7 +600,7 @@
 
         rightForests.forEach(({ forest, totalHeight }, stageId) => {
           const stage = stageById.get(stageId);
-          const rootX = V_SPINE_X + V_STAGE_WIDTH + 180;
+          const rootX = stage.x + V_STAGE_WIDTH + 180;
           let top = stage.y - totalHeight / 2;
           forest.forEach((node, index) => {
             if (index) top += V_DETAIL_Y_GAP;
@@ -694,6 +718,7 @@
       function renderVerticalStage(stage) {
         const hasDetails = Boolean(stage.viewId);
         const isOpen = openStageIds.includes(stage.id);
+        const layerLabel = navigationStageIds.has(stage.id) ? "案内層" : "主工程";
         createVerticalNode({
           ...stage,
           depth: 1,
@@ -704,7 +729,7 @@
             event.stopPropagation();
             if (!hasDetails) {
               activeStageId = stage.id;
-              crumb.textContent = `工程フロー › ${stage.label}`;
+              crumb.textContent = `${layerLabel} › ${stage.label}`;
               renderVertical();
               focusVerticalStage(stage);
               return;
@@ -713,11 +738,11 @@
             if (openIndex >= 0) {
               openStageIds.splice(openIndex, 1);
               activeStageId = null;
-              crumb.textContent = "00_目次から第二の脳までの工程フロー";
+              crumb.textContent = "プロジェクト全体マップ｜案内層と主工程";
             } else {
               openStageIds.push(stage.id);
               activeStageId = stage.id;
-              crumb.textContent = `工程フロー › ${stage.label} › 詳細`;
+              crumb.textContent = `${layerLabel} › ${stage.label} › 詳細`;
             }
             renderVertical();
             if (openIndex >= 0) focusVerticalStage(stage);
@@ -754,7 +779,9 @@
               detailExpanded.add(node.id);
             }
             activeStageId = node.stageId;
-            crumb.textContent = `工程フロー › ${stageById.get(node.stageId).label} › ${node.label}`;
+            const stage = stageById.get(node.stageId);
+            const layerLabel = navigationStageIds.has(stage.id) ? "案内層" : "主工程";
+            crumb.textContent = `${layerLabel} › ${stage.label} › ${node.label}`;
             renderVertical();
             focusVerticalDetail(node.id);
           } : null
@@ -778,7 +805,7 @@
       }
 
       function renderVerticalFlow() {
-        const chainBeforeParallel = ["index", "readme", "idea", "plan", "design", "spec"];
+        const chainBeforeParallel = ["idea", "plan", "design", "spec"];
         for (let index = 0; index < chainBeforeParallel.length - 1; index += 1) {
           const from = stageById.get(chainBeforeParallel[index]);
           const to = stageById.get(chainBeforeParallel[index + 1]);
@@ -846,7 +873,7 @@
           rules.series,
           "guard"
         );
-        createLabel("親プロジェクトと独立した後続に適用", bracketX - 88, topY - 42);
+        createLabel("全工程に適用するAI行動規範・承認・停止条件", bracketX - 150, topY - 42);
       }
 
       function renderVertical() {
@@ -862,7 +889,10 @@
 
         renderVerticalFlow();
         renderVerticalGuardrail();
-        createLabel("中央の工程フロー", V_SPINE_X + 42, 54);
+        const navigation = stageById.get("index");
+        createLabel("理解・案内の入口（役割を分離）", navigation.x - 20, navigation.y - V_NODE_HEIGHT / 2 - 48);
+        const idea = stageById.get("idea");
+        createLabel("判断・実行の主工程", idea.x + 42, idea.y - V_NODE_HEIGHT / 2 - 48);
         const parallel = stageById.get("igr");
         createLabel("05・06・07は並列実行", parallel.x + 42, parallel.y - V_NODE_HEIGHT / 2 - 48);
         const igx = stageById.get("igx");
@@ -908,7 +938,7 @@
       }
 
       function focusVerticalEntry() {
-        const entry = stageById.get("index");
+        const entry = stageById.get("readme");
         const rect = verticalViewportRect();
         transform.scale = Math.min(0.92, Math.max(0.62, rect.width / 1500));
         transform.x = rect.width * 0.46 - (entry.x + V_STAGE_WIDTH / 2) * transform.scale;
@@ -993,7 +1023,7 @@
         setScale(transform.scale * 0.85, rect.width / 2, rect.height / 2);
       });
 
-      crumb.textContent = "00_目次から第二の脳までの工程フロー";
+      crumb.textContent = "プロジェクト全体マップ｜案内層と主工程";
       render();
       requestAnimationFrame(fitAll);
    
