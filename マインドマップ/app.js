@@ -413,7 +413,7 @@
           const centerX = stage.x + NODE_WIDTH / 2;
           appendPath(`M ${centerX} ${guardY - 4} L ${centerX} ${stage.y - NODE_HEIGHT / 2 + 6}`, rules.series, "guard");
         });
-        createLabel("企画から10の完走確認までを支える判断・承認・停止条件", 940, guardY - 33);
+        createLabel("親プロジェクトと独立した後続を支える判断・承認・停止条件", 940, guardY - 33);
       }
 
       function render() {
@@ -434,7 +434,7 @@
         });
         renderGuardrail();
 
-        createLabel("プロジェクトの構想から第二の脳へ進む主軸", 350, MAIN_Y - 85);
+        createLabel("親プロジェクト完成から独立した後続へ接続する全体像", 350, MAIN_Y - 85);
         createLabel("並列実行", 1515, MAIN_Y - 200);
         createLabel("現在の完走条件には含めない", 1435, MAIN_Y + 255, "journey-stage-note text-small");
         stages.forEach(renderStage);
@@ -470,6 +470,7 @@
       const verticalDetailLayouts = [];
 
       const verticalRows = [
+        ["index"],
         ["readme"],
         ["idea"],
         ["plan"],
@@ -712,7 +713,7 @@
             if (openIndex >= 0) {
               openStageIds.splice(openIndex, 1);
               activeStageId = null;
-              crumb.textContent = "READMEから第二の脳までの工程フロー";
+              crumb.textContent = "00_目次から第二の脳までの工程フロー";
             } else {
               openStageIds.push(stage.id);
               activeStageId = stage.id;
@@ -777,7 +778,7 @@
       }
 
       function renderVerticalFlow() {
-        const chainBeforeParallel = ["readme", "idea", "plan", "design", "spec"];
+        const chainBeforeParallel = ["index", "readme", "idea", "plan", "design", "spec"];
         for (let index = 0; index < chainBeforeParallel.length - 1; index += 1) {
           const from = stageById.get(chainBeforeParallel[index]);
           const to = stageById.get(chainBeforeParallel[index + 1]);
@@ -845,7 +846,7 @@
           rules.series,
           "guard"
         );
-        createLabel("企画から10の完走確認までに適用", bracketX - 88, topY - 42);
+        createLabel("親プロジェクトと独立した後続に適用", bracketX - 88, topY - 42);
       }
 
       function renderVertical() {
@@ -907,7 +908,7 @@
       }
 
       function focusVerticalEntry() {
-        const entry = stageById.get("readme");
+        const entry = stageById.get("index");
         const rect = verticalViewportRect();
         transform.scale = Math.min(0.92, Math.max(0.62, rect.width / 1500));
         transform.x = rect.width * 0.46 - (entry.x + V_STAGE_WIDTH / 2) * transform.scale;
@@ -992,8 +993,8 @@
         setScale(transform.scale * 0.85, rect.width / 2, rect.height / 2);
       });
 
-      crumb.textContent = "READMEから第二の脳までの工程フロー";
+      crumb.textContent = "00_目次から第二の脳までの工程フロー";
       render();
-      requestAnimationFrame(focusEntry);
+      requestAnimationFrame(fitAll);
    
 })();

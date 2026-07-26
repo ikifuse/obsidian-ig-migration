@@ -791,4 +791,333 @@ svg {
   color: var(--destructive);
 }
 
-html>body{padding:0}
+html > body {
+  padding: 0;
+}
+
+#project-vertical-hybrid-flow {
+  width: 100%;
+  color: var(--foreground);
+}
+
+#project-vertical-hybrid-flow .mind-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 52px;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--background);
+  flex-wrap: wrap;
+}
+
+#project-vertical-hybrid-flow .mind-crumb {
+  color: var(--muted-foreground);
+  overflow-wrap: anywhere;
+}
+
+#project-vertical-hybrid-flow .mind-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+#project-vertical-hybrid-flow .mind-viewport {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 52px);
+  min-height: 620px;
+  overflow: hidden;
+  touch-action: none;
+  cursor: grab;
+  background:
+    radial-gradient(
+      circle at 1px 1px,
+      color-mix(in srgb, var(--muted-foreground) 18%, transparent) 1px,
+      transparent 0
+    );
+  background-size: 24px 24px;
+}
+
+#project-vertical-hybrid-flow .mind-viewport.is-dragging {
+  cursor: grabbing;
+}
+
+#project-vertical-hybrid-flow .mind-world {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+#project-vertical-hybrid-flow .mind-lines {
+  position: absolute;
+  inset: 0;
+  max-width: none;
+  overflow: visible;
+  pointer-events: none;
+}
+
+#project-vertical-hybrid-flow .mind-line {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+#project-vertical-hybrid-flow .mind-line[data-series="1"] {
+  stroke: var(--viz-series-1);
+}
+
+#project-vertical-hybrid-flow .mind-line[data-series="2"] {
+  stroke: var(--viz-series-2);
+}
+
+#project-vertical-hybrid-flow .mind-line[data-series="3"] {
+  stroke: var(--viz-series-3);
+}
+
+#project-vertical-hybrid-flow .mind-line[data-series="4"] {
+  stroke: var(--viz-series-4);
+}
+
+#project-vertical-hybrid-flow .mind-line[data-series="5"] {
+  stroke: var(--viz-series-5);
+}
+
+#project-vertical-hybrid-flow .mind-line[data-series="6"] {
+  stroke: var(--viz-series-6);
+}
+
+#project-vertical-hybrid-flow .mind-line[data-line-kind="flow"] {
+  stroke: var(--foreground);
+  stroke-width: 2;
+}
+
+#project-vertical-hybrid-flow .mind-line[data-line-kind="guard"] {
+  stroke: var(--viz-series-5);
+  stroke-width: 2;
+}
+
+#project-vertical-hybrid-flow .mind-line[data-line-kind="excluded"] {
+  stroke: var(--muted-foreground);
+  stroke-dasharray: 8 7;
+}
+
+#project-vertical-hybrid-flow .mind-line[data-line-kind="detail"] {
+  stroke-width: 1.25;
+}
+
+#project-vertical-hybrid-flow .mind-node {
+  position: absolute;
+  width: 238px;
+  height: 78px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.55rem;
+  padding: 0.62rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+  border-radius: 0.8rem;
+  color: var(--foreground);
+  text-align: left;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  background: color-mix(in srgb, var(--card) 94%, transparent);
+  box-shadow: 0 8px 22px color-mix(in srgb, var(--foreground) 7%, transparent);
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease,
+    background 150ms ease;
+  cursor: pointer;
+}
+
+#project-vertical-hybrid-flow .mind-node:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--foreground) 11%, transparent);
+}
+
+#project-vertical-hybrid-flow .mind-node:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+
+#project-vertical-hybrid-flow .mind-node[data-depth="0"] {
+  width: 268px;
+  min-height: 68px;
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+#project-vertical-hybrid-flow .mind-node[data-depth="1"] {
+  width: 252px;
+  min-height: 60px;
+  font-weight: 500;
+}
+
+#project-vertical-hybrid-flow .mind-node[data-kind="entry"] {
+  background: color-mix(in srgb, var(--viz-series-1) 18%, var(--card));
+}
+
+#project-vertical-hybrid-flow .mind-node[data-kind="guard"] {
+  width: 270px;
+  background: color-mix(in srgb, var(--viz-series-5) 20%, var(--card));
+}
+
+#project-vertical-hybrid-flow .mind-node[data-kind="parallel"] {
+  background: color-mix(in srgb, var(--viz-series-3) 17%, var(--card));
+}
+
+#project-vertical-hybrid-flow .mind-node[data-kind="excluded"] {
+  border-style: dashed;
+  background: color-mix(in srgb, var(--muted) 78%, transparent);
+}
+
+#project-vertical-hybrid-flow .mind-node[data-kind="owner"] {
+  background: color-mix(in srgb, var(--viz-series-4) 20%, var(--card));
+}
+
+#project-vertical-hybrid-flow .mind-node[data-kind="goal"] {
+  width: 270px;
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+#project-vertical-hybrid-flow .mind-node[data-kind="goal"] .mind-node-note {
+  color: var(--primary-foreground);
+  opacity: 0.78;
+}
+
+#project-vertical-hybrid-flow .mind-node.is-active {
+  outline: 3px solid var(--ring);
+  outline-offset: 4px;
+}
+
+#project-vertical-hybrid-flow .journey-label {
+  position: absolute;
+  color: var(--muted-foreground);
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+#project-vertical-hybrid-flow .journey-stage-note {
+  position: absolute;
+  width: 270px;
+  color: var(--muted-foreground);
+  text-align: center;
+  pointer-events: none;
+}
+
+#project-vertical-hybrid-flow .mind-node[data-depth="1"][data-series="1"],
+#project-vertical-hybrid-flow .mind-node[data-series="1"][aria-expanded="true"] {
+  background: color-mix(in srgb, var(--viz-series-1) 18%, var(--card));
+}
+
+#project-vertical-hybrid-flow .mind-node[data-depth="1"][data-series="2"],
+#project-vertical-hybrid-flow .mind-node[data-series="2"][aria-expanded="true"] {
+  background: color-mix(in srgb, var(--viz-series-2) 18%, var(--card));
+}
+
+#project-vertical-hybrid-flow .mind-node[data-depth="1"][data-series="3"],
+#project-vertical-hybrid-flow .mind-node[data-series="3"][aria-expanded="true"] {
+  background: color-mix(in srgb, var(--viz-series-3) 18%, var(--card));
+}
+
+#project-vertical-hybrid-flow .mind-node[data-depth="1"][data-series="4"],
+#project-vertical-hybrid-flow .mind-node[data-series="4"][aria-expanded="true"] {
+  background: color-mix(in srgb, var(--viz-series-4) 18%, var(--card));
+}
+
+#project-vertical-hybrid-flow .mind-node[data-depth="1"][data-series="5"],
+#project-vertical-hybrid-flow .mind-node[data-series="5"][aria-expanded="true"] {
+  background: color-mix(in srgb, var(--viz-series-5) 18%, var(--card));
+}
+
+#project-vertical-hybrid-flow .mind-node[data-depth="1"][data-series="6"],
+#project-vertical-hybrid-flow .mind-node[data-series="6"][aria-expanded="true"] {
+  background: color-mix(in srgb, var(--viz-series-6) 18%, var(--card));
+}
+
+#project-vertical-hybrid-flow .mind-node-label {
+  display: grid;
+  min-width: 0;
+  gap: 0.18rem;
+}
+
+#project-vertical-hybrid-flow .mind-node-title {
+  font-weight: 500;
+}
+
+#project-vertical-hybrid-flow .mind-node-note {
+  color: var(--muted-foreground);
+}
+
+#project-vertical-hybrid-flow .mind-node[data-depth="0"] .mind-node-note {
+  color: var(--primary-foreground);
+  opacity: 0.78;
+}
+
+#project-vertical-hybrid-flow .mind-node-marker {
+  flex: 0 0 auto;
+  display: grid;
+  width: 1.45rem;
+  height: 1.45rem;
+  place-items: center;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--foreground) 9%, transparent);
+  font-weight: 500;
+}
+
+#project-vertical-hybrid-flow .mind-node[data-depth="0"] .mind-node-marker {
+  background: color-mix(in srgb, var(--primary-foreground) 18%, transparent);
+}
+
+#project-vertical-hybrid-flow .mind-node[aria-expanded="true"] .mind-node-marker {
+  transform: rotate(90deg);
+}
+
+#project-vertical-hybrid-flow .mind-hint {
+  position: absolute;
+  z-index: 4;
+  bottom: 0.65rem;
+  left: 0.75rem;
+  padding: 0.15rem 0.4rem;
+  color: var(--muted-foreground);
+  background: color-mix(in srgb, var(--background) 88%, transparent);
+  pointer-events: none;
+}
+
+#project-vertical-hybrid-flow .mind-empty-marker {
+  opacity: 0.35;
+}
+
+@media (max-width: 560px) {
+  #project-vertical-hybrid-flow .mind-toolbar {
+    align-items: flex-start;
+  }
+
+  #project-vertical-hybrid-flow .mind-viewport {
+    height: calc(100vh - 94px);
+    min-height: 480px;
+  }
+
+  #project-vertical-hybrid-flow .mind-hint {
+    right: 0.5rem;
+    left: 0.5rem;
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #project-vertical-hybrid-flow .mind-node {
+    transition: none;
+  }
+}
