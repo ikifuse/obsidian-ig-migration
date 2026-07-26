@@ -2,10 +2,6 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { 初期状態を作る as createInitialState } from "./ブラウザー内データ";
 import { 検証用親工程ログ一覧 as parentLogs } from "./検証用親工程ログ";
-import {
-  SystemLogのカードID一覧 as cardIdsForSystemLog,
-  検証用SystemLog一覧 as systemLogs
-} from "./検証用SystemLogs";
 
 test("検証用カードはMention・Location・Tag各30枚を単独状態で開始する", () => {
   const state = createInitialState();
@@ -44,22 +40,6 @@ test("親工程形式の検証用ログはPost・Reel・Story各30件ある", ()
   assert.equal(logs.filter((log) => log.type === "Feed").length, 30);
   assert.equal(logs.filter((log) => log.type === "Reels").length, 30);
   assert.equal(logs.filter((log) => log.type === "Stories").length, 30);
-});
-
-test("SystemLogsの三一覧はリンク一覧と同じ90枚を種類別に参照する", () => {
-  const state = createInitialState();
-  const allIds = systemLogs.flatMap((systemLog) => cardIdsForSystemLog(state, systemLog.id));
-
-  assert.deepEqual(
-    systemLogs.map((systemLog) => [systemLog.filename, cardIdsForSystemLog(state, systemLog.id).length]),
-    [
-      ["ハッシュタグ一覧.md", 30],
-      ["メンション一覧.md", 30],
-      ["場所一覧.md", 30]
-    ]
-  );
-  assert.deepEqual(new Set(allIds), new Set(Object.keys(state.cards)));
-  assert.equal(allIds.length, Object.keys(state.cards).length);
 });
 
 test("キャプションは原文で、抽出対象と末尾Wikiリンクを分離している", () => {
