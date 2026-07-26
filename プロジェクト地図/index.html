@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>プロジェクト地図｜七つの叩き台</title>
+<style>
+:root { color-scheme: light; --bg:#f5f3ee; --panel:#fff; --ink:#20251f; --muted:#667064; --accent:#315c4a; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif; color:var(--ink); background:var(--bg); }
+main { max-width:1120px; margin:auto; padding:40px 20px 60px; }
+.eyebrow { color:var(--accent); font-weight:700; font-size:13px; }
+h1 { margin:8px 0 10px; font-size:clamp(28px,5vw,48px); }
+.lead { max-width:760px; margin:0 0 28px; color:var(--muted); line-height:1.7; }
+.actions { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:28px; }
+.actions a { padding:10px 14px; border:1px solid rgba(49,92,74,.22); border-radius:10px; color:var(--ink); background:#fff; text-decoration:none; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; }
+.map-card { display:grid; gap:8px; min-height:178px; padding:18px; border:1px solid rgba(49,92,74,.16); border-radius:16px; color:var(--ink); background:var(--panel); text-decoration:none; box-shadow:0 10px 28px rgba(32,37,31,.08); }
+.map-card:hover { border-color:var(--accent); transform:translateY(-2px); }
+.map-card strong { font-size:18px; }
+.map-card span:not(.number), .map-card small { color:var(--muted); line-height:1.5; }
+.number { color:var(--accent); font-size:12px; font-weight:700; }
+.notice { margin-top:24px; padding:14px 16px; border-left:4px solid var(--accent); background:#e7eee9; line-height:1.6; }
+</style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">企画検証用・未確定</p>
+  <h1>プロジェクト地図 七つの叩き台</h1>
+  <p class="lead">公開参考資料の内容を、役割の異なる七つの地図へ分離した最初の確認版です。地図を見ながら、各孫企画書の不足・重複・誤配置を直します。</p>
+  <nav class="actions">
+    <a href="../マインドマップ/index.html">公開参考資料を見る</a>
+    <a href="reference-map-copy/index.html">複製時点の原本を見る</a>
+  </nav>
+  <section class="grid">
+      <a class="map-card" href="maps/00_%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E5%85%A8%E4%BD%93%E3%83%95%E3%83%AD%E3%83%BC/prototype/index.html">
+        <span class="number">01</span>
+        <strong>プロジェクト全体フロー</strong>
+        <span>発端から親完成、独立後続までの縦軸</span>
+        <small>12ノード・flow</small>
+      </a>
+      <a class="map-card" href="maps/01_%E4%BC%81%E7%94%BB%E5%9C%B0%E5%9B%B3/prototype/index.html">
+        <span class="number">02</span>
+        <strong>01 企画地図</strong>
+        <span>目的・理由・価値・完走点・判断原則</span>
+        <small>128ノード・tree</small>
+      </a>
+      <a class="map-card" href="maps/02_%E8%A8%AD%E8%A8%88%E5%9C%B0%E5%9B%B3/prototype/index.html">
+        <span class="number">03</span>
+        <strong>02 設計地図</strong>
+        <span>企画条件から構造・責任・境界への変換</span>
+        <small>225ノード・tree</small>
+      </a>
+      <a class="map-card" href="maps/04_%E4%BB%95%E6%A7%98%E5%9C%B0%E5%9B%B3/prototype/index.html">
+        <span class="number">04</span>
+        <strong>04 仕様地図</strong>
+        <span>入力・処理・出力・例外・再実行・完了条件</span>
+        <small>275ノード・tree</small>
+      </a>
+      <a class="map-card" href="maps/09_IGC%E7%B5%B1%E5%90%88%E5%9C%B0%E5%9B%B3/prototype/index.html">
+        <span class="number">05</span>
+        <strong>09 IGC統合地図</strong>
+        <span>統合・安全更新・上流境界・親完成</span>
+        <small>237ノード・tree</small>
+      </a>
+      <a class="map-card" href="maps/10_Memory_Synapse_DB%E5%9C%B0%E5%9B%B3/prototype/index.html">
+        <span class="number">06</span>
+        <strong>10 Memory Synapse DB地図</strong>
+        <span>独立後続・知識モデル・人間判断・復旧</span>
+        <small>446ノード・tree</small>
+      </a>
+      <a class="map-card" href="maps/90_%E8%A6%AAAGENTS%E3%83%BBdocs%E5%88%A4%E6%96%AD%E3%83%AB%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0/prototype/index.html">
+        <span class="number">07</span>
+        <strong>親AGENTS・docs 判断ルーティング</strong>
+        <span>作業内容から読む文書、承認、停止点へ進む</span>
+        <small>110ノード・routing</small>
+      </a></section>
+  <p class="notice">現在の公開参考資料は変更していません。この入口と七地図はローカルの企画検証用です。</p>
+</main>
+</body>
+</html>

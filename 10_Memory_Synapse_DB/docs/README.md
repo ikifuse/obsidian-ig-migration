@@ -7,6 +7,7 @@
 ## 文書
 
 - [design-workflow.md](design-workflow.md)：Memory Synapse DB専用設計の確認・変更手順
+- [feature-consultation-workflow.md](feature-consultation-workflow.md)：画面・操作・機能の質問に、関係する既存例を少数だけ補足する相談手順
 - [specification-workflow.md](specification-workflow.md)：Memory Synapse DB仕様の確認・変更手順
 - [implementation-workflow.md](implementation-workflow.md)：日本語5分割の実行コード、ブラウザー確認版、読み取り専用仮プラグイン、正式プラグイン、Obsidian実物検証の手順
 

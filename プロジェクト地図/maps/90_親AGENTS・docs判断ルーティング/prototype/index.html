@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>親AGENTS・docs 判断ルーティング｜企画検証用</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="app">
+  <header class="toolbar">
+    <div class="identity">
+      <h1 class="title" data-title>親AGENTS・docs 判断ルーティング</h1>
+      <p class="subtitle" data-subtitle></p>
+    </div>
+    <span class="badge">企画検証用・未確定</span>
+    <div class="controls" aria-label="地図操作">
+      <a class="btn" href="../../../index.html">七地図</a>
+      <a class="btn" href="../../../../マインドマップ/index.html">参考原本</a>
+      <button class="btn" type="button" data-fit>全体</button>
+      <button class="btn" type="button" data-expand>全展開</button>
+      <button class="btn" type="button" data-collapse>閉じる</button>
+      <button class="btn" type="button" data-zoom-out aria-label="縮小">−</button>
+      <button class="btn" type="button" data-zoom-in aria-label="拡大">＋</button>
+    </div>
+  </header>
+  <section class="viewport" data-viewport aria-label="親AGENTS・docs 判断ルーティング">
+    <div class="world" data-world>
+      <svg class="edges" data-edges aria-hidden="true"></svg>
+      <div data-nodes></div>
+    </div>
+    <p class="hint"><span data-count></span>・ノードをクリックして展開・余白をドラッグ・ホイールで拡大縮小</p>
+  </section>
+</main>
+<script src="data/map-data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
