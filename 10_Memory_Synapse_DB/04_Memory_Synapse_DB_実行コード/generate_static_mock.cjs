@@ -91,11 +91,13 @@ mentions.forEach(([account, name, series]) => {
     kind: "mention",
     name: `@${account}`,
     source: {
-      mention: `@${account}`,
-      name,
-      phone: [],
-      web: [`https://instagram.invalid/${account}/`],
-      note: `『${series}』の架空の登場人物を使った個人情報を含まない検証用データ`
+      mention_note: {
+        mention: `@${account}`,
+        name,
+        phone: [],
+        web: [`https://instagram.invalid/${account}/`],
+        note: `『${series}』の架空の登場人物を使った個人情報を含まない検証用データ`
+      }
     },
     relatedPosts: []
   };
@@ -108,9 +110,23 @@ locations.forEach((location, index) => {
     kind: "location",
     name: location,
     source: {
-      location,
-      geo: `${(34.62 + index * 0.003).toFixed(4)}, ${(135.43 + index * 0.004).toFixed(4)}`,
-      address: `大阪府内・${location}周辺（検証用表記）`,
+      location_note: { location },
+      geo: {
+        lat: Number((34.62 + index * 0.003).toFixed(4)),
+        lng: Number((135.43 + index * 0.004).toFixed(4)),
+        alt: null
+      },
+      address: {
+        full: `大阪府内・${location}周辺（検証用表記）`,
+        components: {
+          country: null,
+          prefecture: null,
+          city: null,
+          district: null,
+          street: null,
+          postal_code: null
+        }
+      },
       activity_id: `mock_activity_${String(index + 1).padStart(3, "0")}`,
       source_files: [`[[mock_activity_${String(index + 1).padStart(3, "0")}.gpx]]`],
       note: "大阪の公開観光名所を題材にした、個人の行動履歴を含まない検証用データ"
@@ -126,8 +142,10 @@ tags.forEach(([name, category, note]) => {
     kind: "tag",
     name: `#${name}`,
     source: {
-      hashtag: `#${name}`,
-      note: `${note}（${category}の検証用記入）`
+      hashtag_note: {
+        hashtag: `#${name}`,
+        note: `${note}（${category}の検証用記入）`
+      }
     },
     relatedPosts: []
   };
@@ -304,12 +322,47 @@ if (goku) {
   };
 }
 
+const groups = {
+  "location-ユニバーサル・スタジオ・ジャパン": {
+    bigCardId: "location-ユニバーサル・スタジオ・ジャパン",
+    memberIds: ["location-USJ"],
+    displayMode: "source"
+  },
+  "tag-#生ビール": {
+    bigCardId: "tag-#生ビール",
+    memberIds: ["tag-#ハイボール"],
+    displayMode: "source"
+  }
+};
+
 const stateFile = `import type { 融合状態 } from "../01_データ構造/融合グループ";
+
+export type ブラウザー検査結果 = {
+  cardId: string;
+  brokenWikiLinks: number;
+  suspectedMultipleMemberships: number;
+  malformedManagedHeadings: number;
+  targetCardId: string;
+};
+
+/**
+ * 問題がある場合だけ表示する検査欄を確認するための、ブラウザー専用サンプル。
+ * 実際のVaultや通常の融合状態には混ぜず、自動修復も行わない。
+ */
+export const 検証用検査結果一覧: ブラウザー検査結果[] = [
+  {
+    cardId: "mention-@piccolo",
+    brokenWikiLinks: 2,
+    suspectedMultipleMemberships: 1,
+    malformedManagedHeadings: 1,
+    targetCardId: "mention-@piccolo"
+  }
+];
 
 export function 初期状態を作る(): 融合状態 {
   return {
     cards: ${JSON.stringify(cards, null, 2)},
-    groups: {}
+    groups: ${JSON.stringify(groups, null, 2)}
   };
 }
 `;

@@ -19,9 +19,23 @@ export interface 検証用親工程ログ {
     raw: string | null;
     normalized: string | null;
     geo: { lat: number | null; lng: number | null; alt: number | null };
+    address: {
+      full: string | null;
+      components: {
+        country: string | null;
+        prefecture: string | null;
+        city: string | null;
+        district: string | null;
+        street: string | null;
+        postal_code: string | null;
+      };
+    };
+    confidence: {
+      geo: string | null;
+      source: "instagram";
+    };
     synapseLink: string | null;
   };
-  media: string[];
   rawSourcePath: string;
   relatedCardIds: string[];
 }
@@ -73,19 +87,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[野球グローブ|#野球グローブ]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "大阪城",
       "normalized": "大阪城",
       "geo": {
-        "lat": 34.62,
-        "lng": 135.43,
+        "lat": 34.627344154038,
+        "lng": 135.435329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区大阪城 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "大阪城",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[大阪城]]"
     },
-    "media": [
-      "2026-01-30-15-00-00_IG_0001_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-00-00_IG_0001.json]]",
     "relatedCardIds": [
       "mention-@sazae_fuguta",
@@ -127,19 +153,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[野球グローブ|#野球グローブ]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "道頓堀",
       "normalized": "道頓堀",
       "geo": {
-        "lat": 34.623,
-        "lng": 135.434,
+        "lat": 34.630344154038,
+        "lng": 135.439329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区道頓堀 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "道頓堀",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[道頓堀]]"
     },
-    "media": [
-      "2026-01-30-15-01-00_IG_0002_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-01-00_IG_0002.json]]",
     "relatedCardIds": [
       "mention-@masuo_fuguta",
@@ -178,19 +216,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[サッカーボール|#サッカーボール]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "通天閣",
       "normalized": "通天閣",
       "geo": {
-        "lat": 34.626,
-        "lng": 135.438,
+        "lat": 34.633344154038,
+        "lng": 135.443329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区通天閣 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "通天閣",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[通天閣]]"
     },
-    "media": [
-      "2026-01-30-15-02-00_IG_0003_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-02-00_IG_0003.json]]",
     "relatedCardIds": [
       "mention-@tara_fuguta",
@@ -229,19 +279,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[サッカースパイク|#サッカースパイク]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "ユニバーサル・スタジオ・ジャパン",
       "normalized": "ユニバーサル・スタジオ・ジャパン",
       "geo": {
-        "lat": 34.629,
-        "lng": 135.442,
+        "lat": 34.636344154038,
+        "lng": 135.447329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区ユニバーサル・スタジオ・ジャパン 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "ユニバーサル・スタジオ・ジャパン",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[ユニバーサル・スタジオ・ジャパン]]"
     },
-    "media": [
-      "2026-01-30-15-03-00_IG_0004_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-03-00_IG_0004.json]]",
     "relatedCardIds": [
       "mention-@katsuo_isono",
@@ -280,19 +342,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[テニスラケット|#テニスラケット]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "海遊館",
       "normalized": "海遊館",
       "geo": {
-        "lat": 34.632,
-        "lng": 135.446,
+        "lat": 34.639344154038,
+        "lng": 135.451329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区海遊館 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "海遊館",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[海遊館]]"
     },
-    "media": [
-      "2026-01-30-15-04-00_IG_0005_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-04-00_IG_0005.json]]",
     "relatedCardIds": [
       "mention-@wakame_isono",
@@ -336,19 +410,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[テニスボール|#テニスボール]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "梅田スカイビル",
       "normalized": "梅田スカイビル",
       "geo": {
-        "lat": 34.635,
-        "lng": 135.45,
+        "lat": 34.642344154038,
+        "lng": 135.455329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区梅田スカイビル 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "梅田スカイビル",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[梅田スカイビル]]"
     },
-    "media": [
-      "2026-01-30-15-05-00_IG_0006_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-05-00_IG_0006.json]]",
     "relatedCardIds": [
       "mention-@namihei_isono",
@@ -393,19 +479,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[バスケットゴール|#バスケットゴール]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "あべのハルカス",
       "normalized": "あべのハルカス",
       "geo": {
-        "lat": 34.638,
-        "lng": 135.454,
+        "lat": 34.645344154038,
+        "lng": 135.459329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区あべのハルカス 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "あべのハルカス",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[あべのハルカス]]"
     },
-    "media": [
-      "2026-01-30-15-06-00_IG_0007_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-06-00_IG_0007.json]]",
     "relatedCardIds": [
       "mention-@fune_isono",
@@ -450,19 +548,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[バスケットゴール|#バスケットゴール]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "四天王寺",
       "normalized": "四天王寺",
       "geo": {
-        "lat": 34.641,
-        "lng": 135.458,
+        "lat": 34.648344154038,
+        "lng": 135.463329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区四天王寺 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "四天王寺",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[四天王寺]]"
     },
-    "media": [
-      "2026-01-30-15-07-00_IG_0008_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-07-00_IG_0008.json]]",
     "relatedCardIds": [
       "mention-@tama_cat",
@@ -502,19 +612,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[ゴルフクラブ|#ゴルフクラブ]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "黒門市場",
       "normalized": "黒門市場",
       "geo": {
-        "lat": 34.644,
-        "lng": 135.462,
+        "lat": 34.651344154038,
+        "lng": 135.467329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区黒門市場 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "黒門市場",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[黒門市場]]"
     },
-    "media": [
-      "2026-01-30-15-08-00_IG_0009_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-08-00_IG_0009.json]]",
     "relatedCardIds": [
       "mention-@norisuke_namino",
@@ -553,19 +675,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[ゴルフボール|#ゴルフボール]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "新世界",
       "normalized": "新世界",
       "geo": {
-        "lat": 34.647,
-        "lng": 135.466,
+        "lat": 34.654344154038,
+        "lng": 135.471329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区新世界 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "新世界",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[新世界]]"
     },
-    "media": [
-      "2026-01-30-15-09-00_IG_0010_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-09-00_IG_0010.json]]",
     "relatedCardIds": [
       "mention-@taiko_namino",
@@ -609,19 +743,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[ランニングシューズ|#ランニングシューズ]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "アメリカ村",
       "normalized": "アメリカ村",
       "geo": {
-        "lat": 34.65,
-        "lng": 135.47,
+        "lat": 34.657344154038,
+        "lng": 135.475329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区アメリカ村 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "アメリカ村",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[アメリカ村]]"
     },
-    "media": [
-      "2026-01-30-15-10-00_IG_0011_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-10-00_IG_0011.json]]",
     "relatedCardIds": [
       "mention-@ikura_namino",
@@ -661,19 +807,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[ダンベル|#ダンベル]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "難波八阪神社",
       "normalized": "難波八阪神社",
       "geo": {
-        "lat": 34.653,
-        "lng": 135.474,
+        "lat": 34.660344154038,
+        "lng": 135.479329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区難波八阪神社 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "難波八阪神社",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[難波八阪神社]]"
     },
-    "media": [
-      "2026-01-30-15-11-00_IG_0012_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-11-00_IG_0012.json]]",
     "relatedCardIds": [
       "mention-@son_goku",
@@ -717,19 +875,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[水泳ゴーグル|#水泳ゴーグル]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "天王寺動物園",
       "normalized": "天王寺動物園",
       "geo": {
-        "lat": 34.656,
-        "lng": 135.478,
+        "lat": 34.663344154038,
+        "lng": 135.483329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区天王寺動物園 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "天王寺動物園",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[天王寺動物園]]"
     },
-    "media": [
-      "2026-01-30-15-12-00_IG_0013_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-12-00_IG_0013.json]]",
     "relatedCardIds": [
       "mention-@kakarot",
@@ -769,19 +939,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[水泳ゴーグル|#水泳ゴーグル]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "箕面大滝",
       "normalized": "箕面大滝",
       "geo": {
-        "lat": 34.659,
-        "lng": 135.482,
+        "lat": 34.666344154038,
+        "lng": 135.487329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区箕面大滝 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "箕面大滝",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[箕面大滝]]"
     },
-    "media": [
-      "2026-01-30-15-13-00_IG_0014_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-13-00_IG_0014.json]]",
     "relatedCardIds": [
       "mention-@vegeta",
@@ -825,19 +1007,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[自転車ヘルメット|#自転車ヘルメット]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "万博記念公園",
       "normalized": "万博記念公園",
       "geo": {
-        "lat": 34.662,
-        "lng": 135.486,
+        "lat": 34.669344154038,
+        "lng": 135.491329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区万博記念公園 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "万博記念公園",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[万博記念公園]]"
     },
-    "media": [
-      "2026-01-30-15-14-00_IG_0015_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-14-00_IG_0015.json]]",
     "relatedCardIds": [
       "mention-@prince_vegeta",
@@ -882,19 +1076,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[枝豆|#枝豆]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "スパワールド",
       "normalized": "スパワールド",
       "geo": {
-        "lat": 34.665,
-        "lng": 135.49,
+        "lat": 34.672344154038,
+        "lng": 135.495329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区スパワールド 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "スパワールド",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[スパワールド]]"
     },
-    "media": [
-      "2026-01-30-15-15-00_IG_0016_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-15-00_IG_0016.json]]",
     "relatedCardIds": [
       "mention-@piccolo",
@@ -934,19 +1140,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[冷やしトマト|#冷やしトマト]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "天保山大観覧車",
       "normalized": "天保山大観覧車",
       "geo": {
-        "lat": 34.668,
-        "lng": 135.494,
+        "lat": 34.675344154038,
+        "lng": 135.499329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区天保山大観覧車 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "天保山大観覧車",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[天保山大観覧車]]"
     },
-    "media": [
-      "2026-01-30-15-16-00_IG_0017_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-16-00_IG_0017.json]]",
     "relatedCardIds": [
       "mention-@ma_junior",
@@ -985,19 +1203,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[だし巻き卵|#だし巻き卵]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "キッズプラザ大阪",
       "normalized": "キッズプラザ大阪",
       "geo": {
-        "lat": 34.671,
-        "lng": 135.498,
+        "lat": 34.678344154038,
+        "lng": 135.503329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区キッズプラザ大阪 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "キッズプラザ大阪",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[キッズプラザ大阪]]"
     },
-    "media": [
-      "2026-01-30-15-17-00_IG_0018_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-17-00_IG_0018.json]]",
     "relatedCardIds": [
       "mention-@son_gohan",
@@ -1041,19 +1271,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[焼き鳥|#焼き鳥]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "造幣局博物館",
       "normalized": "造幣局博物館",
       "geo": {
-        "lat": 34.674,
-        "lng": 135.502,
+        "lat": 34.681344154038,
+        "lng": 135.507329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区造幣局博物館 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "造幣局博物館",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[造幣局博物館]]"
     },
-    "media": [
-      "2026-01-30-15-18-00_IG_0019_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-18-00_IG_0019.json]]",
     "relatedCardIds": [
       "mention-@great_saiyaman",
@@ -1093,19 +1335,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[焼き鳥|#焼き鳥]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "グランフロント大阪",
       "normalized": "グランフロント大阪",
       "geo": {
-        "lat": 34.677,
-        "lng": 135.506,
+        "lat": 34.684344154038,
+        "lng": 135.511329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区グランフロント大阪 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "グランフロント大阪",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[グランフロント大阪]]"
     },
-    "media": [
-      "2026-01-30-15-19-00_IG_0020_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-19-00_IG_0020.json]]",
     "relatedCardIds": [
       "mention-@kuririn",
@@ -1149,19 +1403,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[つくね|#つくね]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "HEP FIVE",
       "normalized": "HEP FIVE",
       "geo": {
-        "lat": 34.68,
-        "lng": 135.51,
+        "lat": 34.687344154038,
+        "lng": 135.515329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区HEP FIVE 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "HEP FIVE",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[HEP FIVE]]"
     },
-    "media": [
-      "2026-01-30-15-20-00_IG_0021_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-20-00_IG_0021.json]]",
     "relatedCardIds": [
       "mention-@bulma",
@@ -1206,19 +1472,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[刺身盛り合わせ|#刺身盛り合わせ]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "中之島公園",
       "normalized": "中之島公園",
       "geo": {
-        "lat": 34.683,
-        "lng": 135.514,
+        "lat": 34.690344154038,
+        "lng": 135.519329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区中之島公園 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "中之島公園",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[中之島公園]]"
     },
-    "media": [
-      "2026-01-30-15-21-00_IG_0022_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-21-00_IG_0022.json]]",
     "relatedCardIds": [
       "mention-@kamesennin",
@@ -1258,19 +1536,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[しめ鯖|#しめ鯖]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "大阪市立科学館",
       "normalized": "大阪市立科学館",
       "geo": {
-        "lat": 34.686,
-        "lng": 135.518,
+        "lat": 34.693344154038,
+        "lng": 135.523329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区大阪市立科学館 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "大阪市立科学館",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[大阪市立科学館]]"
     },
-    "media": [
-      "2026-01-30-15-22-00_IG_0023_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-22-00_IG_0023.json]]",
     "relatedCardIds": [
       "mention-@jackie_chun",
@@ -1309,19 +1599,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[ほっけ開き|#ほっけ開き]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "国立国際美術館",
       "normalized": "国立国際美術館",
       "geo": {
-        "lat": 34.689,
-        "lng": 135.522,
+        "lat": 34.696344154038,
+        "lng": 135.527329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区国立国際美術館 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "国立国際美術館",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[国立国際美術館]]"
     },
-    "media": [
-      "2026-01-30-15-23-00_IG_0024_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-23-00_IG_0024.json]]",
     "relatedCardIds": [
       "mention-@tenshinhan",
@@ -1365,19 +1667,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[フライドポテト|#フライドポテト]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "大阪歴史博物館",
       "normalized": "大阪歴史博物館",
       "geo": {
-        "lat": 34.692,
-        "lng": 135.526,
+        "lat": 34.699344154038,
+        "lng": 135.531329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区大阪歴史博物館 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "大阪歴史博物館",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[大阪歴史博物館]]"
     },
-    "media": [
-      "2026-01-30-15-24-00_IG_0025_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-24-00_IG_0025.json]]",
     "relatedCardIds": [
       "mention-@yamcha",
@@ -1422,19 +1736,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[フライドポテト|#フライドポテト]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "千日前道具屋筋商店街",
       "normalized": "千日前道具屋筋商店街",
       "geo": {
-        "lat": 34.695,
-        "lng": 135.53,
+        "lat": 34.702344154038,
+        "lng": 135.535329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区千日前道具屋筋商店街 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "千日前道具屋筋商店街",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[千日前道具屋筋商店街]]"
     },
-    "media": [
-      "2026-01-30-15-25-00_IG_0026_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-25-00_IG_0026.json]]",
     "relatedCardIds": [
       "mention-@trunks",
@@ -1474,19 +1800,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[もつ煮込み|#もつ煮込み]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "法善寺横丁",
       "normalized": "法善寺横丁",
       "geo": {
-        "lat": 34.698,
-        "lng": 135.534,
+        "lat": 34.705344154038,
+        "lng": 135.539329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区法善寺横丁 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "法善寺横丁",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[法善寺横丁]]"
     },
-    "media": [
-      "2026-01-30-15-26-00_IG_0027_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-26-00_IG_0027.json]]",
     "relatedCardIds": [
       "mention-@goten",
@@ -1525,19 +1863,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[焼きおにぎり|#焼きおにぎり]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "露天神社",
       "normalized": "露天神社",
       "geo": {
-        "lat": 34.701,
-        "lng": 135.538,
+        "lat": 34.708344154038,
+        "lng": 135.543329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区露天神社 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "露天神社",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[露天神社]]"
     },
-    "media": [
-      "2026-01-30-15-27-00_IG_0028_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-27-00_IG_0028.json]]",
     "relatedCardIds": [
       "mention-@freeza",
@@ -1581,19 +1931,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[生ビール|#生ビール]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "岸和田城",
       "normalized": "岸和田城",
       "geo": {
-        "lat": 34.704,
-        "lng": 135.542,
+        "lat": 34.711344154038,
+        "lng": 135.547329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区岸和田城 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "岸和田城",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[岸和田城]]"
     },
-    "media": [
-      "2026-01-30-15-28-00_IG_0029_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-28-00_IG_0029.json]]",
     "relatedCardIds": [
       "mention-@cell",
@@ -1633,19 +1995,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[ハイボール|#ハイボール]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": "USJ",
       "normalized": "USJ",
       "geo": {
-        "lat": 34.707,
-        "lng": 135.546,
+        "lat": 34.714344154038,
+        "lng": 135.551329361620,
         "alt": null
+      },
+      "address": {
+        "full": "大阪府大阪市架空区USJ 1-2-3",
+        "components": {
+          "country": "日本",
+          "prefecture": "大阪府",
+          "city": "大阪市架空区",
+          "district": "USJ",
+          "street": "1-2-3",
+          "postal_code": "540-0000"
+        }
+      },
+      "confidence": {
+        "geo": "high",
+        "source": "instagram"
       },
       "synapseLink": "[[USJ]]"
     },
-    "media": [
-      "2026-01-30-15-29-00_IG_0030_photo_001.jpg"
-    ],
     "rawSourcePath": "[[2026-01-30-15-29-00_IG_0030.json]]",
     "relatedCardIds": [
       "mention-@majin_buu",
@@ -1685,19 +2059,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[テニスボール|#テニスボール]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
-        "lat": 34.65,
-        "lng": 135.47,
+        "lat": 34.657344154038,
+        "lng": 135.475329361620,
         "alt": null
+      },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
       },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-00-00_IGR_0001_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-00-00_IGR_0001.json]]",
     "relatedCardIds": [
       "mention-@sazae_fuguta",
@@ -1732,19 +2118,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[バスケットボール|#バスケットボール]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
-        "lat": 34.652,
-        "lng": 135.472,
+        "lat": 34.659344154038,
+        "lng": 135.477329361620,
         "alt": null
+      },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
       },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-01-00_IGR_0002_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-01-00_IGR_0002.json]]",
     "relatedCardIds": [
       "mention-@masuo_fuguta",
@@ -1778,19 +2176,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[バスケットゴール|#バスケットゴール]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
-        "lat": 34.654,
-        "lng": 135.474,
+        "lat": 34.661344154038,
+        "lng": 135.479329361620,
         "alt": null
+      },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
       },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-02-00_IGR_0003_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-02-00_IGR_0003.json]]",
     "relatedCardIds": [
       "mention-@tara_fuguta",
@@ -1824,19 +2234,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[ゴルフクラブ|#ゴルフクラブ]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
-        "lat": 34.656,
-        "lng": 135.476,
+        "lat": 34.663344154038,
+        "lng": 135.481329361620,
         "alt": null
+      },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
       },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-03-00_IGR_0004_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-03-00_IGR_0004.json]]",
     "relatedCardIds": [
       "mention-@katsuo_isono",
@@ -1870,19 +2292,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[ゴルフボール|#ゴルフボール]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
-        "lat": 34.658,
-        "lng": 135.478,
+        "lat": 34.665344154038,
+        "lng": 135.483329361620,
         "alt": null
+      },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
       },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-04-00_IGR_0005_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-04-00_IGR_0005.json]]",
     "relatedCardIds": [
       "mention-@wakame_isono",
@@ -1916,19 +2350,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[ランニングシューズ|#ランニングシューズ]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
-        "lat": 34.66,
-        "lng": 135.48,
+        "lat": 34.667344154038,
+        "lng": 135.485329361620,
         "alt": null
+      },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
       },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-05-00_IGR_0006_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-05-00_IGR_0006.json]]",
     "relatedCardIds": [
       "mention-@namihei_isono",
@@ -1962,19 +2408,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[ダンベル|#ダンベル]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
-        "lat": 34.662,
-        "lng": 135.482,
+        "lat": 34.669344154038,
+        "lng": 135.487329361620,
         "alt": null
+      },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
       },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-06-00_IGR_0007_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-06-00_IGR_0007.json]]",
     "relatedCardIds": [
       "mention-@fune_isono",
@@ -2008,19 +2466,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[ヨガマット|#ヨガマット]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
-        "lat": 34.664,
-        "lng": 135.484,
+        "lat": 34.671344154038,
+        "lng": 135.489329361620,
         "alt": null
+      },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
       },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-07-00_IGR_0008_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-07-00_IGR_0008.json]]",
     "relatedCardIds": [
       "mention-@tama_cat",
@@ -2059,19 +2529,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[水泳ゴーグル|#水泳ゴーグル]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
-        "lat": 34.666,
-        "lng": 135.486,
+        "lat": 34.673344154038,
+        "lng": 135.491329361620,
         "alt": null
+      },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
       },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-08-00_IGR_0009_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-08-00_IGR_0009.json]]",
     "relatedCardIds": [
       "mention-@norisuke_namino",
@@ -2106,19 +2588,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[自転車ヘルメット|#自転車ヘルメット]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
-        "lat": 34.668,
-        "lng": 135.488,
+        "lat": 34.675344154038,
+        "lng": 135.493329361620,
         "alt": null
+      },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
       },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-09-00_IGR_0010_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-09-00_IGR_0010.json]]",
     "relatedCardIds": [
       "mention-@taiko_namino",
@@ -2152,19 +2646,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[枝豆|#枝豆]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
-        "lat": 34.67,
-        "lng": 135.49,
+        "lat": 34.677344154038,
+        "lng": 135.495329361620,
         "alt": null
+      },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
       },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-10-00_IGR_0011_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-10-00_IGR_0011.json]]",
     "relatedCardIds": [
       "mention-@ikura_namino",
@@ -2198,19 +2704,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[冷やしトマト|#冷やしトマト]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
-        "lat": 34.672,
-        "lng": 135.492,
+        "lat": 34.679344154038,
+        "lng": 135.497329361620,
         "alt": null
+      },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
       },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-11-00_IGR_0012_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-11-00_IGR_0012.json]]",
     "relatedCardIds": [
       "mention-@son_goku",
@@ -2244,7 +2762,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[だし巻き卵|#だし巻き卵]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -2252,11 +2770,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-12-00_IGR_0013_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-12-00_IGR_0013.json]]",
     "relatedCardIds": [
       "mention-@kakarot",
@@ -2290,7 +2820,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[鶏の唐揚げ|#鶏の唐揚げ]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -2298,11 +2828,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-13-00_IGR_0014_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-13-00_IGR_0014.json]]",
     "relatedCardIds": [
       "mention-@vegeta",
@@ -2336,7 +2878,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[焼き鳥|#焼き鳥]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -2344,11 +2886,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-14-00_IGR_0015_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-14-00_IGR_0015.json]]",
     "relatedCardIds": [
       "mention-@prince_vegeta",
@@ -2382,7 +2936,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[つくね|#つくね]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -2390,11 +2944,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-15-00_IGR_0016_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-15-00_IGR_0016.json]]",
     "relatedCardIds": [
       "mention-@piccolo",
@@ -2433,7 +2999,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[刺身盛り合わせ|#刺身盛り合わせ]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -2441,11 +3007,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-16-00_IGR_0017_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-16-00_IGR_0017.json]]",
     "relatedCardIds": [
       "mention-@ma_junior",
@@ -2480,7 +3058,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[しめ鯖|#しめ鯖]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -2488,11 +3066,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-17-00_IGR_0018_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-17-00_IGR_0018.json]]",
     "relatedCardIds": [
       "mention-@son_gohan",
@@ -2526,7 +3116,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[ほっけ開き|#ほっけ開き]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -2534,11 +3124,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-18-00_IGR_0019_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-18-00_IGR_0019.json]]",
     "relatedCardIds": [
       "mention-@great_saiyaman",
@@ -2572,7 +3174,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[揚げ出し豆腐|#揚げ出し豆腐]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -2580,11 +3182,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-19-00_IGR_0020_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-19-00_IGR_0020.json]]",
     "relatedCardIds": [
       "mention-@kuririn",
@@ -2618,7 +3232,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[フライドポテト|#フライドポテト]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -2626,11 +3240,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-20-00_IGR_0021_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-20-00_IGR_0021.json]]",
     "relatedCardIds": [
       "mention-@bulma",
@@ -2664,7 +3290,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[もつ煮込み|#もつ煮込み]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -2672,11 +3298,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-21-00_IGR_0022_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-21-00_IGR_0022.json]]",
     "relatedCardIds": [
       "mention-@kamesennin",
@@ -2710,7 +3348,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[焼きおにぎり|#焼きおにぎり]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -2718,11 +3356,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-22-00_IGR_0023_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-22-00_IGR_0023.json]]",
     "relatedCardIds": [
       "mention-@jackie_chun",
@@ -2756,7 +3406,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[生ビール|#生ビール]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -2764,11 +3414,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-23-00_IGR_0024_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-23-00_IGR_0024.json]]",
     "relatedCardIds": [
       "mention-@tenshinhan",
@@ -2807,7 +3469,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[ハイボール|#ハイボール]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -2815,11 +3477,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-24-00_IGR_0025_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-24-00_IGR_0025.json]]",
     "relatedCardIds": [
       "mention-@yamcha",
@@ -2854,7 +3528,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[野球バット|#野球バット]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -2862,11 +3536,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-25-00_IGR_0026_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-25-00_IGR_0026.json]]",
     "relatedCardIds": [
       "mention-@trunks",
@@ -2900,7 +3586,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[野球グローブ|#野球グローブ]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -2908,11 +3594,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-26-00_IGR_0027_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-26-00_IGR_0027.json]]",
     "relatedCardIds": [
       "mention-@goten",
@@ -2946,7 +3644,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[サッカーボール|#サッカーボール]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -2954,11 +3652,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-27-00_IGR_0028_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-27-00_IGR_0028.json]]",
     "relatedCardIds": [
       "mention-@freeza",
@@ -2992,7 +3702,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[サッカースパイク|#サッカースパイク]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -3000,11 +3710,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-28-00_IGR_0029_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-28-00_IGR_0029.json]]",
     "relatedCardIds": [
       "mention-@cell",
@@ -3038,7 +3760,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[テニスラケット|#テニスラケット]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -3046,11 +3768,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-02-15-10-29-00_IGR_0030_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-02-15-10-29-00_IGR_0030.json]]",
     "relatedCardIds": [
       "mention-@majin_buu",
@@ -3089,19 +3823,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[冷やしトマト|#冷やしトマト]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
-        "lat": 34.69,
-        "lng": 135.49,
+        "lat": 34.697344154038,
+        "lng": 135.495329361620,
         "alt": null
+      },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
       },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-00-00_IGS_0001_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-00-00_IGS_0001.json]]",
     "relatedCardIds": [
       "mention-@ikura_namino",
@@ -3136,19 +3882,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[冷やしトマト|#冷やしトマト]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
-        "lat": 34.692,
-        "lng": 135.492,
+        "lat": 34.699344154038,
+        "lng": 135.497329361620,
         "alt": null
+      },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
       },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-01-00_IGS_0002_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-01-00_IGS_0002.json]]",
     "relatedCardIds": [
       "mention-@son_goku",
@@ -3182,19 +3940,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[だし巻き卵|#だし巻き卵]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
-        "lat": 34.694,
-        "lng": 135.494,
+        "lat": 34.701344154038,
+        "lng": 135.499329361620,
         "alt": null
+      },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
       },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-02-00_IGS_0003_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-02-00_IGS_0003.json]]",
     "relatedCardIds": [
       "mention-@kakarot",
@@ -3228,19 +3998,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[鶏の唐揚げ|#鶏の唐揚げ]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
-        "lat": 34.696,
-        "lng": 135.496,
+        "lat": 34.703344154038,
+        "lng": 135.501329361620,
         "alt": null
+      },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
       },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-03-00_IGS_0004_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-03-00_IGS_0004.json]]",
     "relatedCardIds": [
       "mention-@vegeta",
@@ -3274,19 +4056,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[焼き鳥|#焼き鳥]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
-        "lat": 34.698,
-        "lng": 135.498,
+        "lat": 34.705344154038,
+        "lng": 135.503329361620,
         "alt": null
+      },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
       },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-04-00_IGS_0005_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-04-00_IGS_0005.json]]",
     "relatedCardIds": [
       "mention-@prince_vegeta",
@@ -3320,19 +4114,31 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[つくね|#つくね]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
-        "lat": 34.7,
-        "lng": 135.5,
+        "lat": 34.707344154038,
+        "lng": 135.505329361620,
         "alt": null
+      },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
       },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-05-00_IGS_0006_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-05-00_IGS_0006.json]]",
     "relatedCardIds": [
       "mention-@piccolo",
@@ -3366,7 +4172,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[刺身盛り合わせ|#刺身盛り合わせ]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -3374,11 +4180,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-06-00_IGS_0007_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-06-00_IGS_0007.json]]",
     "relatedCardIds": [
       "mention-@ma_junior",
@@ -3412,7 +4230,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[しめ鯖|#しめ鯖]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -3420,11 +4238,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-07-00_IGS_0008_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-07-00_IGS_0008.json]]",
     "relatedCardIds": [
       "mention-@son_gohan",
@@ -3458,7 +4288,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[ほっけ開き|#ほっけ開き]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -3466,11 +4296,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-08-00_IGS_0009_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-08-00_IGS_0009.json]]",
     "relatedCardIds": [
       "mention-@great_saiyaman",
@@ -3509,7 +4351,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[フライドポテト|#フライドポテト]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -3517,11 +4359,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-09-00_IGS_0010_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-09-00_IGS_0010.json]]",
     "relatedCardIds": [
       "mention-@kuririn",
@@ -3556,7 +4410,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[フライドポテト|#フライドポテト]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -3564,11 +4418,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-10-00_IGS_0011_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-10-00_IGS_0011.json]]",
     "relatedCardIds": [
       "mention-@bulma",
@@ -3602,7 +4468,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[もつ煮込み|#もつ煮込み]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -3610,11 +4476,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-11-00_IGS_0012_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-11-00_IGS_0012.json]]",
     "relatedCardIds": [
       "mention-@kamesennin",
@@ -3648,7 +4526,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[焼きおにぎり|#焼きおにぎり]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -3656,11 +4534,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-12-00_IGS_0013_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-12-00_IGS_0013.json]]",
     "relatedCardIds": [
       "mention-@jackie_chun",
@@ -3694,7 +4584,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[生ビール|#生ビール]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -3702,11 +4592,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-13-00_IGS_0014_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-13-00_IGS_0014.json]]",
     "relatedCardIds": [
       "mention-@tenshinhan",
@@ -3740,7 +4642,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[ハイボール|#ハイボール]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -3748,11 +4650,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-14-00_IGS_0015_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-14-00_IGS_0015.json]]",
     "relatedCardIds": [
       "mention-@yamcha",
@@ -3786,7 +4700,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[野球バット|#野球バット]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -3794,11 +4708,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-15-00_IGS_0016_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-15-00_IGS_0016.json]]",
     "relatedCardIds": [
       "mention-@trunks",
@@ -3832,7 +4758,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[野球グローブ|#野球グローブ]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -3840,11 +4766,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-16-00_IGS_0017_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-16-00_IGS_0017.json]]",
     "relatedCardIds": [
       "mention-@goten",
@@ -3878,7 +4816,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[サッカーボール|#サッカーボール]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -3886,11 +4824,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-17-00_IGS_0018_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-17-00_IGS_0018.json]]",
     "relatedCardIds": [
       "mention-@freeza",
@@ -3929,7 +4879,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[テニスラケット|#テニスラケット]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -3937,11 +4887,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-18-00_IGS_0019_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-18-00_IGS_0019.json]]",
     "relatedCardIds": [
       "mention-@cell",
@@ -3976,7 +4938,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[テニスラケット|#テニスラケット]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -3984,11 +4946,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-19-00_IGS_0020_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-19-00_IGS_0020.json]]",
     "relatedCardIds": [
       "mention-@majin_buu",
@@ -4022,7 +4996,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[テニスボール|#テニスボール]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -4030,11 +5004,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-20-00_IGS_0021_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-20-00_IGS_0021.json]]",
     "relatedCardIds": [
       "mention-@sazae_fuguta",
@@ -4068,7 +5054,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[バスケットボール|#バスケットボール]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -4076,11 +5062,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-21-00_IGS_0022_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-21-00_IGS_0022.json]]",
     "relatedCardIds": [
       "mention-@masuo_fuguta",
@@ -4114,7 +5112,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[バスケットゴール|#バスケットゴール]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -4122,11 +5120,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-22-00_IGS_0023_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-22-00_IGS_0023.json]]",
     "relatedCardIds": [
       "mention-@tara_fuguta",
@@ -4160,7 +5170,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[ゴルフクラブ|#ゴルフクラブ]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -4168,11 +5178,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-23-00_IGS_0024_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-23-00_IGS_0024.json]]",
     "relatedCardIds": [
       "mention-@katsuo_isono",
@@ -4206,7 +5228,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[ゴルフボール|#ゴルフボール]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -4214,11 +5236,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-24-00_IGS_0025_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-24-00_IGS_0025.json]]",
     "relatedCardIds": [
       "mention-@wakame_isono",
@@ -4252,7 +5286,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[ランニングシューズ|#ランニングシューズ]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -4260,11 +5294,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-25-00_IGS_0026_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-25-00_IGS_0026.json]]",
     "relatedCardIds": [
       "mention-@namihei_isono",
@@ -4298,7 +5344,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[ダンベル|#ダンベル]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -4306,11 +5352,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-26-00_IGS_0027_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-26-00_IGS_0027.json]]",
     "relatedCardIds": [
       "mention-@fune_isono",
@@ -4349,7 +5407,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[水泳ゴーグル|#水泳ゴーグル]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -4357,11 +5415,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-27-00_IGS_0028_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-27-00_IGS_0028.json]]",
     "relatedCardIds": [
       "mention-@tama_cat",
@@ -4396,7 +5466,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[水泳ゴーグル|#水泳ゴーグル]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -4404,11 +5474,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-28-00_IGS_0029_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-28-00_IGS_0029.json]]",
     "relatedCardIds": [
       "mention-@norisuke_namino",
@@ -4442,7 +5524,7 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "wiki": "[[自転車ヘルメット|#自転車ヘルメット]]"
       }
     ],
-    "location": {
+        "location": {
       "raw": null,
       "normalized": null,
       "geo": {
@@ -4450,11 +5532,23 @@ export const 検証用親工程ログ一覧: Record<string, 検証用親工程�
         "lng": null,
         "alt": null
       },
+      "address": {
+        "full": null,
+        "components": {
+          "country": null,
+          "prefecture": null,
+          "city": null,
+          "district": null,
+          "street": null,
+          "postal_code": null
+        }
+      },
+      "confidence": {
+        "geo": null,
+        "source": "instagram"
+      },
       "synapseLink": null
     },
-    "media": [
-      "2026-03-01-08-29-00_IGS_0030_video_001.mp4"
-    ],
     "rawSourcePath": "[[2026-03-01-08-29-00_IGS_0030.json]]",
     "relatedCardIds": [
       "mention-@taiko_namino",

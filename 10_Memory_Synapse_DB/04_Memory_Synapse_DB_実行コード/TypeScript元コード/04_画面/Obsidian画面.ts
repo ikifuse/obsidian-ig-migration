@@ -78,15 +78,21 @@ class MemorySynapseView extends ItemView {
         this.contentEl,
         state,
         async (oldState, newState) => {
-          if (!this.lastReadResult) throw new Error("読み取り結果がありません");
-          
-          const yamlStringify = (stringifyYaml as any) || ((obj: any) => JSON.stringify(obj, null, 2));
+          try {
+            if (!this.lastReadResult) throw new Error("読み取り結果がありません");
+            
+            const yamlStringify = (stringifyYaml as any) || ((obj: any) => JSON.stringify(obj, null, 2));
 
-          const updates = 状態差分から更新を生成する(oldState, newState, this.lastReadResult);
-          if (updates.length > 0) {
-            await processTransaction(this.app, updates, yamlStringify);
-            // Re-read from Vault to ensure UI is in perfect sync
-            await this.refresh();
+            const updates = 状態差分から更新を生成する(oldState, newState, this.lastReadResult);
+            if (updates.length > 0) {
+              await processTransaction(this.app, updates, yamlStringify);
+              // Re-read from Vault to ensure UI is in perfect sync
+              await this.refresh();
+            }
+          } catch (e: any) {
+            const msg = エラー内容を文字列にする(e);
+            new Notice(`保存エラー: ${msg}`);
+            throw e;
           }
         },
         (cardId) => {

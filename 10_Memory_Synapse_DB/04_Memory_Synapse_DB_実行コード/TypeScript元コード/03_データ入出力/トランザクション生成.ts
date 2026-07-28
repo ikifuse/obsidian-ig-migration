@@ -12,6 +12,7 @@ export function 状態差分から更新を生成する(
     if (!updates.has(id)) {
       const card = readResult.cardsById[id];
       if (!card) throw new Error(`TFile not found for card ${id}`);
+      if (card.yamlError) throw new Error(`YAMLエラーがあるため書き込みを停止しました（${card.name}）: ${card.yamlError}`);
       updates.set(id, { file: card.file });
     }
     return updates.get(id)!;

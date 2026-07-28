@@ -70,14 +70,22 @@ export async function processTransaction(
   }
 }
 
-export interface Vaultから読み取ったカード extends 読み取ったカード, カード {
+export type Vaultから読み取ったカード = 読み取ったカード & カード & {
   file: TFile;
-}
+};
 
 export interface Obsidian読取結果 extends カード読取結果<Vaultから読み取ったカード> {
   groups: Record<string, 融合グループ>;
   cardsById: Record<string, Vaultから読み取ったカード>;
 }
+
+import {
+  validateTagSource,
+  validateMentionSource,
+  validateLocationSource,
+  validateHandwrittenNote
+} from "./形式検証";
+import { 保存用から画面データへ変換する } from "../01_データ構造/手書き情報";
 
 export async function Synapsesを読み取る(
   app: App,
@@ -103,20 +111,59 @@ export async function Synapsesを読み取る(
         counts[kind]++;
 
         const id = `${kind}-${file.basename}`;
-        let source = {};
+        let source: any = {};
+        let yamlError: string | undefined = undefined;
+
         const baseYamlText = 最初のYAMLブロックを抽出する(text);
         if (baseYamlText) {
-          try { source = parseYaml(baseYamlText) || {}; } catch (e) { /* ignore */ }
+          try {
+            source = parseYaml(baseYamlText);
+            let errorMsg = null;
+            if (kind === "tag") errorMsg = validateTagSource(source);
+            else if (kind === "mention") errorMsg = validateMentionSource(source);
+            else if (kind === "location") errorMsg = validateLocationSource(source);
+            if (errorMsg) yamlError = errorMsg;
+          } catch (e: any) {
+            yamlError = "YAML構文エラー: " + e.message;
+          }
+        } else {
+          yamlError = "YAMLブロックが見つかりません";
+        }
+
+        let name = file.basename;
+        if (!yamlError) {
+          if (kind === "tag") name = source.hashtag_note?.hashtag || name;
+          else if (kind === "mention") name = source.mention_note?.mention || name;
+          else if (kind === "location") name = source.location_note?.location || name;
         }
 
         const relatedPosts = 関連投稿を抽出する(text);
         const memorySynapse = extractMemorySynapse(text, parseYaml);
-        const handwritten = extractHandwrittenNote(text, parseYaml);
+        
+        const rawHandwritten = extractHandwrittenNote(text, parseYaml);
+        let handwrittenError: string | undefined = undefined;
+        if (rawHandwritten) {
+          handwrittenError = validateHandwrittenNote(rawHandwritten) || undefined;
+          if (handwrittenError) {
+             yamlError = yamlError ? yamlError + " / 手書き情報エラー: " + handwrittenError : "手書き情報エラー: " + handwrittenError;
+          }
+        }
+        const handwritten = (rawHandwritten && !handwrittenError) ? 保存用から画面データへ変換する(rawHandwritten) : undefined;
 
-        const card: Vaultから読み取ったカード = {
-          file, path: file.path, basename: file.basename, kind, wikiLinkCount: links,
-          id, name: file.basename, source, relatedPosts, handwritten
+        const baseCard = {
+          file, path: file.path, basename: file.basename, wikiLinkCount: links,
+          id, name, relatedPosts, handwritten, yamlError
         };
+
+        let card: Vaultから読み取ったカード;
+        if (kind === "tag") {
+          card = { ...baseCard, kind: "tag", source } as Vaultから読み取ったカード;
+        } else if (kind === "mention") {
+          card = { ...baseCard, kind: "mention", source } as Vaultから読み取ったカード;
+        } else {
+          card = { ...baseCard, kind: "location", source } as Vaultから読み取ったカード;
+        }
+
         cards.push(card);
         cardsById[id] = card;
 

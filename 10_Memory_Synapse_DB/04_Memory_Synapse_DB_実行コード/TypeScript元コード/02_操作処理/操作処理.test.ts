@@ -12,7 +12,7 @@ import { カードを融合する as mergeCards, 大きなカードを推奨す�
 import { ブラウザー操作履歴 as BrowserHistory } from "./元に戻す";
 
 function card(id: string, kind: カード種類): カード {
-  return { id, kind, name: id, source: {}, relatedPosts: [] };
+  return { id, kind, name: id, source: {} as any, relatedPosts: [] };
 }
 
 function operationState(): 融合状態 {

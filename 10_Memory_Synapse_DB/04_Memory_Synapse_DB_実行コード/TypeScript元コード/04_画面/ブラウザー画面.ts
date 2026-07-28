@@ -56,7 +56,7 @@ let searchQuery = "";
 let handwrittenOnly = false;
 const kindFilters = new Set<Card["kind"]>();
 const statusFilters = new Set<CardStatusFilter>();
-let expandedFolders = new Set<string>(["Instagram_Logs", "Posts", "Reels", "Stories", "Synapses", "Locations", "Mentions", "Tags", "SystemLogs"]);
+let expandedFolders = new Set<string>(["Instagram_Logs", "Synapses"]);
 
 const appElement = document.querySelector<HTMLDivElement>("#app");
 if (!appElement) throw new Error("#app was not found");
@@ -156,7 +156,6 @@ function renderTreeFolder(name: string, depth: number): string {
   if (isExpanded) {
     const logs = getLogFiles();
     if (name === "Instagram_Logs") {
-      html += renderTreeFolder("media", depth + 1);
       html += renderTreeFolder("Posts", depth + 1);
       html += renderTreeFolder("Reels", depth + 1);
       html += renderTreeFolder("Stories", depth + 1);
@@ -361,9 +360,6 @@ function renderLogFileView(filename: string): string {
   const geo = log.location.geo.lat === null || log.location.geo.lng === null
     ? "null"
     : `${log.location.geo.lat}, ${log.location.geo.lng}`;
-  const media = log.media
-    .map((name) => `<p style="margin:16px 0;">${escapeHtml(`![[${name}]]`)}</p>`)
-    .join("");
   const footerLinks = log.links.map((link) => {
     if (!link.cardId) return `<span>${escapeHtml(link.wiki)}</span>`;
     return `<span class="post-link" data-action="select-card" data-card-id="${escapeHtml(link.cardId)}" style="cursor:pointer; color:var(--text-accent);">${escapeHtml(link.wiki)}</span>`;
@@ -388,7 +384,6 @@ function renderLogFileView(filename: string): string {
     <div class="log-content">
       <p>${escapeHtml("[[instagram]]")}</p>
       <p style="line-height:1.8; white-space:pre-wrap;">${escapeHtml(log.caption)}</p>
-      ${media}
       <hr style="border:0; border-top:1px solid var(--line); margin:20px 0;">
       <div class="post-links">${footerLinks}</div>
     </div>
@@ -480,7 +475,7 @@ function renderInspectionIssues(card: Card): string {
 function renderHero(card: Card, handwritten: boolean): string {
   const values: Array<[string, string]> = handwritten && card.handwritten
     ? noteFields(card.handwritten)
-    : Object.entries(card.source).map(([key, value]) => [key, Array.isArray(value) ? value.join("、") : String(value ?? "")]);
+    : Object.entries(card.source).map(([key, value]) => [key, Array.isArray(value) ? value.join("、") : (typeof value === "object" && value !== null ? JSON.stringify(value, null, 2) : String(value ?? ""))]);
   return `<article class="hero">
     <div class="eyebrow">${handwritten ? "手書き・補正後" : "移行時点の個別カード情報"}</div>
     <h2>${escapeHtml(handwritten && card.handwritten?.displayName ? card.handwritten.displayName : card.name)}</h2>
@@ -514,7 +509,7 @@ function renderCardFields(source: Card["source"]): string {
   return renderFieldValues(
     Object.entries(source).map(([key, value]) => [
       key,
-      Array.isArray(value) ? value.join("、") : String(value ?? "")
+      Array.isArray(value) ? value.join("、") : (typeof value === "object" && value !== null ? JSON.stringify(value, null, 2) : String(value ?? ""))
     ])
   );
 }
@@ -523,7 +518,7 @@ function renderFieldValues(values: Array<[string, string]>): string {
   const fields = values.filter(([, value]) => value.trim());
   return fields.length === 0
     ? '<div class="compact">表示できる情報はありません。</div>'
-    : `<dl class="field-grid">${fields.map(([key, value]) => `<div class="field"><dt>${escapeHtml(key)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}</dl>`;
+    : `<dl class="field-grid">${fields.map(([key, value]) => `<div class="field"><dt>${escapeHtml(key)}</dt><dd style="white-space: pre-wrap; word-break: break-word;">${escapeHtml(value)}</dd></div>`).join("")}</dl>`;
 }
 
 function renderRelatedPosts(card: Card): string {

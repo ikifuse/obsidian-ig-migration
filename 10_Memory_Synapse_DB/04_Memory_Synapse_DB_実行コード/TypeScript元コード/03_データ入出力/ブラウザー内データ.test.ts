@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import type { MentionCard } from "../01_データ構造/カード";
 import {
   初期状態を作る as createInitialState,
   検証用検査結果一覧 as browserInspectionResults
@@ -129,7 +130,8 @@ test("ログとSynapseカードの関連投稿は双方向に一致する", () =
   const state = createInitialState();
   for (const card of Object.values(state.cards)) {
     assert.ok(card.relatedPosts.length > 0, `${card.id}: 関連投稿がありません`);
-    assert.ok(String(card.source.note ?? "").length > 0, `${card.id}: 検証用情報が空です`);
+    const note = card.kind === "tag" ? card.source.hashtag_note?.note : card.kind === "mention" ? card.source.mention_note?.note : card.source.note;
+    assert.ok(String(note ?? "").length > 0, `${card.id}: 検証用情報が空です`);
 
     for (const postLink of card.relatedPosts) {
       const logId = postLink.replace(/^\[\[/, "").replace(/\]\]$/, "");
@@ -154,9 +156,9 @@ test("公開用サンプルにローカルパスや実在サービスへのプ�
   assert.equal(serialized.includes("file://"), false);
   assert.equal(serialized.includes("www.instagram.com"), false);
 
-  const mentions = Object.values(state.cards).filter((card) => card.kind === "mention");
+  const mentions = Object.values(state.cards).filter((card) => card.kind === "mention") as MentionCard[];
   for (const card of mentions) {
-    const urls = Array.isArray(card.source.web) ? card.source.web : [];
+    const urls = Array.isArray(card.source.mention_note?.web) ? card.source.mention_note.web : [];
     assert.ok(urls.length > 0, `${card.id}: URL形式の検証値がありません`);
     assert.ok(urls.every((url) => url.startsWith("https://instagram.invalid/")), `${card.id}: 到達可能なプロフィールURLです`);
   }
