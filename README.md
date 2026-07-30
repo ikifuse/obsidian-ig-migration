@@ -35,7 +35,7 @@ GitHub上では、以下の項目を押すと、リポジトリの構成から�
 
 現在、具体的な意見や修正案を必要としているのは、子プロジェクト `10_Memory_Synapse_DB` のテストサンプルとUIです。コードをダウンロードしなくても、次のリンクからブラウザー確認用モックを直接操作できます。
 
-[▶ Memory Synapse DBのブラウザー確認用モックを開く](https://ikifuse.github.io/obsidian-ig-migration/10_Memory_Synapse_DB/05_Memory_Synapse_DB_%E3%83%96%E3%83%A9%E3%82%A6%E3%82%B6%E3%83%BC%E7%A2%BA%E8%AA%8D%E7%89%88/)
+[▶ Memory Synapse DBのブラウザー確認用モックを開く](https://ikifuse.github.io/obsidian-ig-migration/10_Memory_Synapse_DB/05_Memory_Synapse_DB_%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB%E6%A4%9C%E8%A8%BC%E3%82%AD%E3%83%83%E3%83%88/%E3%83%96%E3%83%A9%E3%82%A6%E3%82%B6%E3%83%BC%E7%A2%BA%E8%AA%8D%E7%94%A8%E3%83%A2%E3%83%83%E3%82%AF/)
 
 このモックには、実データや個人情報の代わりに、大阪の公開観光地、架空人物、スポーツ用品、居酒屋メニューを使った公開用合成データ90件を収録しています。融合・分離・取消・表示変更などを実際に試し、「このケースも必要」「この操作では分かりにくい」「この表示へ変えた方がよい」といった提案を、[Issue #3](https://github.com/ikifuse/obsidian-ig-migration/issues/3)へ具体的に提示できる確認環境です。
 
@@ -425,6 +425,8 @@ README内で概要を確認する場合は、以下の項目を押すと、リ�
 
 - [Memory Synapse DB専用AGENTS](10_Memory_Synapse_DB/AGENTS.md)
 - [専用docs目次](10_Memory_Synapse_DB/docs/README.md)
+- [機能相談工程](10_Memory_Synapse_DB/docs/feature-consultation-workflow.md)
+- [ブラウザー確認工程](10_Memory_Synapse_DB/docs/browser-confirmation-workflow.md)
 - [設計工程](10_Memory_Synapse_DB/docs/design-workflow.md)
 - [仕様工程](10_Memory_Synapse_DB/docs/specification-workflow.md)
 - [実装工程](10_Memory_Synapse_DB/docs/implementation-workflow.md)
@@ -432,13 +434,16 @@ README内で概要を確認する場合は、以下の項目を押すと、リ�
 </details>
 
 <details>
-<summary>04〜06 実行コード・ブラウザー確認版・仮プラグイン</summary>
+<summary>04〜07 実行コード・サンプル検証キット・仮プラグイン・承認検証台帳</summary>
 
 - [実行コード目次](10_Memory_Synapse_DB/04_Memory_Synapse_DB_実行コード/00_実行コード目次.md)
 - [ビルド・検証方法](10_Memory_Synapse_DB/04_Memory_Synapse_DB_実行コード/99_ビルド・検証方法.md)
-- `04_Memory_Synapse_DB_実行コード`：TypeScript元コード、公開用合成データ生成コード、ビルド設定
-- `05_Memory_Synapse_DB_ブラウザー確認版`：Mention・Location・Tag各30件を単独状態から操作する技術検証用モック
-- `06_Memory_Synapse_DB_仮プラグイン`：Vaultを変更しない読み取り専用の技術検証版
+- [04_Memory_Synapse_DB_実行コード](10_Memory_Synapse_DB/04_Memory_Synapse_DB_実行コード/)：TypeScript元コード、試験、ビルド設定
+- [05_Memory_Synapse_DB_サンプル検証キット](10_Memory_Synapse_DB/05_Memory_Synapse_DB_サンプル検証キット/README.md)：ブラウザー確認用モック、サンプルデータ、サンプルVault、検証ケース台帳、写真・動画と出典
+- [ブラウザー確認用モックのHTML](10_Memory_Synapse_DB/05_Memory_Synapse_DB_サンプル検証キット/ブラウザー確認用モック/index.html)：GitHub上で現在のHTMLファイルを確認
+- [06_Memory_Synapse_DB_仮プラグイン](10_Memory_Synapse_DB/06_Memory_Synapse_DB_仮プラグイン/memory-synapse-db/)：Vaultを変更しない読み取り専用の技術検証版
+- [06のmanifest.json](10_Memory_Synapse_DB/06_Memory_Synapse_DB_仮プラグイン/memory-synapse-db/manifest.json)：プラグイン識別情報
+- [07_Memory_Synapse_DB_承認・検証台帳](10_Memory_Synapse_DB/07_Memory_Synapse_DB_承認・検証台帳.md)：変更サイクルの現在地、承認状態、検証結果、Git基準点
 
 公開用合成データは、Mentionに架空人物、Locationに大阪の公開観光地、Tagにスポーツ用品15件と居酒屋メニュー15件を使用しています。Post・Reel・Story各30件の親工程形式ログと双方向に対応させ、実データ、ローカルパス、実在サービスのプロフィールURLを含めない構成です。
 
@@ -576,7 +581,7 @@ IGP・IGR・IGSは、正常実行、件数と内容、オーナーが意図し�
 
 * ⚙️　**動作テスト用データの使い分け**<br>
   * 📦　**親プロジェクトを検証する場合**：検証する方が、ご自身のInstagramデータをMeta社からJSON形式でエクスポートしてダウンロードし、ローカル環境へ配置してください。そのJSONを使ってIGP・IGR・IGSの変換を実行し、必要に応じてIGCによる統合まで検証していただく必要があります。Instagramの実データには個人情報が含まれるため、このリポジトリでは親プロジェクト用の実データを配布できません。使用したJSONと生成成果物は、GitHubへ公開しないでください。<br>
-  * 🧪　**子プロジェクト `10_Memory_Synapse_DB` を検証する場合**：[ブラウザー確認版](https://ikifuse.github.io/obsidian-ig-migration/10_Memory_Synapse_DB/05_Memory_Synapse_DB_%E3%83%96%E3%83%A9%E3%82%A6%E3%82%B6%E3%83%BC%E7%A2%BA%E8%AA%8D%E7%89%88/)に、個人情報を含めず公開できる合成データ90件を収録しています。大阪の公開観光地、架空人物、スポーツ用品、居酒屋メニューを使い、融合・分離・取消・表示変更などのUI検証を行えます。この合成データは10の操作とUIを検証するためのものであり、親プロジェクトがMetaのエクスポートJSONを正しく変換できることの検証には使用できません。<br>
+  * 🧪　**子プロジェクト `10_Memory_Synapse_DB` を検証する場合**：[ブラウザー確認用モック](https://ikifuse.github.io/obsidian-ig-migration/10_Memory_Synapse_DB/05_Memory_Synapse_DB_%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB%E6%A4%9C%E8%A8%BC%E3%82%AD%E3%83%83%E3%83%88/%E3%83%96%E3%83%A9%E3%82%A6%E3%82%B6%E3%83%BC%E7%A2%BA%E8%AA%8D%E7%94%A8%E3%83%A2%E3%83%83%E3%82%AF/)に、個人情報を含めず公開できる合成データ90件を収録しています。大阪の公開観光地、架空人物、スポーツ用品、居酒屋メニューを使い、融合・分離・取消・表示変更などのUI検証を行えます。この合成データは10の操作とUIを検証するためのものであり、親プロジェクトがMetaのエクスポートJSONを正しく変換できることの検証には使用できません。<br>
 * 👤　**オーナーは非エンジニア（コードを1行も読む事も書くことも出来ないAIを勉強し始めて間もないただのタクシー運転手です）です**<br>
   * 💬　難しいプログラミングやコードの書き方に関する質問には直接お答えできない場合があります。技術的な判断はエンジニアの皆様にお任せする部分が多くなります。なお、オーナーは日本語のみを理解するため、README・Issue・やり取りも日本語を前提にしています。<br>
 * 🗺️　**まずは企画書と設計書をご確認ください**<br>
