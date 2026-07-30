@@ -1,14 +1,29 @@
 ---
 name: msdb-browser-to-spec
-description: Apply the Memory Synapse DB feature-consultation, sample-and-browser-confirmation workflow through baseline checks, authoritative design/spec updates, auditable TypeScript, the read-only 06 technical preview, and the separately approved 08 plugin. Use when discussing or adopting a browser UI, layout, interaction, or feature; when reconciling the 05 mock and sample Vault with authoritative documents; when generating or reviewing 06; or when checking that sample-only data and mock Obsidian elements do not enter the plugin.
+description: Run one stateful Memory Synapse DB change cycle from feature consultation and repeated 05 browser exploration through Git checkpoints, authoritative design/spec updates, auditable TypeScript, the read-only 06 technical preview, and the separately approved 08 plugin. Use when discussing or adopting a browser UI, layout, interaction, or feature; when reconciling the 05 mock and sample Vault with authoritative documents; when generating or reviewing 06; or when checking that sample-only data and mock Obsidian elements do not enter the plugin.
 ---
 
 # Memory Synapse DBブラウザー確認反映
 
+## 一つの変更サイクル
+
+機能相談、05探索、Git途中保存、正本反映、04実装、06確認を別ルーティンにしない。作業開始時に`10_Memory_Synapse_DB/07_Memory_Synapse_DB_承認・検証台帳.md`を読み、進行中の変更案件とphaseを特定する。
+
+新しい変更案件では、オーナーへ次を一度だけ確認する。
+
+- 05で試す対象と維持条件
+- 候補完成時の停止点
+- 専用ブランチでのWIPコミットとpushの一括許可
+- 仕様承認後に04実装、検査、06生成まで進む一括許可
+
+オーナーへphase名、Gitコマンドまたは定型文を覚えさせない。必要な判断時に、採用か修正かを直接確認する。
+
+Git途中保存が許可された場合も、`main`への直接push、merge、Pull Request、タグおよびreleaseは行わない。WIPコミットは未承認であることを名前に示す。
+
 ## 必須ワークフロー
 
 1. 機能・画面の相談を含む場合は`10_Memory_Synapse_DB/docs/feature-consultation-workflow.md`を、ブラウザー確認または採用を含む場合は`10_Memory_Synapse_DB/docs/browser-confirmation-workflow.md`を最後まで読む。
-2. `10_Memory_Synapse_DB/AGENTS.md`の読み込みルーターに従い、対象機能を定める現役仕様分冊を必ず読み、必要な範囲だけ対応設計、現在の画面、対象コードおよび確認ケースを読む。
+2. 07の現在地と対象ブランチを確認し、`10_Memory_Synapse_DB/AGENTS.md`の読み込みルーターに従い、対象機能を定める現役仕様分冊を必ず読み、必要な範囲だけ対応設計、現在の画面、対象コードおよび確認ケースを読む。
 3. 提案前に、次の変更整合性ゲートを出力する。確認できない欄を推測で補わない。
    - 確認した現状と根拠
    - 維持条件
@@ -19,20 +34,21 @@ description: Apply the Memory Synapse DB feature-consultation, sample-and-browse
    - 採用後の確認方法
 4. 既存の採用事項との矛盾がないことを確認した後だけ、案を提示する。
 5. ブラウザー確認が試行中か、オーナーが採用を確定したかを、オーナーの発言と現物から区別する。
-6. 試行中なら、承認範囲の05以外へ変更を広げない。
-7. 採用済みなら、相談時の変更整合性ゲート、05の元コード、差分、検証ケース台帳、サンプルVault、操作結果および必要なスクリーンショットを再照合し、06・08へ持ち込まないサンプル専用表示を特定する。
-8. 各変更を設計変更、仕様変更、実装不具合または未確認へ分類する。
-9. 設計変更があれば対応設計だけを更新して停止し、承認後に対応仕様だけを更新して再度停止する。設計変更がなければ仕様工程から開始する。
-10. オーナーが仕様と04実装を承認した後だけ、04の人間可読TypeScriptとテストへ実装する。05を04の通常ビルド入力または出力にしない。
-11. 実装前後に境界検査を実行する。
+6. 試行中ならphaseを`05_exploration`とし、開始時に確認した05以外へ変更を広げない。個々の試行で正式承認を求めず、仕様解釈または維持条件が分岐する場合だけ質問する。
+7. Git途中保存が一括許可されている場合は、05の検査に合格し、差分が05と07だけであることを確認して、意味のある区切りで`WIP（未承認）`コミットと同じ専用ブランチへのpushを行う。
+8. 候補完成時は、相談時の変更整合性ゲート、05の元コード、差分、検証ケース台帳、サンプルVault、操作結果および必要なスクリーンショットを再照合し、06・08へ持ち込まないサンプル専用表示を特定する。
+9. 各変更を設計変更、仕様変更、実装不具合または未確認へ分類する。
+10. 設計変更があれば対応設計だけを更新して停止し、承認後に対応仕様を提示する。設計変更がなければ、05完成候補と対応仕様差分を一組で提示し、一度の承認を待つ。
+11. オーナーが仕様を承認し、変更サイクルで04から06までが一括許可されている場合だけ、04の人間可読TypeScriptとテストへ実装する。05を04の通常ビルド入力または出力にしない。
+12. 実装前後に境界検査を実行する。
 
 ```bash
 node .agents/skills/msdb-browser-to-spec/scripts/check-plugin-boundary.mjs
 ```
 
-12. 型検査、自動テスト、依存関係および再現可能なビルドを監査し、04から読み取り専用の06だけを生成する。
-13. 05のサンプルVaultの複製で06を検証し、仕様B-01からB-19の非永続操作、標準タブへの移動およびVault非変更を確認する。B-20からB-32は05側で確認する。
-14. 発見事項を再分類して停止する。08のコードと書き込み試験は、対象と停止点が別承認された後だけ開始する。
+13. 型検査、自動テスト、依存関係および再現可能なビルドを監査する。すべて合格し、一括許可の範囲内なら、04から読み取り専用の06だけを生成する。不合格、範囲外変更または未確認事項があれば途中で停止する。
+14. 05のサンプルVaultの複製で06を検証し、仕様B-01からB-19の非永続操作、標準タブへの移動およびVault非変更を確認する。B-20からB-32は05側で確認する。
+15. phaseを`06_review`として停止し、オーナーへ採用か修正かを確認する。承認後は同じ07行を完了状態へ更新する。08のコードと書き込み試験は、対象と停止点が別承認された後だけ開始する。
 
 ## 判断規則
 
@@ -51,8 +67,9 @@ node .agents/skills/msdb-browser-to-spec/scripts/check-plugin-boundary.mjs
 ## 停止条件
 
 - 設計を変更したら、仕様を変更する前に停止する。
-- 仕様を変更したら、コードを変更する前に停止する。
-- 04を変更したら、コード監査結果を報告して06実物確認前に停止する。
+- 05完成候補と仕様差分を提示したら、仕様承認前に停止する。
+- 仕様を変更したら、04から06までの一括許可がなければコードを変更する前に停止する。
+- 04を変更したら、コード監査結果を報告する。一括許可があり全検査が合格した場合だけ06生成まで進み、06実物確認で停止する。
 - 06を生成したら、日常利用Vaultへ入れず、サンプルVaultの複製で停止する。
 - 06が合格しても、08を変更する前に停止する。
 - 境界検査が既存不一致を報告した場合は、自動修正せず、依存経路と影響を報告する。
