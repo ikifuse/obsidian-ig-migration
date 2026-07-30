@@ -1,11 +1,16 @@
-import type { カード } from "./カード";
+import type { カード, カード種類 } from "./カード";
 
-export type 表示方法 = "source" | "handwritten";
+export type カテゴリ別代表 = Partial<Record<カード種類, string>>;
 
+/**
+ * schema_version 2 の融合状態。
+ * managerId は関係を保持する既存カードであり、画面上の代表カードとは別の責務を持つ。
+ */
 export interface 融合グループ {
-  bigCardId: string;
+  schemaVersion: 2;
+  managerId: string;
   memberIds: string[];
-  displayMode: 表示方法;
+  representatives: カテゴリ別代表;
 }
 
 export interface 融合状態 {
@@ -13,8 +18,13 @@ export interface 融合状態 {
   groups: Record<string, 融合グループ>;
 }
 
-export interface 大きなカード推奨結果 {
+export interface 関係管理カード推奨結果 {
   candidateIds: string[];
   recommendedIds: string[];
   reason: string;
+}
+
+export interface カテゴリ別代表推奨結果 {
+  representatives: カテゴリ別代表;
+  unresolvedKinds: カード種類[];
 }

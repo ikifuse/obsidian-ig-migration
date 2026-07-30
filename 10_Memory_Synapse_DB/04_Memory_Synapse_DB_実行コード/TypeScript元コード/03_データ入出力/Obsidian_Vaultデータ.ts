@@ -1,9 +1,10 @@
 import type { App, TFile } from "obsidian";
 import type { カード, カード種類 } from "../01_データ構造/カード";
-import type { 融合グループ } from "../01_データ構造/融合グループ";
+import type { カテゴリ別代表, 融合グループ } from "../01_データ構造/融合グループ";
 import { 対象ルートを整理する } from "../05_共通処理/入力値整理";
 import type { カード読取結果, 読み取ったカード } from "./カード入出力";
 import { Wikiリンク数を数える, YAMLブロックを抽出する, YAMLブロックを置換する, 最初のYAMLブロックを抽出する, 関連投稿を抽出する } from "./Markdown解析";
+import { Wikiリンクを分解する } from "./Wikiリンク解決";
 
 export type ParseYamlFn = (text: string) => any;
 export type StringifyYamlFn = (obj: any) => string;
@@ -77,6 +78,7 @@ export type Vaultから読み取ったカード = 読み取ったカード & カ
 export interface Obsidian読取結果 extends カード読取結果<Vaultから読み取ったカード> {
   groups: Record<string, 融合グループ>;
   cardsById: Record<string, Vaultから読み取ったカード>;
+  migrationWarnings: string[];
 }
 
 import {
@@ -99,6 +101,8 @@ export async function Synapsesを読み取る(
   const cards: Vaultから読み取ったカード[] = [];
   const cardsById: Record<string, Vaultから読み取ったカード> = {};
   const groups: Record<string, 融合グループ> = {};
+  const pendingGroups: Array<{ managerId: string; raw: any }> = [];
+  const migrationWarnings: string[] = [];
   const counts = { mention: 0, location: 0, tag: 0 };
 
   for (const file of files) {
@@ -168,18 +172,87 @@ export async function Synapsesを読み取る(
         cardsById[id] = card;
 
         if (memorySynapse?.members && Array.isArray(memorySynapse.members)) {
-          groups[id] = {
-            bigCardId: id,
-            memberIds: memorySynapse.members,
-            displayMode: memorySynapse.display_mode === "handwritten" ? "handwritten" : "source"
-          };
+          pendingGroups.push({ managerId: id, raw: memorySynapse });
         }
       }
     }
   }
 
+  const pathToId = new Map(cards.map((card) => [card.path.replace(/\.md$/i, ""), card.id]));
+  const basenameToIds = new Map<string, string[]>();
+  for (const card of cards) {
+    const ids = basenameToIds.get(card.basename) ?? [];
+    ids.push(card.id);
+    basenameToIds.set(card.basename, ids);
+  }
+  const resolveCardId = (value: unknown): string | null => {
+    const text = String(value ?? "").trim();
+    if (cardsById[text]) return text;
+    const wiki = text.match(/^\[\[([^|\]]+)(?:\|[^\]]*)?\]\]$/)?.[1]?.replace(/\.md$/i, "");
+    if (!wiki) return null;
+    const byPath = pathToId.get(wiki);
+    if (byPath) return byPath;
+    const basename = wiki.split("/").pop() ?? wiki;
+    const byBasename = basenameToIds.get(basename) ?? [];
+    return byBasename.length === 1 ? byBasename[0]! : null;
+  };
+
+  for (const pending of pendingGroups) {
+    const rawMembers = pending.raw.members as unknown[];
+    const resolvedMembers = rawMembers.map((value: unknown) => resolveCardId(value));
+    for (let index = 0; index < rawMembers.length; index++) {
+      if (!resolvedMembers[index]) {
+        migrationWarnings.push(
+          `${cardsById[pending.managerId]?.path ?? pending.managerId}: 融合構成員リンクを解決できません（${String(rawMembers[index])}）。`
+        );
+      }
+    }
+    const memberIds: string[] = resolvedMembers
+      .filter((id: string | null): id is string => Boolean(id) && id !== pending.managerId);
+    const ids: string[] = [pending.managerId, ...new Set<string>(memberIds)];
+    const representatives: カテゴリ別代表 = {};
+    const rawRepresentatives = pending.raw.representatives ?? {};
+    for (const kind of ["mention", "location", "tag"] as カード種類[]) {
+      const resolved = resolveCardId(rawRepresentatives[kind]);
+      if (resolved) representatives[kind] = resolved;
+      if (rawRepresentatives[kind] && !resolved) {
+        migrationWarnings.push(
+          `${cardsById[pending.managerId]?.path ?? pending.managerId}: ${kind}代表リンクを解決できません（${String(rawRepresentatives[kind])}）。`
+        );
+      }
+    }
+
+    if (Number(pending.raw.schema_version) !== 2) {
+      for (const kind of ["mention", "location", "tag"] as カード種類[]) {
+        const sameKind = ids.filter((id) => cardsById[id]?.kind === kind);
+        if (sameKind.length === 1) representatives[kind] = sameKind[0];
+        if (sameKind.length > 1) {
+          migrationWarnings.push(
+            `${cardsById[pending.managerId]?.name ?? pending.managerId}: 旧schemaの${kind}代表は複数候補から選択が必要です。`
+          );
+        }
+      }
+    }
+
+    groups[pending.managerId] = {
+      schemaVersion: 2,
+      managerId: pending.managerId,
+      memberIds: ids.filter((id) => id !== pending.managerId),
+      representatives
+    };
+  }
+
+  for (const card of cards) {
+    for (const wikiLink of card.relatedPosts) {
+      const parsed = Wikiリンクを分解する(wikiLink);
+      if (!parsed || !app.metadataCache.getFirstLinkpathDest(parsed.path, card.path)) {
+        migrationWarnings.push(`${card.path}: 関連投稿リンクを解決できません（${wikiLink}）。`);
+      }
+    }
+  }
+
   return {
-    cards, cardsById, groups, counts,
+    cards, cardsById, groups, counts, migrationWarnings,
     elapsedMs: performance.now() - startMs,
     totalMarkdownFiles: files.length,
     totalWikiLinks,

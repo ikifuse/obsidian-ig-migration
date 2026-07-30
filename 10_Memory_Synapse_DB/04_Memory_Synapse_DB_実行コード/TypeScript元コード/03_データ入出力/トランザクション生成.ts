@@ -31,30 +31,39 @@ export function 状態差分から更新を生成する(
   const oldGroups = oldState.groups;
   const newGroups = newState.groups;
 
-  const allBigCardIds = new Set([...Object.keys(oldGroups), ...Object.keys(newGroups)]);
+  const allManagerIds = new Set([...Object.keys(oldGroups), ...Object.keys(newGroups)]);
 
-  for (const bigId of allBigCardIds) {
-    const oldGroup = oldGroups[bigId];
-    const newGroup = newGroups[bigId];
+  for (const managerId of allManagerIds) {
+    const oldGroup = oldGroups[managerId];
+    const newGroup = newGroups[managerId];
     
     if (!oldGroup && newGroup) {
-      getUpdate(bigId).memorySynapse = {
-        schema_version: 1,
-        display_mode: newGroup.displayMode,
-        members: newGroup.memberIds.map(id => readResult.cardsById[id]?.path ? `[[${readResult.cardsById[id].path}|${readResult.cardsById[id].name}]]` : id)
-      };
+      getUpdate(managerId).memorySynapse = 永続化用グループ(newGroup, readResult);
     } else if (oldGroup && !newGroup) {
-      getUpdate(bigId).memorySynapse = null;
+      getUpdate(managerId).memorySynapse = null;
     } else if (oldGroup && newGroup) {
       if (JSON.stringify(oldGroup) !== JSON.stringify(newGroup)) {
-        getUpdate(bigId).memorySynapse = {
-          schema_version: 1,
-          display_mode: newGroup.displayMode,
-          members: newGroup.memberIds.map(id => readResult.cardsById[id]?.path ? `[[${readResult.cardsById[id].path}|${readResult.cardsById[id].name}]]` : id)
-        };
+        getUpdate(managerId).memorySynapse = 永続化用グループ(newGroup, readResult);
       }
     }
   }
 
   return Array.from(updates.values());
+}
+
+function 永続化用グループ(
+  group: 融合状態["groups"][string],
+  readResult: Obsidian読取結果
+): Record<string, unknown> {
+  const wiki = (id: string): string => {
+    const card = readResult.cardsById[id];
+    return card?.path ? `[[${card.path}|${card.name}]]` : id;
+  };
+  return {
+    schema_version: 2,
+    members: group.memberIds.map(wiki),
+    representatives: Object.fromEntries(
+      Object.entries(group.representatives).map(([kind, id]) => [kind, wiki(id)])
+    )
+  };
 }

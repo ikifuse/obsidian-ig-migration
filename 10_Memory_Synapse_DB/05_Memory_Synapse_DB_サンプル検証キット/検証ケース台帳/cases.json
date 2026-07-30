@@ -1,0 +1,4362 @@
+[
+  {
+    "number": "P-01",
+    "role": "重点検証",
+    "labels": [
+      "写真なし",
+      "通常本文"
+    ],
+    "purpose": "メディアがないPostの本文と末尾リンクを確認する",
+    "targetPostId": "2026-01-30-15-00-00_IG_0001",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-00-00_IG_0001.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 78,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [],
+    "relatedCards": [
+      {
+        "id": "mention-@sazae_fuguta",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@sazae_fuguta.md"
+      },
+      {
+        "id": "mention-@masuo_fuguta",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@masuo_fuguta.md"
+      },
+      {
+        "id": "mention-@son_goku",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@son_goku.md"
+      },
+      {
+        "id": "location-大阪城",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/大阪城.md"
+      },
+      {
+        "id": "tag-#野球バット",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/野球バット.md"
+      },
+      {
+        "id": "tag-#野球グローブ",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/野球グローブ.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 0,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-02",
+    "role": "重点検証",
+    "labels": [
+      "写真1枚"
+    ],
+    "purpose": "写真1枚を持つPostを確認する",
+    "targetPostId": "2026-01-30-15-01-00_IG_0002",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-01-00_IG_0002.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 43,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "野球グローブ",
+        "vaultPath": "写真・動画と出典/tags/baseball-glove.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@masuo_fuguta",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@masuo_fuguta.md"
+      },
+      {
+        "id": "location-道頓堀",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/道頓堀.md"
+      },
+      {
+        "id": "tag-#野球グローブ",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/野球グローブ.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-03",
+    "role": "重点検証",
+    "labels": [
+      "写真3枚"
+    ],
+    "purpose": "複数写真の件数と順序を確認する",
+    "targetPostId": "2026-01-30-15-02-00_IG_0003",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-02-00_IG_0003.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 43,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "サッカーボール",
+        "vaultPath": "写真・動画と出典/tags/soccer-ball.jpg",
+        "missing": false
+      },
+      {
+        "order": 2,
+        "kind": "image",
+        "label": "サッカーボール（別角度）",
+        "vaultPath": "写真・動画と出典/tags/soccer-ball-02.jpg",
+        "missing": false
+      },
+      {
+        "order": 3,
+        "kind": "image",
+        "label": "サッカーボール（試合風景）",
+        "vaultPath": "写真・動画と出典/tags/soccer-ball-03.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@tara_fuguta",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@tara_fuguta.md"
+      },
+      {
+        "id": "location-通天閣",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/通天閣.md"
+      },
+      {
+        "id": "tag-#サッカーボール",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/サッカーボール.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 3,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-04",
+    "role": "重点検証",
+    "labels": [
+      "空の本文",
+      "写真1枚"
+    ],
+    "purpose": "本文が空でも写真と末尾リンクが残ることを確認する",
+    "targetPostId": "2026-01-30-15-03-00_IG_0004",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-03-00_IG_0004.md",
+    "bodyCondition": {
+      "empty": true,
+      "characterCount": 0,
+      "hasLineBreaks": false,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "サッカースパイク",
+        "vaultPath": "写真・動画と出典/tags/soccer-cleats.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@katsuo_isono",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@katsuo_isono.md"
+      },
+      {
+        "id": "location-ユニバーサル・スタジオ・ジャパン",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/ユニバーサル・スタジオ・ジャパン.md"
+      },
+      {
+        "id": "tag-#サッカースパイク",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/サッカースパイク.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-05",
+    "role": "重点検証",
+    "labels": [
+      "長文",
+      "改行",
+      "URL",
+      "絵文字"
+    ],
+    "purpose": "長い本文の表示と改行を確認する",
+    "targetPostId": "2026-01-30-15-04-00_IG_0005",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-04-00_IG_0005.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 159,
+      "hasLineBreaks": true,
+      "hasUrl": true,
+      "hasEmoji": true
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "テニスラケット",
+        "vaultPath": "写真・動画と出典/tags/tennis-racket.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@wakame_isono",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@wakame_isono.md"
+      },
+      {
+        "id": "location-海遊館",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/海遊館.md"
+      },
+      {
+        "id": "tag-#テニスラケット",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/テニスラケット.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-06",
+    "role": "重点検証",
+    "labels": [
+      "タグなし",
+      "メンションなし",
+      "位置情報1件"
+    ],
+    "purpose": "タグとメンションがなく、位置情報だけがあるPostを確認する",
+    "targetPostId": "2026-01-30-15-05-00_IG_0006",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-05-00_IG_0006.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 31,
+      "hasLineBreaks": false,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "位置情報のみの投稿用写真",
+        "vaultPath": "写真・動画と出典/tags/chilled-tomato.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "location-梅田スカイビル",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/梅田スカイビル.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-07",
+    "role": "重点検証",
+    "labels": [
+      "タグ複数",
+      "メンション複数",
+      "位置情報1件",
+      "末尾リンク1行"
+    ],
+    "purpose": "複数のタグとメンション、位置情報、写真下のリンク行を確認する",
+    "targetPostId": "2026-01-30-15-06-00_IG_0007",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-06-00_IG_0007.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 73,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "バスケットボール",
+        "vaultPath": "写真・動画と出典/tags/basketball.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@fune_isono",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@fune_isono.md"
+      },
+      {
+        "id": "mention-@katsuo_isono",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@katsuo_isono.md"
+      },
+      {
+        "id": "location-あべのハルカス",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/あべのハルカス.md"
+      },
+      {
+        "id": "tag-#バスケットボール",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/バスケットボール.md"
+      },
+      {
+        "id": "tag-#バスケットゴール",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/バスケットゴール.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-08",
+    "role": "重点検証",
+    "labels": [
+      "写真欠損",
+      "不完全データ"
+    ],
+    "purpose": "存在しない写真を別素材で補わないことを確認する",
+    "targetPostId": "2026-01-30-15-07-00_IG_0008",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-07-00_IG_0008.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 54,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "存在しない写真",
+        "vaultPath": "写真・動画と出典/missing-post-photo.jpg",
+        "missing": true
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@tama_cat",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@tama_cat.md"
+      },
+      {
+        "id": "mention-@son_goku",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@son_goku.md"
+      },
+      {
+        "id": "location-四天王寺",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/四天王寺.md"
+      },
+      {
+        "id": "tag-#バスケットゴール",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/バスケットゴール.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": true
+    },
+    "missingCondition": "指定されたメディアファイルが存在せず、別素材で補われない"
+  },
+  {
+    "number": "P-09",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-01-30-15-08-00_IG_0009",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-08-00_IG_0009.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 47,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "ゴルフクラブ",
+        "vaultPath": "写真・動画と出典/tags/golf-club.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@norisuke_namino",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@norisuke_namino.md"
+      },
+      {
+        "id": "location-黒門市場",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/黒門市場.md"
+      },
+      {
+        "id": "tag-#ゴルフクラブ",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/ゴルフクラブ.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-10",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-01-30-15-09-00_IG_0010",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-09-00_IG_0010.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 43,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "ゴルフボール",
+        "vaultPath": "写真・動画と出典/tags/golf-ball.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@taiko_namino",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@taiko_namino.md"
+      },
+      {
+        "id": "location-新世界",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/新世界.md"
+      },
+      {
+        "id": "tag-#ゴルフボール",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/ゴルフボール.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-11",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-01-30-15-10-00_IG_0011",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-10-00_IG_0011.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 60,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "ランニングシューズ",
+        "vaultPath": "写真・動画と出典/tags/running-shoes.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@ikura_namino",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@ikura_namino.md"
+      },
+      {
+        "id": "mention-@son_goku",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@son_goku.md"
+      },
+      {
+        "id": "location-アメリカ村",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/アメリカ村.md"
+      },
+      {
+        "id": "tag-#ランニングシューズ",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/ランニングシューズ.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-12",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-01-30-15-11-00_IG_0012",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-11-00_IG_0012.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 40,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "ダンベル",
+        "vaultPath": "写真・動画と出典/tags/dumbbell.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@son_goku",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@son_goku.md"
+      },
+      {
+        "id": "location-難波八阪神社",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/難波八阪神社.md"
+      },
+      {
+        "id": "tag-#ダンベル",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/ダンベル.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-13",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-01-30-15-12-00_IG_0013",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-12-00_IG_0013.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 48,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "ヨガマット",
+        "vaultPath": "写真・動画と出典/tags/yoga-mat.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@kakarot",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@kakarot.md"
+      },
+      {
+        "id": "location-天王寺動物園",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/天王寺動物園.md"
+      },
+      {
+        "id": "tag-#ヨガマット",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/ヨガマット.md"
+      },
+      {
+        "id": "tag-#水泳ゴーグル",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/水泳ゴーグル.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-14",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-01-30-15-13-00_IG_0014",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-13-00_IG_0014.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 38,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "水泳ゴーグル",
+        "vaultPath": "写真・動画と出典/tags/swimming-goggles.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@vegeta",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@vegeta.md"
+      },
+      {
+        "id": "location-箕面大滝",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/箕面大滝.md"
+      },
+      {
+        "id": "tag-#水泳ゴーグル",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/水泳ゴーグル.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-15",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-01-30-15-14-00_IG_0015",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-14-00_IG_0015.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 61,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "自転車ヘルメット",
+        "vaultPath": "写真・動画と出典/tags/bicycle-helmet.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@prince_vegeta",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@prince_vegeta.md"
+      },
+      {
+        "id": "mention-@son_goku",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@son_goku.md"
+      },
+      {
+        "id": "location-万博記念公園",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/万博記念公園.md"
+      },
+      {
+        "id": "tag-#自転車ヘルメット",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/自転車ヘルメット.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-16",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-01-30-15-15-00_IG_0016",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-15-00_IG_0016.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 50,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "枝豆",
+        "vaultPath": "写真・動画と出典/tags/edamame.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@piccolo",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@piccolo.md"
+      },
+      {
+        "id": "mention-@ma_junior",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@ma_junior.md"
+      },
+      {
+        "id": "location-スパワールド",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/スパワールド.md"
+      },
+      {
+        "id": "tag-#枝豆",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/枝豆.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-17",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-01-30-15-16-00_IG_0017",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-16-00_IG_0017.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 44,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "冷やしトマト",
+        "vaultPath": "写真・動画と出典/tags/chilled-tomato.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@ma_junior",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@ma_junior.md"
+      },
+      {
+        "id": "location-天保山大観覧車",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/天保山大観覧車.md"
+      },
+      {
+        "id": "tag-#冷やしトマト",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/冷やしトマト.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-18",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-01-30-15-17-00_IG_0018",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-17-00_IG_0018.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 44,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "だし巻き卵",
+        "vaultPath": "写真・動画と出典/tags/dashimaki-tamago.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@son_gohan",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@son_gohan.md"
+      },
+      {
+        "id": "location-キッズプラザ大阪",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/キッズプラザ大阪.md"
+      },
+      {
+        "id": "tag-#だし巻き卵",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/だし巻き卵.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-19",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-01-30-15-18-00_IG_0019",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-18-00_IG_0019.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 52,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "鶏の唐揚げ",
+        "vaultPath": "写真・動画と出典/tags/karaage.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@great_saiyaman",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@great_saiyaman.md"
+      },
+      {
+        "id": "location-造幣局博物館",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/造幣局博物館.md"
+      },
+      {
+        "id": "tag-#鶏の唐揚げ",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/鶏の唐揚げ.md"
+      },
+      {
+        "id": "tag-#焼き鳥",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/焼き鳥.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-20",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-01-30-15-19-00_IG_0020",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-19-00_IG_0020.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 41,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "焼き鳥",
+        "vaultPath": "写真・動画と出典/tags/yakitori.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@kuririn",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@kuririn.md"
+      },
+      {
+        "id": "location-グランフロント大阪",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/グランフロント大阪.md"
+      },
+      {
+        "id": "tag-#焼き鳥",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/焼き鳥.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-21",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-01-30-15-20-00_IG_0021",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-20-00_IG_0021.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 52,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "つくね",
+        "vaultPath": "写真・動画と出典/tags/tsukune.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@bulma",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@bulma.md"
+      },
+      {
+        "id": "mention-@kamesennin",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@kamesennin.md"
+      },
+      {
+        "id": "location-HEP FIVE",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/HEP FIVE.md"
+      },
+      {
+        "id": "tag-#つくね",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/つくね.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-22",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-01-30-15-21-00_IG_0022",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-21-00_IG_0022.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 56,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "刺身盛り合わせ",
+        "vaultPath": "写真・動画と出典/tags/sashimi.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@kamesennin",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@kamesennin.md"
+      },
+      {
+        "id": "mention-@son_goku",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@son_goku.md"
+      },
+      {
+        "id": "location-中之島公園",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/中之島公園.md"
+      },
+      {
+        "id": "tag-#刺身盛り合わせ",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/刺身盛り合わせ.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-23",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-01-30-15-22-00_IG_0023",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-22-00_IG_0023.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 43,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "しめ鯖",
+        "vaultPath": "写真・動画と出典/tags/shime-saba.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@jackie_chun",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@jackie_chun.md"
+      },
+      {
+        "id": "location-大阪市立科学館",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/大阪市立科学館.md"
+      },
+      {
+        "id": "tag-#しめ鯖",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/しめ鯖.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-24",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-01-30-15-23-00_IG_0024",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-23-00_IG_0024.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 44,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "ほっけ開き",
+        "vaultPath": "写真・動画と出典/tags/grilled-hokke.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@tenshinhan",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@tenshinhan.md"
+      },
+      {
+        "id": "location-国立国際美術館",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/国立国際美術館.md"
+      },
+      {
+        "id": "tag-#ほっけ開き",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/ほっけ開き.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-25",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-01-30-15-24-00_IG_0025",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-24-00_IG_0025.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 50,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "揚げ出し豆腐",
+        "vaultPath": "写真・動画と出典/tags/agedashi-tofu.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@yamcha",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@yamcha.md"
+      },
+      {
+        "id": "location-大阪歴史博物館",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/大阪歴史博物館.md"
+      },
+      {
+        "id": "tag-#揚げ出し豆腐",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/揚げ出し豆腐.md"
+      },
+      {
+        "id": "tag-#フライドポテト",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/フライドポテト.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-26",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-01-30-15-25-00_IG_0026",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-25-00_IG_0026.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 54,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "フライドポテト",
+        "vaultPath": "写真・動画と出典/tags/french-fries.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@trunks",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@trunks.md"
+      },
+      {
+        "id": "mention-@goten",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@goten.md"
+      },
+      {
+        "id": "location-千日前道具屋筋商店街",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/千日前道具屋筋商店街.md"
+      },
+      {
+        "id": "tag-#フライドポテト",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/フライドポテト.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-27",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-01-30-15-26-00_IG_0027",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-26-00_IG_0027.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 37,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "もつ煮込み",
+        "vaultPath": "写真・動画と出典/tags/motsu-stew.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@goten",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@goten.md"
+      },
+      {
+        "id": "location-法善寺横丁",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/法善寺横丁.md"
+      },
+      {
+        "id": "tag-#もつ煮込み",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/もつ煮込み.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-28",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-01-30-15-27-00_IG_0028",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-27-00_IG_0028.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 38,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "焼きおにぎり",
+        "vaultPath": "写真・動画と出典/tags/grilled-rice-ball.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@freeza",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@freeza.md"
+      },
+      {
+        "id": "location-露天神社",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/露天神社.md"
+      },
+      {
+        "id": "tag-#焼きおにぎり",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/焼きおにぎり.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-29",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-01-30-15-28-00_IG_0029",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-28-00_IG_0029.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 46,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "生ビール",
+        "vaultPath": "写真・動画と出典/tags/draft-beer.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@cell",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@cell.md"
+      },
+      {
+        "id": "mention-@son_goku",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@son_goku.md"
+      },
+      {
+        "id": "location-岸和田城",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/岸和田城.md"
+      },
+      {
+        "id": "tag-#生ビール",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/生ビール.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "P-30",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-01-30-15-29-00_IG_0030",
+    "postType": "Post",
+    "sampleVaultRelativePath": "Instagram_Logs/Posts/2026-01-30-15-29-00_IG_0030.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 39,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "ハイボール",
+        "vaultPath": "写真・動画と出典/tags/highball.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@majin_buu",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@majin_buu.md"
+      },
+      {
+        "id": "location-USJ",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Locations/USJ.md"
+      },
+      {
+        "id": "tag-#ハイボール",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/ハイボール.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-01",
+    "role": "重点検証",
+    "labels": [
+      "動画1件"
+    ],
+    "purpose": "正常なReel動画を確認する",
+    "targetPostId": "2026-02-15-10-00-00_IGR_0001",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-00-00_IGR_0001.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 49,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "スポーツ用品の短い動画",
+        "vaultPath": "写真・動画と出典/sample-sports.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@sazae_fuguta",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@sazae_fuguta.md"
+      },
+      {
+        "id": "mention-@son_goku",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@son_goku.md"
+      },
+      {
+        "id": "tag-#テニスボール",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/テニスボール.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-02",
+    "role": "重点検証",
+    "labels": [
+      "動画1件",
+      "関連情報複数",
+      "末尾リンク"
+    ],
+    "purpose": "Reelの動画と関連情報を確認する",
+    "targetPostId": "2026-02-15-10-01-00_IGR_0002",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-01-00_IGR_0002.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 41,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "スポーツ用品の短い動画",
+        "vaultPath": "写真・動画と出典/sample-sports.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@masuo_fuguta",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@masuo_fuguta.md"
+      },
+      {
+        "id": "tag-#バスケットボール",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/バスケットボール.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-03",
+    "role": "重点検証",
+    "labels": [
+      "空の本文",
+      "動画1件"
+    ],
+    "purpose": "本文が空でもReel動画が残ることを確認する",
+    "targetPostId": "2026-02-15-10-02-00_IGR_0003",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-02-00_IGR_0003.md",
+    "bodyCondition": {
+      "empty": true,
+      "characterCount": 0,
+      "hasLineBreaks": false,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "スポーツ用品の短い動画",
+        "vaultPath": "写真・動画と出典/sample-sports.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@tara_fuguta",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@tara_fuguta.md"
+      },
+      {
+        "id": "tag-#バスケットゴール",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/バスケットゴール.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-04",
+    "role": "重点検証",
+    "labels": [
+      "動画欠損",
+      "不完全データ"
+    ],
+    "purpose": "存在しないReel動画を別素材で補わないことを確認する",
+    "targetPostId": "2026-02-15-10-03-00_IGR_0004",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-03-00_IGR_0004.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 39,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "存在しない動画",
+        "vaultPath": "写真・動画と出典/missing-reel-video.mp4",
+        "missing": true
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@katsuo_isono",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@katsuo_isono.md"
+      },
+      {
+        "id": "tag-#ゴルフクラブ",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/ゴルフクラブ.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": true
+    },
+    "missingCondition": "指定されたメディアファイルが存在せず、別素材で補われない"
+  },
+  {
+    "number": "R-05",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-02-15-10-04-00_IGR_0005",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-04-00_IGR_0005.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 39,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "スポーツ用品の短い動画",
+        "vaultPath": "写真・動画と出典/sample-sports.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@wakame_isono",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@wakame_isono.md"
+      },
+      {
+        "id": "tag-#ゴルフボール",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/ゴルフボール.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-06",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-02-15-10-05-00_IGR_0006",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-05-00_IGR_0006.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 43,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "スポーツ用品の短い動画",
+        "vaultPath": "写真・動画と出典/sample-sports.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@namihei_isono",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@namihei_isono.md"
+      },
+      {
+        "id": "tag-#ランニングシューズ",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/ランニングシューズ.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-07",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-02-15-10-06-00_IGR_0007",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-06-00_IGR_0007.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 35,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "スポーツ用品の短い動画",
+        "vaultPath": "写真・動画と出典/sample-sports.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@fune_isono",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@fune_isono.md"
+      },
+      {
+        "id": "tag-#ダンベル",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/ダンベル.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-08",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-02-15-10-07-00_IGR_0008",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-07-00_IGR_0008.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 34,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "スポーツ用品の短い動画",
+        "vaultPath": "写真・動画と出典/sample-sports.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@tama_cat",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@tama_cat.md"
+      },
+      {
+        "id": "tag-#ヨガマット",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/ヨガマット.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-09",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-02-15-10-08-00_IGR_0009",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-08-00_IGR_0009.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 52,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "スポーツ用品の短い動画",
+        "vaultPath": "写真・動画と出典/sample-sports.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@norisuke_namino",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@norisuke_namino.md"
+      },
+      {
+        "id": "mention-@son_goku",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@son_goku.md"
+      },
+      {
+        "id": "tag-#水泳ゴーグル",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/水泳ゴーグル.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-10",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-02-15-10-09-00_IGR_0010",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-09-00_IGR_0010.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 41,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "スポーツ用品の短い動画",
+        "vaultPath": "写真・動画と出典/sample-sports.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@taiko_namino",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@taiko_namino.md"
+      },
+      {
+        "id": "tag-#自転車ヘルメット",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/自転車ヘルメット.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-11",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-02-15-10-10-00_IGR_0011",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-10-00_IGR_0011.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 35,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "日本の食事の短い動画",
+        "vaultPath": "写真・動画と出典/sample-japanese-food.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@ikura_namino",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@ikura_namino.md"
+      },
+      {
+        "id": "tag-#枝豆",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/枝豆.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-12",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-02-15-10-11-00_IGR_0012",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-11-00_IGR_0012.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 35,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "日本の食事の短い動画",
+        "vaultPath": "写真・動画と出典/sample-japanese-food.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@son_goku",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@son_goku.md"
+      },
+      {
+        "id": "tag-#冷やしトマト",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/冷やしトマト.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-13",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-02-15-10-12-00_IGR_0013",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-12-00_IGR_0013.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 33,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "日本の食事の短い動画",
+        "vaultPath": "写真・動画と出典/sample-japanese-food.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@kakarot",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@kakarot.md"
+      },
+      {
+        "id": "tag-#だし巻き卵",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/だし巻き卵.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-14",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-02-15-10-13-00_IGR_0014",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-13-00_IGR_0014.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 32,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "日本の食事の短い動画",
+        "vaultPath": "写真・動画と出典/sample-japanese-food.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@vegeta",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@vegeta.md"
+      },
+      {
+        "id": "tag-#鶏の唐揚げ",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/鶏の唐揚げ.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-15",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-02-15-10-14-00_IGR_0015",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-14-00_IGR_0015.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 37,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "日本の食事の短い動画",
+        "vaultPath": "写真・動画と出典/sample-japanese-food.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@prince_vegeta",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@prince_vegeta.md"
+      },
+      {
+        "id": "tag-#焼き鳥",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/焼き鳥.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-16",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-02-15-10-15-00_IGR_0016",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-15-00_IGR_0016.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 31,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "日本の食事の短い動画",
+        "vaultPath": "写真・動画と出典/sample-japanese-food.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@piccolo",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@piccolo.md"
+      },
+      {
+        "id": "tag-#つくね",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/つくね.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-17",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-02-15-10-16-00_IGR_0017",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-16-00_IGR_0017.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 47,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "日本の食事の短い動画",
+        "vaultPath": "写真・動画と出典/sample-japanese-food.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@ma_junior",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@ma_junior.md"
+      },
+      {
+        "id": "mention-@son_goku",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@son_goku.md"
+      },
+      {
+        "id": "tag-#刺身盛り合わせ",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/刺身盛り合わせ.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-18",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-02-15-10-17-00_IGR_0018",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-17-00_IGR_0018.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 33,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "日本の食事の短い動画",
+        "vaultPath": "写真・動画と出典/sample-japanese-food.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@son_gohan",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@son_gohan.md"
+      },
+      {
+        "id": "tag-#しめ鯖",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/しめ鯖.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-19",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-02-15-10-18-00_IGR_0019",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-18-00_IGR_0019.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 40,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "日本の食事の短い動画",
+        "vaultPath": "写真・動画と出典/sample-japanese-food.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@great_saiyaman",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@great_saiyaman.md"
+      },
+      {
+        "id": "tag-#ほっけ開き",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/ほっけ開き.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-20",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-02-15-10-19-00_IGR_0020",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-19-00_IGR_0020.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 34,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "日本の食事の短い動画",
+        "vaultPath": "写真・動画と出典/sample-japanese-food.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@kuririn",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@kuririn.md"
+      },
+      {
+        "id": "tag-#揚げ出し豆腐",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/揚げ出し豆腐.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-21",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-02-15-10-20-00_IGR_0021",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-20-00_IGR_0021.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 33,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "日本の食事の短い動画",
+        "vaultPath": "写真・動画と出典/sample-japanese-food.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@bulma",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@bulma.md"
+      },
+      {
+        "id": "tag-#フライドポテト",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/フライドポテト.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-22",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-02-15-10-21-00_IGR_0022",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-21-00_IGR_0022.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 36,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "日本の食事の短い動画",
+        "vaultPath": "写真・動画と出典/sample-japanese-food.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@kamesennin",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@kamesennin.md"
+      },
+      {
+        "id": "tag-#もつ煮込み",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/もつ煮込み.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-23",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-02-15-10-22-00_IGR_0023",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-22-00_IGR_0023.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 38,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "日本の食事の短い動画",
+        "vaultPath": "写真・動画と出典/sample-japanese-food.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@jackie_chun",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@jackie_chun.md"
+      },
+      {
+        "id": "tag-#焼きおにぎり",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/焼きおにぎり.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-24",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-02-15-10-23-00_IGR_0024",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-23-00_IGR_0024.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 35,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "日本の食事の短い動画",
+        "vaultPath": "写真・動画と出典/sample-japanese-food.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@tenshinhan",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@tenshinhan.md"
+      },
+      {
+        "id": "tag-#生ビール",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/生ビール.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-25",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-02-15-10-24-00_IGR_0025",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-24-00_IGR_0025.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 42,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "日本の食事の短い動画",
+        "vaultPath": "写真・動画と出典/sample-japanese-food.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@yamcha",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@yamcha.md"
+      },
+      {
+        "id": "mention-@son_goku",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@son_goku.md"
+      },
+      {
+        "id": "tag-#ハイボール",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/ハイボール.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-26",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-02-15-10-25-00_IGR_0026",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-25-00_IGR_0026.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 32,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "スポーツ用品の短い動画",
+        "vaultPath": "写真・動画と出典/sample-sports.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@trunks",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@trunks.md"
+      },
+      {
+        "id": "tag-#野球バット",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/野球バット.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-27",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-02-15-10-26-00_IGR_0027",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-26-00_IGR_0027.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 32,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "スポーツ用品の短い動画",
+        "vaultPath": "写真・動画と出典/sample-sports.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@goten",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@goten.md"
+      },
+      {
+        "id": "tag-#野球グローブ",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/野球グローブ.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-28",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-02-15-10-27-00_IGR_0028",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-27-00_IGR_0028.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 34,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "スポーツ用品の短い動画",
+        "vaultPath": "写真・動画と出典/sample-sports.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@freeza",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@freeza.md"
+      },
+      {
+        "id": "tag-#サッカーボール",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/サッカーボール.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-29",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-02-15-10-28-00_IGR_0029",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-28-00_IGR_0029.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 33,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "スポーツ用品の短い動画",
+        "vaultPath": "写真・動画と出典/sample-sports.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@cell",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@cell.md"
+      },
+      {
+        "id": "tag-#サッカースパイク",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/サッカースパイク.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "R-30",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-02-15-10-29-00_IGR_0030",
+    "postType": "Reel",
+    "sampleVaultRelativePath": "Instagram_Logs/Reels/2026-02-15-10-29-00_IGR_0030.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 37,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "スポーツ用品の短い動画",
+        "vaultPath": "写真・動画と出典/sample-sports.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@majin_buu",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@majin_buu.md"
+      },
+      {
+        "id": "tag-#テニスラケット",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/テニスラケット.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-01",
+    "role": "重点検証",
+    "labels": [
+      "写真1枚",
+      "位置情報なし",
+      "Story"
+    ],
+    "purpose": "写真を持ち、名前付き位置情報がないStoryを確認する",
+    "targetPostId": "2026-03-01-08-00-00_IGS_0001",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-00-00_IGS_0001.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 44,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "枝豆",
+        "vaultPath": "写真・動画と出典/tags/edamame.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@ikura_namino",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@ikura_namino.md"
+      },
+      {
+        "id": "tag-#枝豆",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/枝豆.md"
+      },
+      {
+        "id": "tag-#冷やしトマト",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/冷やしトマト.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-02",
+    "role": "重点検証",
+    "labels": [
+      "動画1件",
+      "Story"
+    ],
+    "purpose": "動画を持つStoryを確認する",
+    "targetPostId": "2026-03-01-08-01-00_IGS_0002",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-01-00_IGS_0002.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 36,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "日本の食事の短い動画",
+        "vaultPath": "写真・動画と出典/sample-japanese-food.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@son_goku",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@son_goku.md"
+      },
+      {
+        "id": "tag-#冷やしトマト",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/冷やしトマト.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-03",
+    "role": "重点検証",
+    "labels": [
+      "空の本文",
+      "写真1枚",
+      "Story"
+    ],
+    "purpose": "本文が空でもStoryの写真が残ることを確認する",
+    "targetPostId": "2026-03-01-08-02-00_IGS_0003",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-02-00_IGS_0003.md",
+    "bodyCondition": {
+      "empty": true,
+      "characterCount": 0,
+      "hasLineBreaks": false,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "だし巻き卵",
+        "vaultPath": "写真・動画と出典/tags/dashimaki-tamago.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@kakarot",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@kakarot.md"
+      },
+      {
+        "id": "tag-#だし巻き卵",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/だし巻き卵.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-04",
+    "role": "重点検証",
+    "labels": [
+      "メディア欠損",
+      "不完全データ",
+      "Story"
+    ],
+    "purpose": "存在しないStoryメディアを別素材で補わないことを確認する",
+    "targetPostId": "2026-03-01-08-03-00_IGS_0004",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-03-00_IGS_0004.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 33,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "存在しないStoryメディア",
+        "vaultPath": "写真・動画と出典/missing-story-media.jpg",
+        "missing": true
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@vegeta",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@vegeta.md"
+      },
+      {
+        "id": "tag-#鶏の唐揚げ",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/鶏の唐揚げ.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": true
+    },
+    "missingCondition": "指定されたメディアファイルが存在せず、別素材で補われない"
+  },
+  {
+    "number": "S-05",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-03-01-08-04-00_IGS_0005",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-04-00_IGS_0005.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 38,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "焼き鳥",
+        "vaultPath": "写真・動画と出典/tags/yakitori.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@prince_vegeta",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@prince_vegeta.md"
+      },
+      {
+        "id": "tag-#焼き鳥",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/焼き鳥.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-06",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-03-01-08-05-00_IGS_0006",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-05-00_IGS_0006.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 32,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "日本の食事の短い動画",
+        "vaultPath": "写真・動画と出典/sample-japanese-food.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@piccolo",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@piccolo.md"
+      },
+      {
+        "id": "tag-#つくね",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/つくね.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-07",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-03-01-08-06-00_IGS_0007",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-06-00_IGS_0007.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 38,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "刺身盛り合わせ",
+        "vaultPath": "写真・動画と出典/tags/sashimi.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@ma_junior",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@ma_junior.md"
+      },
+      {
+        "id": "tag-#刺身盛り合わせ",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/刺身盛り合わせ.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-08",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-03-01-08-07-00_IGS_0008",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-07-00_IGS_0008.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 34,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "日本の食事の短い動画",
+        "vaultPath": "写真・動画と出典/sample-japanese-food.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@son_gohan",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@son_gohan.md"
+      },
+      {
+        "id": "tag-#しめ鯖",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/しめ鯖.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-09",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-03-01-08-08-00_IGS_0009",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-08-00_IGS_0009.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 41,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "ほっけ開き",
+        "vaultPath": "写真・動画と出典/tags/grilled-hokke.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@great_saiyaman",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@great_saiyaman.md"
+      },
+      {
+        "id": "tag-#ほっけ開き",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/ほっけ開き.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-10",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-03-01-08-09-00_IGS_0010",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-09-00_IGS_0010.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 44,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "日本の食事の短い動画",
+        "vaultPath": "写真・動画と出典/sample-japanese-food.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@kuririn",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@kuririn.md"
+      },
+      {
+        "id": "tag-#揚げ出し豆腐",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/揚げ出し豆腐.md"
+      },
+      {
+        "id": "tag-#フライドポテト",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/フライドポテト.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-11",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-03-01-08-10-00_IGS_0011",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-10-00_IGS_0011.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 34,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "フライドポテト",
+        "vaultPath": "写真・動画と出典/tags/french-fries.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@bulma",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@bulma.md"
+      },
+      {
+        "id": "tag-#フライドポテト",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/フライドポテト.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-12",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-03-01-08-11-00_IGS_0012",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-11-00_IGS_0012.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 37,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "日本の食事の短い動画",
+        "vaultPath": "写真・動画と出典/sample-japanese-food.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@kamesennin",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@kamesennin.md"
+      },
+      {
+        "id": "tag-#もつ煮込み",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/もつ煮込み.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-13",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-03-01-08-12-00_IGS_0013",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-12-00_IGS_0013.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 39,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "焼きおにぎり",
+        "vaultPath": "写真・動画と出典/tags/grilled-rice-ball.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@jackie_chun",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@jackie_chun.md"
+      },
+      {
+        "id": "tag-#焼きおにぎり",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/焼きおにぎり.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-14",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-03-01-08-13-00_IGS_0014",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-13-00_IGS_0014.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 36,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "日本の食事の短い動画",
+        "vaultPath": "写真・動画と出典/sample-japanese-food.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@tenshinhan",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@tenshinhan.md"
+      },
+      {
+        "id": "tag-#生ビール",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/生ビール.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-15",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-03-01-08-14-00_IGS_0015",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-14-00_IGS_0015.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 33,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "ハイボール",
+        "vaultPath": "写真・動画と出典/tags/highball.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@yamcha",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@yamcha.md"
+      },
+      {
+        "id": "tag-#ハイボール",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/ハイボール.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-16",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-03-01-08-15-00_IGS_0016",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-15-00_IGS_0016.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 33,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "スポーツ用品の短い動画",
+        "vaultPath": "写真・動画と出典/sample-sports.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@trunks",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@trunks.md"
+      },
+      {
+        "id": "tag-#野球バット",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/野球バット.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-17",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-03-01-08-16-00_IGS_0017",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-16-00_IGS_0017.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 33,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "野球グローブ",
+        "vaultPath": "写真・動画と出典/tags/baseball-glove.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@goten",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@goten.md"
+      },
+      {
+        "id": "tag-#野球グローブ",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/野球グローブ.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-18",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-03-01-08-17-00_IGS_0018",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-17-00_IGS_0018.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 35,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "スポーツ用品の短い動画",
+        "vaultPath": "写真・動画と出典/sample-sports.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@freeza",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@freeza.md"
+      },
+      {
+        "id": "tag-#サッカーボール",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/サッカーボール.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-19",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-03-01-08-18-00_IGS_0019",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-18-00_IGS_0019.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 43,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "サッカースパイク",
+        "vaultPath": "写真・動画と出典/tags/soccer-cleats.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@cell",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@cell.md"
+      },
+      {
+        "id": "tag-#サッカースパイク",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/サッカースパイク.md"
+      },
+      {
+        "id": "tag-#テニスラケット",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/テニスラケット.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-20",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-03-01-08-19-00_IGS_0020",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-19-00_IGS_0020.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 38,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "スポーツ用品の短い動画",
+        "vaultPath": "写真・動画と出典/sample-sports.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@majin_buu",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@majin_buu.md"
+      },
+      {
+        "id": "tag-#テニスラケット",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/テニスラケット.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-21",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-03-01-08-20-00_IGS_0021",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-20-00_IGS_0021.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 40,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "テニスボール",
+        "vaultPath": "写真・動画と出典/tags/tennis-ball.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@sazae_fuguta",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@sazae_fuguta.md"
+      },
+      {
+        "id": "tag-#テニスボール",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/テニスボール.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-22",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-03-01-08-21-00_IGS_0022",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-21-00_IGS_0022.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 42,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "スポーツ用品の短い動画",
+        "vaultPath": "写真・動画と出典/sample-sports.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@masuo_fuguta",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@masuo_fuguta.md"
+      },
+      {
+        "id": "tag-#バスケットボール",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/バスケットボール.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-23",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-03-01-08-22-00_IGS_0023",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-22-00_IGS_0023.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 41,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "バスケットゴール",
+        "vaultPath": "写真・動画と出典/tags/basketball-hoop.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@tara_fuguta",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@tara_fuguta.md"
+      },
+      {
+        "id": "tag-#バスケットゴール",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/バスケットゴール.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-24",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-03-01-08-23-00_IGS_0024",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-23-00_IGS_0024.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 40,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "スポーツ用品の短い動画",
+        "vaultPath": "写真・動画と出典/sample-sports.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@katsuo_isono",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@katsuo_isono.md"
+      },
+      {
+        "id": "tag-#ゴルフクラブ",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/ゴルフクラブ.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-25",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-03-01-08-24-00_IGS_0025",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-24-00_IGS_0025.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 40,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "ゴルフボール",
+        "vaultPath": "写真・動画と出典/tags/golf-ball.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@wakame_isono",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@wakame_isono.md"
+      },
+      {
+        "id": "tag-#ゴルフボール",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/ゴルフボール.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-26",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-03-01-08-25-00_IGS_0026",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-25-00_IGS_0026.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 44,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "スポーツ用品の短い動画",
+        "vaultPath": "写真・動画と出典/sample-sports.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@namihei_isono",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@namihei_isono.md"
+      },
+      {
+        "id": "tag-#ランニングシューズ",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/ランニングシューズ.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-27",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-03-01-08-26-00_IGS_0027",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-26-00_IGS_0027.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 36,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "ダンベル",
+        "vaultPath": "写真・動画と出典/tags/dumbbell.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@fune_isono",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@fune_isono.md"
+      },
+      {
+        "id": "tag-#ダンベル",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/ダンベル.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-28",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-03-01-08-27-00_IGS_0028",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-27-00_IGS_0028.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 43,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "スポーツ用品の短い動画",
+        "vaultPath": "写真・動画と出典/sample-sports.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@tama_cat",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@tama_cat.md"
+      },
+      {
+        "id": "tag-#ヨガマット",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/ヨガマット.md"
+      },
+      {
+        "id": "tag-#水泳ゴーグル",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/水泳ゴーグル.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-29",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "写真1枚"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-03-01-08-28-00_IGS_0029",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-28-00_IGS_0029.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 43,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "image",
+        "label": "水泳ゴーグル",
+        "vaultPath": "写真・動画と出典/tags/swimming-goggles.jpg",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@norisuke_namino",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@norisuke_namino.md"
+      },
+      {
+        "id": "tag-#水泳ゴーグル",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/水泳ゴーグル.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  },
+  {
+    "number": "S-30",
+    "role": "件数確認",
+    "labels": [
+      "件数・検索確認",
+      "動画1件"
+    ],
+    "purpose": "件数、検索、絞り込み、関連投稿数を確認する",
+    "targetPostId": "2026-03-01-08-29-00_IGS_0030",
+    "postType": "Story",
+    "sampleVaultRelativePath": "Instagram_Logs/Stories/2026-03-01-08-29-00_IGS_0030.md",
+    "bodyCondition": {
+      "empty": false,
+      "characterCount": 42,
+      "hasLineBreaks": true,
+      "hasUrl": false,
+      "hasEmoji": false
+    },
+    "mediaCondition": [
+      {
+        "order": 1,
+        "kind": "video",
+        "label": "スポーツ用品の短い動画",
+        "vaultPath": "写真・動画と出典/sample-sports.mp4",
+        "missing": false
+      }
+    ],
+    "relatedCards": [
+      {
+        "id": "mention-@taiko_namino",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Mentions/@taiko_namino.md"
+      },
+      {
+        "id": "tag-#自転車ヘルメット",
+        "sampleVaultRelativePath": "Instagram_Logs/Synapses/Tags/自転車ヘルメット.md"
+      }
+    ],
+    "expectedDisplay": {
+      "captionPreserved": true,
+      "mediaCount": 1,
+      "mediaOrderPreserved": true,
+      "trailingLinksInOneLine": true,
+      "missingMediaIsNotSubstituted": false
+    },
+    "missingCondition": null
+  }
+]
