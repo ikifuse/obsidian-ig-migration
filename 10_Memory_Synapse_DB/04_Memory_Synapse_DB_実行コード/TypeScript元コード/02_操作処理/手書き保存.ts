@@ -15,7 +15,5 @@ export function 手書き情報を保存する(
   const card = state.cards[cardId];
   if (!card) return 失敗結果(current, "カードが見つかりません。");
   card.handwritten = 手書き情報を整理する(note);
-  const group = state.groups[cardId];
-  if (group) group.displayMode = "handwritten";
   return 成功結果(state, "手書き情報をブラウザー内の検証状態へ保存しました。実ファイルは変更していません。");
 }

@@ -9,12 +9,12 @@ export function カードの融合グループを探す(
   cardId: string
 ): 融合グループ | undefined {
   return Object.values(state.groups).find(
-    (group) => group.bigCardId === cardId || group.memberIds.includes(cardId)
+    (group) => group.managerId === cardId || group.memberIds.includes(cardId)
   );
 }
 
 export function グループの全カードID(group: 融合グループ): string[] {
-  return [group.bigCardId, ...group.memberIds];
+  return [group.managerId, ...group.memberIds];
 }
 
 export function 融合候補を展開する(

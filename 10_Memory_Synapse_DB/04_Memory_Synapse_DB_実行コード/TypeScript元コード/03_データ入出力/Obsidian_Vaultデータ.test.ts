@@ -39,10 +39,63 @@ test("blocks writing to a card if it has yamlError", () => {
     },
     groups: {},
     counts: { tag: 1, mention: 0, location: 0 },
+    migrationWarnings: [],
     elapsedMs: 0, totalMarkdownFiles: 1, totalWikiLinks: 0
   };
 
   assert.throws(() => {
     状態差分から更新を生成する(oldState, newState, readResult);
   }, /YAMLエラーがあるため書き込みを停止しました（bad）: Invalid structure/);
+});
+
+test("future persistence data uses schema version 2 representatives and no display mode", () => {
+  const oldState: 融合状態 = {
+    cards: {
+      "mention-a": { id: "mention-a", kind: "mention", name: "@a", source: {} as any, relatedPosts: [] },
+      "tag-a": { id: "tag-a", kind: "tag", name: "#a", source: {} as any, relatedPosts: [] }
+    },
+    groups: {}
+  };
+  const newState: 融合状態 = {
+    cards: oldState.cards,
+    groups: {
+      "mention-a": {
+        schemaVersion: 2,
+        managerId: "mention-a",
+        memberIds: ["tag-a"],
+        representatives: { mention: "mention-a", tag: "tag-a" }
+      }
+    }
+  };
+  const mentionFile = {} as TFile;
+  const tagFile = {} as TFile;
+  const readResult: Obsidian読取結果 = {
+    cards: [],
+    cardsById: {
+      "mention-a": {
+        ...oldState.cards["mention-a"]!,
+        file: mentionFile, basename: "@a", path: "Instagram_Logs/Synapses/Mentions/@a.md", wikiLinkCount: 0
+      } as any,
+      "tag-a": {
+        ...oldState.cards["tag-a"]!,
+        file: tagFile, basename: "#a", path: "Instagram_Logs/Synapses/Tags/#a.md", wikiLinkCount: 0
+      } as any
+    },
+    groups: {},
+    migrationWarnings: [],
+    counts: { tag: 1, mention: 1, location: 0 },
+    elapsedMs: 0, totalMarkdownFiles: 2, totalWikiLinks: 0
+  };
+
+  const updates = 状態差分から更新を生成する(oldState, newState, readResult);
+  assert.equal(updates.length, 1);
+  assert.deepEqual(updates[0]?.memorySynapse, {
+    schema_version: 2,
+    members: ["[[Instagram_Logs/Synapses/Tags/#a.md|#a]]"],
+    representatives: {
+      mention: "[[Instagram_Logs/Synapses/Mentions/@a.md|@a]]",
+      tag: "[[Instagram_Logs/Synapses/Tags/#a.md|#a]]"
+    }
+  });
+  assert.equal("display_mode" in (updates[0]?.memorySynapse ?? {}), false);
 });

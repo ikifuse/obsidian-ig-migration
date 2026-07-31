@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.json",
+  "files": [
+    "TypeScript元コード/04_画面/Obsidian画面.ts"
+  ],
+  "include": []
+}

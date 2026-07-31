@@ -1,0 +1,4 @@
+interface:
+  display_name: "MSDBブラウザー確認反映"
+  short_description: "05の採用結果を正本・04・06へ段階的に反映"
+  default_prompt: "Use $msdb-browser-to-spec to carry approved 05 mock changes through the authoritative design and specification, auditable 04 source, and read-only 06 verification, stopping at every approval boundary."

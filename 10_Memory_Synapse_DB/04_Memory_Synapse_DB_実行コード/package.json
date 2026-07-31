@@ -1,12 +1,14 @@
 {
   "name": "memory-synapse-db",
   "version": "0.0.1",
-  "description": "Read-only feasibility prototype for Memory Synapse DB",
+  "description": "Read-only technical preview for Memory Synapse DB",
   "main": "main.js",
   "type": "module",
   "scripts": {
-    "build": "npm run check && node esbuild.config.mjs production",
-    "check": "tsc --noEmit --skipLibCheck",
+    "build": "npm run check:boundary && npm run check && node esbuild.config.mjs production",
+    "audit:bundle": "npm run check:boundary && npm run check && node esbuild.config.mjs audit",
+    "check:boundary": "node ../../.agents/skills/msdb-browser-to-spec/scripts/check-plugin-boundary.mjs",
+    "check": "tsc --project tsconfig.plugin.json --noEmit",
     "test": "node --import tsx --test TypeScript元コード/02_操作処理/*.test.ts TypeScript元コード/03_データ入出力/*.test.ts"
   },
   "keywords": [
