@@ -75,10 +75,19 @@ export type Vaultから読み取ったカード = 読み取ったカード & カ
   file: TFile;
 };
 
+export type 検査問題種類 = "解析不能" | "リンク" | "多重所属" | "入れ子" | "代表";
+
+export interface 検査問題 {
+  kind: 検査問題種類;
+  filePath: string;
+  message: string;
+}
+
 export interface Obsidian読取結果 extends カード読取結果<Vaultから読み取ったカード> {
   groups: Record<string, 融合グループ>;
   cardsById: Record<string, Vaultから読み取ったカード>;
   migrationWarnings: string[];
+  problems: 検査問題[];
 }
 
 import {
@@ -103,6 +112,7 @@ export async function Synapsesを読み取る(
   const groups: Record<string, 融合グループ> = {};
   const pendingGroups: Array<{ managerId: string; raw: any }> = [];
   const migrationWarnings: string[] = [];
+  const problems: 検査問題[] = [];
   const counts = { mention: 0, location: 0, tag: 0 };
 
   for (const file of files) {
@@ -142,9 +152,27 @@ export async function Synapsesを読み取る(
         }
 
         const relatedPosts = 関連投稿を抽出する(text);
-        const memorySynapse = extractMemorySynapse(text, parseYaml);
-        
-        const rawHandwritten = extractHandwrittenNote(text, parseYaml);
+        let memorySynapse: any = null;
+        const memorySynapseYaml = YAMLブロックを抽出する(text, "Memory Synapse");
+        if (memorySynapseYaml) {
+          try {
+            memorySynapse = parseYaml(memorySynapseYaml)?.memory_synapse ?? null;
+          } catch (error: any) {
+            const message = `Memory Synapse YAML構文エラー: ${error.message}`;
+            yamlError = yamlError ? `${yamlError} / ${message}` : message;
+          }
+        }
+
+        let rawHandwritten: any = null;
+        const handwrittenYaml = YAMLブロックを抽出する(text, "手書き情報");
+        if (handwrittenYaml) {
+          try {
+            rawHandwritten = parseYaml(handwrittenYaml)?.memory_synapse_note ?? null;
+          } catch (error: any) {
+            const message = `手書き情報YAML構文エラー: ${error.message}`;
+            yamlError = yamlError ? `${yamlError} / ${message}` : message;
+          }
+        }
         let handwrittenError: string | undefined = undefined;
         if (rawHandwritten) {
           handwrittenError = validateHandwrittenNote(rawHandwritten) || undefined;
@@ -170,8 +198,17 @@ export async function Synapsesを読み取る(
 
         cards.push(card);
         cardsById[id] = card;
+        if (yamlError) {
+          problems.push({ kind: "解析不能", filePath: file.path, message: yamlError });
+        }
 
-        if (memorySynapse?.members && Array.isArray(memorySynapse.members)) {
+        if (memorySynapse && !Array.isArray(memorySynapse.members)) {
+          problems.push({
+            kind: "解析不能",
+            filePath: file.path,
+            message: "Memory Synapseのmembersを配列として読み取れません。"
+          });
+        } else if (Array.isArray(memorySynapse?.members)) {
           pendingGroups.push({ managerId: id, raw: memorySynapse });
         }
       }
@@ -202,9 +239,10 @@ export async function Synapsesを読み取る(
     const resolvedMembers = rawMembers.map((value: unknown) => resolveCardId(value));
     for (let index = 0; index < rawMembers.length; index++) {
       if (!resolvedMembers[index]) {
-        migrationWarnings.push(
-          `${cardsById[pending.managerId]?.path ?? pending.managerId}: 融合構成員リンクを解決できません（${String(rawMembers[index])}）。`
-        );
+        const filePath = cardsById[pending.managerId]?.path ?? pending.managerId;
+        const message = `融合構成員リンクを解決できません（${String(rawMembers[index])}）。`;
+        migrationWarnings.push(`${filePath}: ${message}`);
+        problems.push({ kind: "リンク", filePath, message });
       }
     }
     const memberIds: string[] = resolvedMembers
@@ -216,9 +254,10 @@ export async function Synapsesを読み取る(
       const resolved = resolveCardId(rawRepresentatives[kind]);
       if (resolved) representatives[kind] = resolved;
       if (rawRepresentatives[kind] && !resolved) {
-        migrationWarnings.push(
-          `${cardsById[pending.managerId]?.path ?? pending.managerId}: ${kind}代表リンクを解決できません（${String(rawRepresentatives[kind])}）。`
-        );
+        const filePath = cardsById[pending.managerId]?.path ?? pending.managerId;
+        const message = `${kind}代表リンクを解決できません（${String(rawRepresentatives[kind])}）。`;
+        migrationWarnings.push(`${filePath}: ${message}`);
+        problems.push({ kind: "リンク", filePath, message });
       }
     }
 
@@ -242,17 +281,60 @@ export async function Synapsesを読み取る(
     };
   }
 
+  const memberships = new Map<string, string[]>();
+  for (const group of Object.values(groups)) {
+    for (const id of [group.managerId, ...group.memberIds]) {
+      memberships.set(id, [...(memberships.get(id) ?? []), group.managerId]);
+    }
+    for (const memberId of group.memberIds) {
+      if (!groups[memberId]) continue;
+      const filePath = cardsById[group.managerId]?.path ?? group.managerId;
+      problems.push({
+        kind: "入れ子",
+        filePath,
+        message: `${cardsById[memberId]?.path ?? memberId}が別の関係管理カードになっています。`
+      });
+    }
+    const ids = new Set([group.managerId, ...group.memberIds]);
+    const presentKinds = new Set([...ids].map((id) => cardsById[id]?.kind).filter(Boolean));
+    for (const kind of ["mention", "location", "tag"] as カード種類[]) {
+      const representativeId = group.representatives[kind];
+      let message = "";
+      if (presentKinds.has(kind) && !representativeId) message = `${kind}代表が欠けています。`;
+      else if (!presentKinds.has(kind) && representativeId) message = `存在しない${kind}カテゴリの代表があります。`;
+      else if (representativeId && !ids.has(representativeId)) message = `${kind}代表が融合単位外を参照しています。`;
+      else if (representativeId && cardsById[representativeId]?.kind !== kind) message = `${kind}代表の種類が一致しません。`;
+      if (message) {
+        problems.push({
+          kind: "代表",
+          filePath: cardsById[group.managerId]?.path ?? group.managerId,
+          message
+        });
+      }
+    }
+  }
+  for (const [cardId, owners] of memberships) {
+    if (owners.length < 2) continue;
+    problems.push({
+      kind: "多重所属",
+      filePath: cardsById[cardId]?.path ?? cardId,
+      message: `${owners.length}個の融合単位に所属しています。`
+    });
+  }
+
   for (const card of cards) {
     for (const wikiLink of card.relatedPosts) {
       const parsed = Wikiリンクを分解する(wikiLink);
       if (!parsed || !app.metadataCache.getFirstLinkpathDest(parsed.path, card.path)) {
-        migrationWarnings.push(`${card.path}: 関連投稿リンクを解決できません（${wikiLink}）。`);
+        const message = `関連投稿リンクを解決できません（${wikiLink}）。`;
+        migrationWarnings.push(`${card.path}: ${message}`);
+        problems.push({ kind: "リンク", filePath: card.path, message });
       }
     }
   }
 
   return {
-    cards, cardsById, groups, counts, migrationWarnings,
+    cards, cardsById, groups, counts, migrationWarnings, problems,
     elapsedMs: performance.now() - startMs,
     totalMarkdownFiles: files.length,
     totalWikiLinks,
