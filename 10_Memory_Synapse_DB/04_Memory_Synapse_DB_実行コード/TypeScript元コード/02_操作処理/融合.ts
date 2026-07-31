@@ -53,12 +53,28 @@ export function カテゴリ別代表を推奨する(
   const receiverGroup = カードの融合グループを探す(state, receiverId);
   const representatives: カテゴリ別代表 = {};
   const unresolvedKinds: カード種類[] = [];
+  const confirmationRequiredKinds: カード種類[] = [];
 
   for (const kind of ["mention", "location", "tag"] as カード種類[]) {
     const sameKind = candidateIds.filter((id) => state.cards[id]?.kind === kind);
     if (sameKind.length === 0) continue;
     if (sameKind.length === 1) {
       representatives[kind] = sameKind[0];
+      continue;
+    }
+    confirmationRequiredKinds.push(kind);
+    const existingRepresentatives = [...new Set(
+      Object.values(state.groups)
+        .filter((group) => グループの全カードID(group).some((id) => candidateIds.includes(id)))
+        .map((group) => group.representatives[kind])
+        .filter((id): id is string => typeof id === "string" && sameKind.includes(id))
+    )];
+    if (existingRepresentatives.length > 1) {
+      unresolvedKinds.push(kind);
+      continue;
+    }
+    if (existingRepresentatives.length === 1) {
+      representatives[kind] = existingRepresentatives[0];
       continue;
     }
     const receiverRepresentative = receiverGroup?.representatives[kind];
@@ -70,9 +86,10 @@ export function カテゴリ別代表を推奨する(
       representatives[kind] = receiverId;
       continue;
     }
+    representatives[kind] = sameKind[0];
     unresolvedKinds.push(kind);
   }
-  return { representatives, unresolvedKinds };
+  return { representatives, unresolvedKinds, confirmationRequiredKinds };
 }
 
 export function カードを融合する(

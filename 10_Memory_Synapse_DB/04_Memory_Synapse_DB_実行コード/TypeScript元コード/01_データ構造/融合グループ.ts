@@ -27,4 +27,5 @@ export interface 関係管理カード推奨結果 {
 export interface カテゴリ別代表推奨結果 {
   representatives: カテゴリ別代表;
   unresolvedKinds: カード種類[];
+  confirmationRequiredKinds: カード種類[];
 }

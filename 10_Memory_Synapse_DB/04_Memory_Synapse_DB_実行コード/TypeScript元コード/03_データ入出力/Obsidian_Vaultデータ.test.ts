@@ -40,6 +40,7 @@ test("blocks writing to a card if it has yamlError", () => {
     groups: {},
     counts: { tag: 1, mention: 0, location: 0 },
     migrationWarnings: [],
+    problems: [],
     elapsedMs: 0, totalMarkdownFiles: 1, totalWikiLinks: 0
   };
 
@@ -83,6 +84,7 @@ test("future persistence data uses schema version 2 representatives and no displ
     },
     groups: {},
     migrationWarnings: [],
+    problems: [],
     counts: { tag: 1, mention: 1, location: 0 },
     elapsedMs: 0, totalMarkdownFiles: 2, totalWikiLinks: 0
   };

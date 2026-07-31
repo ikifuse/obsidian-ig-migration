@@ -34,6 +34,8 @@
 .msdb-kind { font-size: var(--font-ui-smaller); font-weight: 600; }
 .msdb-link-count { color: var(--text-muted); font-size: var(--font-ui-smaller); }
 .msdb-card-block { padding: 8px 0; border-bottom: 1px solid var(--background-modifier-border); }
+.msdb-card-block[draggable="true"] { cursor: grab; }
+.msdb-card-block.msdb-drop-target { outline: 2px solid var(--interactive-accent); outline-offset: 3px; border-radius: 6px; }
 .msdb-card-block .msdb-card { padding: 0; border-bottom: 0; }
 .msdb-related-posts { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 6px; }
 .msdb-related-label { color: var(--text-muted); font-size: var(--font-ui-smaller); }
@@ -41,6 +43,16 @@
 .msdb-empty { color: var(--text-muted); text-align: center; padding: 20px; }
 .msdb-data-warning { margin: 16px 0; padding: 12px; border: 1px solid var(--color-orange); border-radius: 8px; background: var(--background-secondary); }
 .msdb-data-warning div { margin-top: 4px; color: var(--text-muted); }
+.msdb-problems { margin: 16px 0; padding: 14px; border: 1px solid var(--color-orange); border-radius: 8px; background: var(--background-secondary); }
+.msdb-problems h3 { margin-top: 0; }
+.msdb-problems details { margin-top: 8px; }
+.msdb-problem-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 8px 0; border-top: 1px solid var(--background-modifier-border); }
+.msdb-problem-row div { overflow-wrap: anywhere; }
+.msdb-problem-row button { max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.msdb-comparison-section { margin-top: 14px; padding: 10px 12px; border: 1px solid var(--background-modifier-border); border-radius: 8px; }
+.msdb-comparison-section h3 { margin: 0 0 6px; }
+.msdb-comparison-section ul { margin: 0; padding-left: 22px; }
+.msdb-readonly-confirm { padding: 10px 12px; border: 1px solid var(--color-blue); border-radius: 8px; background: var(--background-secondary); }
 .msdb-group-list { display: grid; gap: 12px; }
 .msdb-group { padding: 14px; border: 1px solid var(--background-modifier-border); border-radius: 10px; background: var(--background-secondary); }
 .msdb-group-header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
@@ -67,4 +79,6 @@
   .memory-synapse-prototype { padding: 12px; }
   .msdb-filters { grid-template-columns: 1fr; }
   .msdb-representative-header span:last-child { width: 100%; margin-left: 0; }
+  .msdb-problem-row { grid-template-columns: 1fr; }
+  .msdb-problem-row button { max-width: 100%; }
 }

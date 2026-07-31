@@ -20,7 +20,11 @@ import {
   カードを融合する as mergeCards,
   関係管理カードを推奨する as recommendManager
 } from "../02_操作処理/融合";
-import { Synapsesを読み取る as scanSynapses, type Obsidian読取結果 } from "../03_データ入出力/Obsidian_Vaultデータ";
+import {
+  Synapsesを読み取る as scanSynapses,
+  type Obsidian読取結果,
+  type 検査問題
+} from "../03_データ入出力/Obsidian_Vaultデータ";
 import { Wikiリンクを分解する as parseWikiLink } from "../03_データ入出力/Wikiリンク解決";
 import { エラー内容を文字列にする } from "../05_共通処理/エラー";
 import { 対象ルートを整理する as normalizeRoot } from "../05_共通処理/入力値整理";
@@ -151,13 +155,7 @@ class MemorySynapseView extends ItemView {
       item.createEl("strong", { text: `${result.counts[kind]}件` });
     }
 
-    const stateErrors = validateState(session);
-    const warnings = [...result.migrationWarnings, ...stateErrors];
-    if (warnings.length > 0) {
-      const warningBlock = view.createDiv({ cls: "msdb-data-warning" });
-      warningBlock.createEl("strong", { text: "確認が必要な融合状態" });
-      for (const message of warnings) warningBlock.createDiv({ text: message });
-    }
+    this.renderProblems(view, result, session);
 
     const groupsHeading = view.createDiv({ cls: "msdb-list-head" });
     groupsHeading.createEl("h3", { text: "融合グループ" });
@@ -185,6 +183,25 @@ class MemorySynapseView extends ItemView {
       const fileCard = result.cardsById[card.id];
       if (!fileCard) continue;
       const block = list.createDiv({ cls: "msdb-card-block" });
+      block.draggable = true;
+      block.addEventListener("dragstart", (event) => {
+        event.dataTransfer?.setData("text/x-memory-synapse-card", card.id);
+        if (event.dataTransfer) event.dataTransfer.effectAllowed = "move";
+      });
+      block.addEventListener("dragover", (event) => {
+        if (!event.dataTransfer?.types.includes("text/x-memory-synapse-card")) return;
+        event.preventDefault();
+        event.dataTransfer.dropEffect = "move";
+        block.addClass("msdb-drop-target");
+      });
+      block.addEventListener("dragleave", () => block.removeClass("msdb-drop-target"));
+      block.addEventListener("drop", (event) => {
+        block.removeClass("msdb-drop-target");
+        const sourceId = event.dataTransfer?.getData("text/x-memory-synapse-card");
+        if (!sourceId || sourceId === card.id) return;
+        event.preventDefault();
+        this.openMerge(sourceId, card.id);
+      });
       const row = block.createDiv({ cls: "msdb-card" });
       const open = row.createEl("button", { cls: "msdb-card-link", text: `${fileCard.basename}.md` });
       open.addEventListener("click", () => void this.app.workspace.getLeaf(false).openFile(fileCard.file));
@@ -241,8 +258,7 @@ class MemorySynapseView extends ItemView {
     change.addEventListener("click", () => this.openManagerChange(group.managerId));
     const dissolve = actions.createEl("button", { text: "融合を解体" });
     dissolve.addEventListener("click", () => {
-      if (!window.confirm("融合関係だけを解体します。個別カードの情報は保持されます。")) return;
-      this.applyOperation(dissolveGroup(session, group.managerId));
+      this.previewOperation("融合をすべて解体", dissolveGroup(session, group.managerId));
     });
 
     for (const kind of ["mention", "location", "tag"] as CardKind[]) {
@@ -333,6 +349,72 @@ class MemorySynapseView extends ItemView {
     this.rerender();
   }
 
+  private previewOperation(title: string, result: 操作結果): void {
+    if (!this.sessionState || !result.ok) {
+      this.applyOperation(result);
+      return;
+    }
+    const before = this.sessionState;
+    const changedPaths = changedFilePaths(before, result.state, this.readResult);
+    new OperationConfirmModal(
+      this.app,
+      title,
+      before,
+      result.state,
+      changedPaths,
+      () => this.applyOperation(result)
+    ).open();
+  }
+
+  private renderProblems(parent: HTMLElement, result: Obsidian読取結果, session: 融合状態): void {
+    const stateProblems: 検査問題[] = validateState(session).map((message) => {
+      const id = message.split(":")[0]?.trim() ?? "";
+      const filePath = result.cardsById[id]?.path ?? id;
+      const kind = message.includes("多重所属")
+        ? "多重所属"
+        : message.includes("グループ外") || message.includes("代表") || message.includes("カテゴリ")
+          ? "代表"
+          : message.includes("リンク先")
+            ? "リンク"
+            : "解析不能";
+      return { kind, filePath, message } as 検査問題;
+    });
+    const unique = new Map<string, 検査問題>();
+    const additionalStateProblems = stateProblems.filter((problem) =>
+      !result.problems.some((existing) =>
+        existing.kind === problem.kind && existing.filePath === problem.filePath
+      )
+    );
+    for (const problem of [...result.problems, ...additionalStateProblems]) {
+      unique.set(`${problem.kind}\n${problem.filePath}\n${problem.message}`, problem);
+    }
+    const problems = [...unique.values()];
+    if (problems.length === 0) return;
+
+    const block = parent.createDiv({ cls: "msdb-problems" });
+    block.createEl("h3", { text: "問題検査" });
+    block.createEl("p", {
+      text: "問題を自動修復しません。対象ファイルを開いて内容を確認できます。",
+      cls: "setting-item-description"
+    });
+    for (const kind of ["解析不能", "リンク", "多重所属", "入れ子", "代表"] as const) {
+      const items = problems.filter((problem) => problem.kind === kind);
+      if (items.length === 0) continue;
+      const section = block.createEl("details");
+      section.createEl("summary", { text: `${kind}（${items.length}件）` });
+      for (const problem of items) {
+        const row = section.createDiv({ cls: "msdb-problem-row" });
+        row.createDiv({ text: problem.message });
+        const file = this.app.vault.getAbstractFileByPath(problem.filePath);
+        const open = row.createEl("button", { text: problem.filePath || "対象不明" });
+        open.disabled = !file || !("extension" in file);
+        if (!open.disabled) {
+          open.addEventListener("click", () => void this.app.workspace.getLeaf(false).openFile(file as any));
+        }
+      }
+    }
+  }
+
   private renderFilters(parent: HTMLElement): void {
     const filters = parent.createDiv({ cls: "msdb-filters" });
     const search = filters.createEl("input", { type: "search", placeholder: "名前・別名・関連投稿を検索" });
@@ -395,17 +477,28 @@ class MemorySynapseView extends ItemView {
     return text.includes(query);
   }
 
-  private openMerge(sourceId: string): void {
+  private openMerge(sourceId: string, fixedReceiverId?: string): void {
     const state = this.sessionState;
     if (!state) return;
+    const proceed = (receiverId: string) => {
+      if (!receiverId) return;
+      this.openMergeConfirmation(state, sourceId, receiverId);
+    };
+    if (fixedReceiverId) {
+      proceed(fixedReceiverId);
+      return;
+    }
     const targets = Object.values(state.cards)
       .filter((card) => card.id !== sourceId)
       .map((card) => ({ value: card.id, label: `${KIND_LABEL[card.kind]} ${card.name}` }));
     new ChoiceModal(this.app, "融合先を選択", [
       { key: "receiver", label: "受け入れるカード", options: targets, initial: targets[0]?.value ?? "" }
     ], (choice) => {
-      const receiverId = choice.receiver;
-      if (!receiverId) return;
+      proceed(choice.receiver ?? "");
+    }).open();
+  }
+
+  private openMergeConfirmation(state: 融合状態, sourceId: string, receiverId: string): void {
       const managerRecommendation = recommendManager(state, sourceId, receiverId);
       const representativeRecommendation = recommendRepresentatives(
         state,
@@ -419,7 +512,8 @@ class MemorySynapseView extends ItemView {
           value: id,
           label: `${state.cards[id]?.name ?? id}${managerRecommendation.recommendedIds.includes(id) ? "（推奨）" : ""}`
         })),
-        initial: managerRecommendation.recommendedIds[0] ?? managerRecommendation.candidateIds[0] ?? ""
+        initial: managerRecommendation.recommendedIds.length === 1 ? managerRecommendation.recommendedIds[0]! : "",
+        required: true
       }];
       for (const kind of ["mention", "location", "tag"] as CardKind[]) {
         const candidates = managerRecommendation.candidateIds.filter((id) => state.cards[id]?.kind === kind);
@@ -428,7 +522,11 @@ class MemorySynapseView extends ItemView {
           key: `representative-${kind}`,
           label: `${KIND_LABEL[kind]}の代表`,
           options: candidates.map((id) => ({ value: id, label: state.cards[id]?.name ?? id })),
-          initial: representativeRecommendation.representatives[kind] ?? candidates[0] ?? ""
+          initial: representativeRecommendation.unresolvedKinds.includes(kind)
+            ? ""
+            : representativeRecommendation.representatives[kind] ?? candidates[0] ?? "",
+          required: true,
+          requiresConfirmation: representativeRecommendation.confirmationRequiredKinds.includes(kind)
         });
       }
       new ChoiceModal(this.app, "融合内容を確認", fields, (selected) => {
@@ -438,9 +536,11 @@ class MemorySynapseView extends ItemView {
           if (value) representatives[kind] = value;
         }
         if (!selected.manager) return;
-        this.applyOperation(mergeCards(state, sourceId, receiverId, selected.manager, representatives));
+        this.previewOperation(
+          "融合関係を確認",
+          mergeCards(state, sourceId, receiverId, selected.manager, representatives)
+        );
       }, managerRecommendation.reason).open();
-    }).open();
   }
 
   private openManagerChange(managerId: string): void {
@@ -453,7 +553,9 @@ class MemorySynapseView extends ItemView {
       options: groupCardIds(group).map((id) => ({ value: id, label: state.cards[id]?.name ?? id })),
       initial: managerId
     }], (selected) => {
-      if (selected.manager) this.applyOperation(changeManager(state, managerId, selected.manager));
+      if (selected.manager) {
+        this.previewOperation("関係管理カードを変更", changeManager(state, managerId, selected.manager));
+      }
     }).open();
   }
 
@@ -469,7 +571,10 @@ class MemorySynapseView extends ItemView {
       initial: group.representatives[kind] ?? ids[0] ?? ""
     }], (selected) => {
       if (selected.representative) {
-        this.applyOperation(changeRepresentative(state, managerId, kind, selected.representative));
+        this.previewOperation(
+          `${KIND_LABEL[kind]}の代表を変更`,
+          changeRepresentative(state, managerId, kind, selected.representative)
+        );
       }
     }).open();
   }
@@ -480,9 +585,7 @@ class MemorySynapseView extends ItemView {
     if (!state || !group) return;
     const remaining = groupCardIds(group).filter((id) => id !== splitId);
     if (remaining.length < 2) {
-      if (window.confirm("このカードを分離すると融合状態は解消されます。続けますか？")) {
-        this.applyOperation(splitCard(state, managerId, splitId));
-      }
+      this.previewOperation("このカードを分離", splitCard(state, managerId, splitId));
       return;
     }
     const fields: ChoiceField[] = [];
@@ -501,7 +604,8 @@ class MemorySynapseView extends ItemView {
           key: `representative-${kind}`,
           label: `${KIND_LABEL[kind]}の次の代表`,
           options: candidates.map((id) => ({ value: id, label: state.cards[id]?.name ?? id })),
-          initial: candidates[0] ?? ""
+          initial: "",
+          required: true
         });
       }
     }
@@ -511,10 +615,13 @@ class MemorySynapseView extends ItemView {
         const value = selected[`representative-${kind}`];
         if (value) representatives[kind] = value;
       }
-      this.applyOperation(splitCard(state, managerId, splitId, selected.manager, representatives));
+      this.previewOperation(
+        "このカードを分離",
+        splitCard(state, managerId, splitId, selected.manager, representatives)
+      );
     };
     if (fields.length === 0) {
-      if (window.confirm("選択した個別カードを融合グループから分離しますか？")) apply({});
+      apply({});
       return;
     }
     new ChoiceModal(this.app, "分離後の状態を確認", fields, apply).open();
@@ -524,7 +631,9 @@ class MemorySynapseView extends ItemView {
     const state = this.sessionState;
     const card = state?.cards[cardId];
     if (!state || !card) return;
-    new HandwrittenModal(this.app, card, (note) => this.applyOperation(saveHandwritten(state, cardId, note))).open();
+    new HandwrittenModal(this.app, card, (note) => {
+      this.previewOperation("手書き情報を保存", saveHandwritten(state, cardId, note));
+    }).open();
   }
 }
 
@@ -600,10 +709,13 @@ type ChoiceField = {
   label: string;
   options: Array<{ value: string; label: string }>;
   initial: string;
+  required?: boolean;
+  requiresConfirmation?: boolean;
 };
 
 class ChoiceModal extends Modal {
   private readonly values: Record<string, string> = {};
+  private readonly confirmed = new Set<string>();
 
   constructor(
     app: App,
@@ -620,19 +732,41 @@ class ChoiceModal extends Modal {
     this.titleEl.setText(this.titleText);
     if (this.description) this.contentEl.createEl("p", { text: this.description, cls: "setting-item-description" });
     for (const field of this.fields) {
-      new Setting(this.contentEl)
+      const setting = new Setting(this.contentEl)
         .setName(field.label)
         .addDropdown((dropdown) => {
+          if (field.required && !field.initial) dropdown.addOption("", "選択してください");
           for (const option of field.options) dropdown.addOption(option.value, option.label);
           dropdown.setValue(field.initial);
-          dropdown.onChange((value) => { this.values[field.key] = value; });
+          dropdown.onChange((value) => {
+            this.values[field.key] = value;
+            updateConfirm();
+          });
         });
+      if (field.requiresConfirmation) {
+        setting.setDesc("同じ種類のカードが複数あります。表示中の代表を人間が確認してください。");
+        setting.addToggle((toggle) => toggle
+          .setTooltip("この代表を確認しました")
+          .onChange((checked) => {
+            if (checked) this.confirmed.add(field.key);
+            else this.confirmed.delete(field.key);
+            updateConfirm();
+          }));
+      }
     }
     const buttons = this.contentEl.createDiv({ cls: "modal-button-container" });
     const cancel = buttons.createEl("button", { text: "キャンセル" });
     cancel.addEventListener("click", () => this.close());
     const confirm = buttons.createEl("button", { text: "画面内で実行", cls: "mod-cta" });
+    const updateConfirm = () => {
+      confirm.disabled = this.fields.some((field) =>
+        (field.required && !this.values[field.key])
+        || (field.requiresConfirmation && !this.confirmed.has(field.key))
+      );
+    };
+    updateConfirm();
     confirm.addEventListener("click", () => {
+      if (confirm.disabled) return;
       this.close();
       this.onConfirm({ ...this.values });
     });
@@ -684,7 +818,6 @@ class HandwrittenModal extends Modal {
     cancel.addEventListener("click", () => this.close());
     const confirm = buttons.createEl("button", { text: "保存内容を確認" });
     confirm.addEventListener("click", () => {
-      if (!window.confirm("この内容を画面セッション内の個別カードへ反映しますか？")) return;
       this.close();
       this.onConfirm(structuredClone(this.note));
     });
@@ -700,6 +833,59 @@ class HandwrittenModal extends Modal {
 
   private area(label: string, value: string, set: (value: string) => void): void {
     new Setting(this.contentEl).setName(label).addTextArea((input) => input.setValue(value).onChange(set));
+  }
+
+  onClose(): void { this.contentEl.empty(); }
+}
+
+class OperationConfirmModal extends Modal {
+  constructor(
+    app: App,
+    private readonly operationTitle: string,
+    private readonly before: 融合状態,
+    private readonly after: 融合状態,
+    private readonly changedPaths: string[],
+    private readonly onConfirm: () => void
+  ) {
+    super(app);
+  }
+
+  onOpen(): void {
+    this.titleEl.setText(`${this.operationTitle} — 操作前後比較`);
+    this.section("現在", comparisonLines(this.before));
+    this.section("操作後", comparisonLines(this.after));
+    const handwritten = handwrittenComparisonLines(this.before, this.after);
+    if (handwritten.length > 0) this.section("手書き情報の変更", handwritten);
+    this.section(
+      "変更するファイル",
+      this.changedPaths.length > 0 ? this.changedPaths : ["変更対象はありません"]
+    );
+    this.section("変更しない情報", [
+      "個別カードのカテゴリ固有情報",
+      "関連投稿",
+      "Frontmatter",
+      "この操作の対象ではない手書き情報"
+    ]);
+    this.section("元に戻せるか", ["画面セッション内の「元に戻す」で直前操作を取り消せます。"]);
+    this.contentEl.createEl("p", {
+      text: "この06技術検証版では、上記ファイルを実際には変更しません。",
+      cls: "msdb-readonly-confirm"
+    });
+    const buttons = this.contentEl.createDiv({ cls: "modal-button-container" });
+    const cancel = buttons.createEl("button", { text: "キャンセル" });
+    cancel.addEventListener("click", () => this.close());
+    const confirm = buttons.createEl("button", { text: "画面内で実行", cls: "mod-cta" });
+    confirm.addEventListener("click", () => {
+      this.close();
+      this.onConfirm();
+    });
+  }
+
+  private section(title: string, lines: string[]): void {
+    const section = this.contentEl.createDiv({ cls: "msdb-comparison-section" });
+    section.createEl("h3", { text: title });
+    const list = section.createEl("ul");
+    for (const line of lines) list.createEl("li", { text: line });
   }
 
   onClose(): void { this.contentEl.empty(); }
@@ -727,6 +913,71 @@ function describeState(state: 融合状態): string {
   const knowledgeUnits = Object.keys(state.cards).length
     - Object.values(state.groups).reduce((count, group) => count + group.memberIds.length, 0);
   return `知識単位${knowledgeUnits}件、融合${groups.length}件${groups.length ? ` [${groups.join(" / ")}]` : ""}`;
+}
+
+function comparisonLines(state: 融合状態): string[] {
+  const groups = Object.values(state.groups);
+  if (groups.length === 0) {
+    return [
+      "関係管理カード: なし",
+      "カテゴリ別代表: なし",
+      "融合構成員数: 0枚",
+      `対象となる個別カード: ${Object.keys(state.cards).length}枚（すべて単独）`
+    ];
+  }
+  return groups.flatMap((group, index) => {
+    const ids = groupCardIds(group);
+    const representatives = (["mention", "location", "tag"] as CardKind[])
+      .filter((kind) => group.representatives[kind])
+      .map((kind) => {
+        const id = group.representatives[kind]!;
+        return `${KIND_LABEL[kind]}=${state.cards[id]?.name ?? id}`;
+      });
+    return [
+      `融合${index + 1} 関係管理カード: ${state.cards[group.managerId]?.name ?? group.managerId}`,
+      `融合${index + 1} カテゴリ別代表: ${representatives.join("、") || "未確定"}`,
+      `融合${index + 1} 全構成員数: ${ids.length}枚`,
+      `融合${index + 1} 対象となる個別カード: ${ids.map((id) => state.cards[id]?.name ?? id).join("、")}`
+    ];
+  });
+}
+
+function changedFilePaths(
+  before: 融合状態,
+  after: 融合状態,
+  result: Obsidian読取結果 | null
+): string[] {
+  const changedIds = new Set<string>();
+  const managerIds = new Set([...Object.keys(before.groups), ...Object.keys(after.groups)]);
+  for (const managerId of managerIds) {
+    if (JSON.stringify(before.groups[managerId]) !== JSON.stringify(after.groups[managerId])) {
+      if (before.groups[managerId]) changedIds.add(managerId);
+      if (after.groups[managerId]) changedIds.add(managerId);
+    }
+  }
+  const cardIds = new Set([...Object.keys(before.cards), ...Object.keys(after.cards)]);
+  for (const cardId of cardIds) {
+    if (
+      JSON.stringify(before.cards[cardId]?.handwritten)
+      !== JSON.stringify(after.cards[cardId]?.handwritten)
+    ) {
+      changedIds.add(cardId);
+    }
+  }
+  return [...changedIds].map((id) => result?.cardsById[id]?.path ?? id);
+}
+
+function handwrittenComparisonLines(before: 融合状態, after: 融合状態): string[] {
+  const lines: string[] = [];
+  for (const cardId of new Set([...Object.keys(before.cards), ...Object.keys(after.cards)])) {
+    const current = before.cards[cardId]?.handwritten;
+    const next = after.cards[cardId]?.handwritten;
+    if (JSON.stringify(current) === JSON.stringify(next)) continue;
+    const name = after.cards[cardId]?.name ?? before.cards[cardId]?.name ?? cardId;
+    lines.push(`${name} 現在: ${current ? JSON.stringify(current) : "なし"}`);
+    lines.push(`${name} 操作後: ${next ? JSON.stringify(next) : "なし"}`);
+  }
+  return lines;
 }
 
 function metric(parent: HTMLElement, label: string, value: string, note: string): void {

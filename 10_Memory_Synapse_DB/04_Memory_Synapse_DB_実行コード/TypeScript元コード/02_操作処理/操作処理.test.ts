@@ -71,9 +71,23 @@ test("same-category multiple candidates require an explicit representative when 
   const state = operationState();
   const recommendation = recommendRepresentatives(state, ["mention-a", "mention-b"], "location-a");
   assert.deepEqual(recommendation.unresolvedKinds, ["mention"]);
+  assert.deepEqual(recommendation.confirmationRequiredKinds, ["mention"]);
+  assert.equal(recommendation.representatives.mention, "mention-a");
   const result = mergeCards(state, "mention-a", "mention-b", "mention-b", {});
   assert.equal(result.ok, false);
   assert.match(result.message, /mentionの代表カードが未選択/);
+});
+
+test("conflicting representatives from two groups are not selected automatically", () => {
+  const state = operationState();
+  state.groups = {
+    "mention-a": group("mention-a", ["tag-a"], { mention: "mention-a", tag: "tag-a" }),
+    "mention-b": group("mention-b", ["location-a"], { mention: "mention-b", location: "location-a" })
+  };
+  const candidates = recommendManager(state, "mention-a", "mention-b").candidateIds;
+  const recommendation = recommendRepresentatives(state, candidates, "mention-b");
+  assert.deepEqual(recommendation.unresolvedKinds, ["mention"]);
+  assert.equal(recommendation.representatives.mention, undefined);
 });
 
 test("merging groups flattens members and keeps one representative per present category", () => {
