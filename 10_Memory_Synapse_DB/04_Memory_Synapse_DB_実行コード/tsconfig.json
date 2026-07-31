@@ -5,7 +5,7 @@
     "isolatedModules": true,
     "lib": ["ES2021", "DOM"],
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "noUncheckedIndexedAccess": true,
