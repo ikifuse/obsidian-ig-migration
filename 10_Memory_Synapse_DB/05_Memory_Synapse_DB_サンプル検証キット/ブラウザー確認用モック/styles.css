@@ -263,8 +263,18 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px
 .handwritten-comparison h3 { margin: 0 0 6px; font-size: .9em; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 .notice { padding: 12px; border-radius: 8px; background: var(--bg-hover); color: var(--text-muted); font-size: 0.9em; margin-bottom: 16px; }
+.post-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.post-link { color: var(--accent); background: var(--bg-panel); padding: 4px 10px; border-radius: 6px; cursor: pointer; border: 1px solid var(--line); font-size: 0.88em; font-family: monospace; transition: all 0.2s ease; }
+.post-link:hover { border-color: var(--accent); background: var(--bg-active); color: #fff; transform: translateY(-1px); }
 .notice.success { border-left: 4px solid var(--accent-2); }
 .notice.error { border-left: 4px solid var(--danger); color: var(--danger); }
+.system-log-tree { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; font-family: monospace; font-size: 0.9em; }
+.system-log-node { background: var(--bg-panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; }
+.system-log-item { display: flex; align-items: center; gap: 8px; }
+.system-log-count { color: var(--text-muted); font-size: 0.85em; }
+.system-log-children { margin-top: 6px; padding-left: 28px; display: flex; flex-direction: column; gap: 4px; }
+.system-log-child-item { display: flex; align-items: center; gap: 6px; }
+.tree-line { color: var(--text-muted); font-size: 0.85em; }
 
 @media (max-width: 900px) {
   .app-shell { position: relative; }

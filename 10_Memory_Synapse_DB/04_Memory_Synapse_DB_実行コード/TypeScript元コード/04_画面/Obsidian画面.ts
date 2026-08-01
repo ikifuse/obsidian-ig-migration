@@ -51,6 +51,46 @@ export default class MemorySynapseDbPrototype extends Plugin {
       callback: () => void this.activateView()
     });
     this.addSettingTab(new MemorySynapseSettingTab(this));
+
+    // 仕様11.2.4連動要件：SystemLogsツリー描画および本文タグ・メンションからのカード連携
+    this.registerMarkdownPostProcessor((element, context) => {
+      const sourcePath = context.sourcePath;
+
+      // 1. SystemLogsのツリー描画
+      if (sourcePath.includes("SystemLogs")) {
+        const listItems = element.querySelectorAll("li");
+        listItems.forEach((li) => {
+          if (!li.querySelector(".msdb-tree-checkbox")) {
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.checked = true;
+            checkbox.disabled = true;
+            checkbox.addClass("msdb-tree-checkbox");
+            li.prepend(checkbox);
+          }
+        });
+      }
+
+      // 2. 本文内タグ/メンション/Wikiリンク選択時の右パネルカード呼び出し連動
+      const links = element.querySelectorAll("a.internal-link, a.tag");
+      links.forEach((link) => {
+        link.addEventListener("click", (evt) => {
+          const rawText = link.textContent ?? "";
+          const targetCardId = link.getAttribute("data-href") ?? rawText;
+          if (targetCardId) {
+            void this.selectCardInView(targetCardId);
+          }
+        });
+      });
+    });
+  }
+
+  async selectCardInView(cardIdOrWiki: string): Promise<void> {
+    await this.activateView();
+    const leaves = this.app.workspace.getLeavesOfType(VIEW_TYPE);
+    if (leaves[0]?.view instanceof MemorySynapseView) {
+      leaves[0].view.selectCard(cardIdOrWiki);
+    }
   }
 
   async activateView(): Promise<void> {
@@ -78,6 +118,7 @@ class MemorySynapseView extends ItemView {
   private kindFilter: CardKind | "all" = "all";
   private statusFilter: "all" | "single" | "manager" | "representative" | "member" = "all";
   private handwrittenOnly = false;
+  private selectedCardId: string | null = null;
 
   constructor(leaf: WorkspaceLeaf, private readonly plugin: MemorySynapseDbPrototype) {
     super(leaf);
@@ -86,6 +127,19 @@ class MemorySynapseView extends ItemView {
   getViewType(): string { return VIEW_TYPE; }
   getDisplayText(): string { return "Memory Synapse DB"; }
   getIcon(): string { return "network"; }
+
+  selectCard(cardIdOrWiki: string): void {
+    if (!this.sessionState) return;
+    const target = Object.values(this.sessionState.cards).find(
+      (c) => c.id === cardIdOrWiki || c.name === cardIdOrWiki || c.id.includes(cardIdOrWiki)
+    );
+    if (target) {
+      this.selectedCardId = target.id;
+      this.search = target.name;
+      this.notice = `選択カード: ${target.name}`;
+      this.rerender();
+    }
+  }
 
   async onOpen(): Promise<void> { await this.refresh(); }
 

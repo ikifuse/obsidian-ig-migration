@@ -275,6 +275,20 @@
       <section class="sample-case-cards">${sample.cases.map((testCase) => `<button class="sample-case-card ${testCase.role === "重点検証" ? "focus" : ""}" data-action="post" data-id="${esc(testCase.targetPostId)}"><span class="sample-case-card-number">${esc(testCase.number)}</span><span class="sample-case-card-role">${esc(testCase.role)}</span><strong>${testCase.labels.map(esc).join("・")}</strong><span>${esc(testCase.purpose)}</span><small>${esc(testCase.targetPostId)}.md</small></button>`).join("")}</section></div>`;
   }
 
+  function formatCaption(caption) {
+    if (!caption) return '<p class="sample-caption-empty">本文は空です</p>';
+    const escaped = esc(caption);
+    const linked = escaped
+      .replace(/(#[\w\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uff00-\uffef]+)/g, (match) => {
+        const tag = match.slice(1);
+        return `<button class="mock-tag" data-action="select-wiki-link" data-wiki="[[${tag}|#${tag}]]">${match}</button>`;
+      })
+      .replace(/(@[\w\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uff00-\uffef\._]+)/g, (match) => {
+        return `<button class="mock-mention" data-action="select-wiki-link" data-wiki="[[${match}|${match}]]">${match}</button>`;
+      });
+    return `<p class="sample-caption">${linked}</p>`;
+  }
+
   function postHtml(id) {
     const item = Object.values(sample.posts).find((post) => post.id === id);
     const testCase = sample.cases.find((entry) => entry.targetPostId === id);
@@ -282,21 +296,41 @@
     const media = testCase?.mediaCondition ?? [];
     return `<div class="log-view"><h1>${esc(item.id)}.md</h1>
       ${testCase ? `<section class="sample-case-banner ${testCase.role === "重点検証" ? "focus" : ""}"><div class="sample-case-heading"><span class="sample-case-number">${esc(testCase.number)}</span><strong>${esc(testCase.role)}</strong></div><div class="sample-case-labels">${testCase.labels.map((label) => `<span>${esc(label)}</span>`).join("")}</div><p>${esc(testCase.purpose)}</p></section>` : ""}
-      <div class="properties-block"><div class="properties-grid"><div class="prop-key">source</div><div>${esc(item.source)}</div><div class="prop-key">type</div><div>${esc(item.type)}</div><div class="prop-key">date</div><div>${esc(item.date)}</div><div class="prop-key">tags</div><div>${esc(item.tags?.join("、") ?? "")}</div><div class="prop-key">mentions</div><div>${esc(item.mentions?.join("、") ?? "")}</div></div></div>
-      ${item.caption ? `<p class="sample-caption">${esc(item.caption)}</p>` : '<p class="sample-caption-empty">本文は空です</p>'}
+      <div class="properties-block"><div class="properties-grid">
+        <div class="prop-key">source</div><div>${esc(item.source)}</div>
+        <div class="prop-key">type</div><div>${esc(item.type)}</div>
+        <div class="prop-key">date</div><div>${esc(item.date)}</div>
+        <div class="prop-key">tags</div><div>${(item.tags ?? []).map((t) => `<button class="mock-tag" data-action="select-wiki-link" data-wiki="[[${esc(t)}|#${esc(t)}]]">#${esc(t)}</button>`).join(" ") || "なし"}</div>
+        <div class="prop-key">mentions</div><div>${(item.mentions ?? []).map((m) => `<button class="mock-mention" data-action="select-wiki-link" data-wiki="[[${esc(m)}|${esc(m)}]]">${esc(m)}</button>`).join(" ") || "なし"}</div>
+      </div></div>
+      ${formatCaption(item.caption)}
       ${media.length ? `<div class="sample-media-grid">${media.map((entry, index) => `<figure class="sample-media"><div class="${entry.exists === false ? "sample-media-missing" : "sample-media-empty"}">メディア ${index + 1}<span>${esc(entry.relativePath ?? entry.path ?? "台帳参照")}</span></div></figure>`).join("")}</div>` : '<div class="sample-media-empty">メディアなし</div>'}
-      <hr><div class="post-links">${item.links.map((link) => `<span class="post-link">${esc(link.wiki)}</span>`).join("")}</div>
+      <hr><div class="post-links">${item.links.map((link) => `<button class="post-link" data-action="select-wiki-link" data-card-id="${esc(link.cardId ?? "")}" data-wiki="${esc(link.wiki)}">${esc(link.wiki)}</button>`).join("")}</div>
     </div>`;
   }
 
   function systemLogHtml(id) {
     const item = Object.values(sample.systemLogs).find((log) => log.id === id);
     if (!item) return '<div class="empty">SystemLogが見つかりません。</div>';
-    return `<div class="log-view"><h1>${esc(item.filename ?? `${item.id}.md`)}</h1>
-      <div class="properties-block">${rowsHtml(Object.entries(item).map(([label, value]) => ({
-        label,
-        value: typeof value === "object" ? JSON.stringify(value, null, 2) : String(value ?? ""),
-      })))}</div>
+    const entries = item.entries ?? [];
+    return `<div class="log-view">
+      <h1>📄 ${esc(item.filename ?? `${item.id}.md`)}</h1>
+      <p class="notice">Obsidianログ形式：全${entries.length}項目。アイテムをクリックするとSynapsesカード、各投稿IDをクリックすると対象ノートが開きます。</p>
+      <div class="system-log-tree">
+        ${entries.map((entry) => `<div class="system-log-node">
+          <div class="system-log-item">
+            <input type="checkbox" checked disabled>
+            <button class="post-link" data-action="select-wiki-link" data-card-id="${esc(entry.cardId)}" data-wiki="${esc(entry.wikiLink)}">${esc(entry.wikiLink)}</button>
+            <span class="system-log-count">(${entry.relatedPostIds?.length ?? 0})</span>
+          </div>
+          <div class="system-log-children">
+            ${(entry.relatedPostIds ?? []).map((postId) => `<div class="system-log-child-item">
+              <span class="tree-line">└─</span>
+              <button class="post-link" data-action="post" data-id="${esc(postId)}">${esc(postId)}</button>
+            </div>`).join("")}
+          </div>
+        </div>`).join("")}
+      </div>
     </div>`;
   }
 
@@ -551,6 +585,29 @@
     else if (action === "cases") { centerMode = "cases"; selected = null; }
     else if (action === "post") { centerMode = "post"; selected = { type: "post", id: data.id }; }
     else if (action === "system-log") { centerMode = "system-log"; selected = { type: "system-log", id: data.id }; }
+    else if (action === "select-wiki-link") {
+      let targetId = data.cardId;
+      if (!targetId || !state.cards[targetId]) {
+        const rawWiki = data.wiki || "";
+        const cleanName = rawWiki.replace(/^\[\[/, "").replace(/\]\]$/, "").split("|")[0].replace(/^#/, "");
+        const matched = Object.values(state.cards).find((c) =>
+          c.name === cleanName ||
+          c.name === `@${cleanName}` ||
+          c.name === `#${cleanName}` ||
+          c.id === `mention-${cleanName}` ||
+          c.id === `location-${cleanName}` ||
+          c.id === `tag-#${cleanName}`
+        );
+        if (matched) targetId = matched.id;
+      }
+      if (targetId && state.cards[targetId]) {
+        const group = groupFor(targetId);
+        selected = { type: group ? "group" : "card", id: group ? group.managerId : targetId };
+        notice = `カード「${state.cards[targetId].name}」を右サイドバーで開きました。`;
+      } else {
+        notice = `Wikiリンク「${data.wiki}」に該当するカードが見つかりませんでした。`;
+      }
+    }
     else if (action === "select-individual") { centerMode = "detail"; selected = { type: "card", id: data.id }; notice = "個別カードを表示しています。"; }
     else if (action === "start-merge") {
       const targetId = Object.keys(state.cards).find((id) => id !== data.id && !groupFor(id));
