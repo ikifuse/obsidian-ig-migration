@@ -4,15 +4,15 @@
 
 本フォルダーは、Memory Synapse DB工程の進め方と停止点を定める現役ワークフローを保持する。企画、設計、仕様の本文正本は置かない。
 
-## Codexでの役割分担
+## 役割分担
 
-- `../AGENTS.md`は、Memory Synapse DB配下で常に守る境界、読み込み先、停止点を短く定める。
-- 本`docs/`は、設計、仕様、ブラウザー確認、実装および検証を進める詳細手順を定める。
-- `../../.agents/skills/msdb-browser-to-spec/`は、05の探索と途中保存、完成候補の確認、正本反映、コード監査、06実物確認を一つの変更サイクルとして実行する。
-- `../07_Memory_Synapse_DB_承認・検証台帳.md`は、AIが変更サイクルの現在地を読み書きする人間可読の台帳とする。仕様本文、会話履歴またはGit差分を複製しない。
-- 企画、設計、仕様の具体的な要求は各正本へ置き、`AGENTS.md`、本`docs/`またはSkillへ重複させない。
+- `../AGENTS.md`は、使用するAIや作業環境にかかわらず常に守る境界、読み込み先、停止点を定める。
+- 本`docs/`は、設計、仕様、05での反復、正本への自然統合、04実装および06検証の詳細手順を定める。
+- `../README.md`は、人間が構成と変更サイクルを把握する入口とする。
+- `../07_Memory_Synapse_DB_承認・検証台帳.md`は、軽い現在地と、サイクル別の変更前後、採用理由、正本反映箇所、検証結果およびGit基準点を保持する。
+- 企画、設計、仕様の現在要件は各正本へ置き、`AGENTS.md`、本`docs/`または07へ重複させない。07の履歴は実装要求の代わりにしない。
 
-この分担は、Codexがプロジェクトルートから作業場所までの`AGENTS.md`を読み、近い階層の指示を後から適用する[OpenAI公式のAGENTS.md仕様](https://learn.chatgpt.com/docs/agent-configuration/agents-md#how-codex-discovers-guidance)と、常設する小さな規則と必要時だけ使う反復手順を分ける[OpenAI公式のSkill運用指針](https://developers.openai.com/cookbook/examples/skills_in_api#skills-vs-tools-vs-system-prompts)に基づく。
+プロジェクト専用Skillは現役運用に置かない。特定AIだけがSkillを読んだ場合にも、読まなかった場合にも同じ結果になるよう、拘束条件を`AGENTS.md`、詳細手順を本`docs/`へ一本化する。
 
 ## 文書
 
@@ -31,6 +31,6 @@
 - [05のサンプル検証キット](../05_Memory_Synapse_DB_サンプル検証キット/README.md)：UIモック、検証ケース台帳、サンプルVaultの確認方法
 - [06の読み取り専用仮プラグイン](../06_Memory_Synapse_DB_仮プラグイン/memory-synapse-db/)：Obsidianへ配置する技術検証版
 - [06のmanifest.json](../06_Memory_Synapse_DB_仮プラグイン/memory-synapse-db/manifest.json)：プラグイン識別情報
-- [07の承認・検証台帳](../07_Memory_Synapse_DB_承認・検証台帳.md)：変更サイクルの現在地、承認状態、検証結果、Git基準点
+- [07の承認・検証台帳](../07_Memory_Synapse_DB_承認・検証台帳.md)：軽い現在地と、対象サイクルごとの変更経緯、承認、検証結果、Git基準点
 
 `05`は`04`の通常ビルドから生成しない独立した検証キットである。`06`は`04`から生成するが、生成物だけを実装判断の根拠にせず、04のTypeScript元コード、依存関係、テストおよびビルド結果と合わせて確認する。
