@@ -289,6 +289,19 @@
     return `<p class="sample-caption">${linked}</p>`;
   }
 
+  function sampleMediaHtml(entry, index, caseNumber) {
+    const vaultPath = entry.vaultPath ?? entry.relativePath ?? entry.path ?? "";
+    const label = entry.label ?? `メディア ${index + 1}`;
+    if (entry.missing === true || !vaultPath) {
+      return `<figure class="sample-media sample-media-missing"><div>欠損メディア</div><strong>${esc(label)}</strong><span>${esc(vaultPath || "パスなし")}</span><small>${esc(caseNumber ?? "")}</small></figure>`;
+    }
+    const source = `../サンプルVault/${vaultPath}`;
+    if (entry.kind === "video") {
+      return `<figure class="sample-media"><video controls preload="metadata"><source src="${esc(source)}"></video><figcaption>${esc(label)}</figcaption></figure>`;
+    }
+    return `<figure class="sample-media"><img src="${esc(source)}" alt="${esc(label)}" loading="lazy"><figcaption>${esc(label)}</figcaption></figure>`;
+  }
+
   function postHtml(id) {
     const item = Object.values(sample.posts).find((post) => post.id === id);
     const testCase = sample.cases.find((entry) => entry.targetPostId === id);
@@ -304,7 +317,7 @@
         <div class="prop-key">mentions</div><div>${(item.mentions ?? []).map((m) => `<button class="mock-mention" data-action="select-wiki-link" data-wiki="[[${esc(m)}|${esc(m)}]]">${esc(m)}</button>`).join(" ") || "なし"}</div>
       </div></div>
       ${formatCaption(item.caption)}
-      ${media.length ? `<div class="sample-media-grid">${media.map((entry, index) => `<figure class="sample-media"><div class="${entry.exists === false ? "sample-media-missing" : "sample-media-empty"}">メディア ${index + 1}<span>${esc(entry.relativePath ?? entry.path ?? "台帳参照")}</span></div></figure>`).join("")}</div>` : '<div class="sample-media-empty">メディアなし</div>'}
+      ${media.length ? `<div class="sample-media-grid">${media.map((entry, index) => sampleMediaHtml(entry, index, testCase?.number)).join("")}</div>` : '<div class="sample-media-empty">メディアなし</div>'}
       <hr><div class="post-links">${item.links.map((link) => `<button class="post-link" data-action="select-wiki-link" data-card-id="${esc(link.cardId ?? "")}" data-wiki="${esc(link.wiki)}">${esc(link.wiki)}</button>`).join("")}</div>
     </div>`;
   }

@@ -66,6 +66,13 @@ assert.ok(appScript.includes('data-action="toggle-folder"'), "左エクスプロ
 assert.ok(appScript.includes("explorerPosts"), "左エクスプローラーから投稿を開ける");
 assert.ok(appScript.includes("explorerSynapseFolder"), "左エクスプローラーから個別カードを開ける");
 assert.ok(appScript.includes("systemLogHtml"), "左エクスプローラーからSystemLogを開ける");
+assert.ok(appScript.includes('data-action="select-wiki-link"'), "投稿とSystemLogsから右パネルのカードを選択できる");
+assert.ok(appScript.includes('data-action="post"'), "右パネルの関連投稿から中央投稿へ戻れる");
+assert.ok(appScript.includes("sampleMediaHtml"), "メディア表示処理を共通化する");
+assert.ok(appScript.includes("<img"), "正常な写真を代替枠ではなく画像として表示する");
+assert.ok(appScript.includes("<video"), "正常な動画を代替枠ではなく動画として表示する");
+assert.ok(appScript.includes("entry.missing === true"), "欠損メディアだけを欠損表示にする");
+assert.ok(appScript.includes("../サンプルVault/"), "モックとサンプルVaultで同じローカルメディアを共用する");
 
 const mentionRows = detailCore.sourceRows("mention_note", JSON.stringify({
   mention: "@taiko_namino",
@@ -111,4 +118,4 @@ assert.ok(detailScript.includes("MutationObserver"), "再描画後にも元情�
 assert.ok(detailScript.includes("sourceRows"), "元情報を項目別表示する");
 
 console.log("05 UI契約検査: 合格");
-console.log("B-07 カテゴリ別集約、B-08 種類別手書き・項目単位優先・元情報保持、B-31 可変境界、B-32 狭幅パネルを確認");
+console.log("B-07、B-08、B-22、B-24、B-31、B-32と相互逆引き連動を確認");

@@ -71,6 +71,14 @@
 .msdb-member-line { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 5px; }
 .msdb-preserved-data { margin-top: 8px; }
 .msdb-preserved-data pre { max-height: 240px; overflow: auto; padding: 8px; color: var(--text-normal); background: var(--background-secondary); }
+.msdb-sidebar-card { margin-top: 10px; }
+.workspace-leaf-content[data-type="memory-synapse-db-readonly-sidebar"] .memory-synapse-prototype { padding: 12px; }
+.workspace-leaf-content[data-type="memory-synapse-db-readonly-sidebar"] .msdb-header { align-items: flex-start; flex-direction: column; }
+.workspace-leaf-content[data-type="memory-synapse-db-readonly-sidebar"] .msdb-card { grid-template-columns: minmax(0, 1fr) auto; }
+.workspace-leaf-content[data-type="memory-synapse-db-readonly-sidebar"] .msdb-group-header { align-items: flex-start; flex-direction: column; }
+.workspace-leaf-content[data-type="memory-synapse-db-readonly-sidebar"] .msdb-representative-header span:last-child { width: 100%; margin-left: 0; }
+.msdb-system-log-tree .task-list-item { margin-block: 4px; }
+.msdb-system-log-tree .task-list-item > ul { margin-top: 4px; }
 
 @media (max-width: 600px) {
   .msdb-header { align-items: flex-start; flex-direction: column; }

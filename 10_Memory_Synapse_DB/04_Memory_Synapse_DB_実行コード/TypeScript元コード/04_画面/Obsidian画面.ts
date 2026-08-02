@@ -29,8 +29,11 @@ import { Wikiリンクを分解する as parseWikiLink } from "../03_データ�
 import { エラー内容を文字列にする } from "../05_共通処理/エラー";
 import { 対象ルートを整理する as normalizeRoot } from "../05_共通処理/入力値整理";
 import { プラグイン設定初期値, 読み取り専用画面ID } from "../05_共通処理/設定";
+import { カードリンク候補か, 参照先カードを探す } from "./カード連動";
 
 const VIEW_TYPE = 読み取り専用画面ID;
+const SIDEBAR_VIEW_TYPE = `${VIEW_TYPE}-sidebar`;
+type 表示面 = "workbench" | "sidebar";
 
 interface PrototypeSettings {
   targetRoot: string;
@@ -43,7 +46,8 @@ export default class MemorySynapseDbPrototype extends Plugin {
 
   async onload(): Promise<void> {
     this.settings = { ...DEFAULT_SETTINGS, ...(await this.loadData() as Partial<PrototypeSettings> | null) };
-    this.registerView(VIEW_TYPE, (leaf) => new MemorySynapseView(leaf, this));
+    this.registerView(VIEW_TYPE, (leaf) => new MemorySynapseView(leaf, this, "workbench"));
+    this.registerView(SIDEBAR_VIEW_TYPE, (leaf) => new MemorySynapseView(leaf, this, "sidebar"));
     this.addRibbonIcon("network", "Memory Synapse DB", () => void this.activateView());
     this.addCommand({
       id: "open-readonly-prototype",
@@ -52,45 +56,38 @@ export default class MemorySynapseDbPrototype extends Plugin {
     });
     this.addSettingTab(new MemorySynapseSettingTab(this));
 
-    // 仕様11.2.4連動要件：SystemLogsツリー描画および本文タグ・メンションからのカード連携
+    // SystemLogsはObsidian標準のタスク表示を維持し、追加のチェックボックスを生成しない。
     this.registerMarkdownPostProcessor((element, context) => {
-      const sourcePath = context.sourcePath;
-
-      // 1. SystemLogsのツリー描画
-      if (sourcePath.includes("SystemLogs")) {
-        const listItems = element.querySelectorAll("li");
-        listItems.forEach((li) => {
-          if (!li.querySelector(".msdb-tree-checkbox")) {
-            const checkbox = document.createElement("input");
-            checkbox.type = "checkbox";
-            checkbox.checked = true;
-            checkbox.disabled = true;
-            checkbox.addClass("msdb-tree-checkbox");
-            li.prepend(checkbox);
-          }
-        });
-      }
-
-      // 2. 本文内タグ/メンション/Wikiリンク選択時の右パネルカード呼び出し連動
-      const links = element.querySelectorAll("a.internal-link, a.tag");
-      links.forEach((link) => {
-        link.addEventListener("click", (evt) => {
-          const rawText = link.textContent ?? "";
-          const targetCardId = link.getAttribute("data-href") ?? rawText;
-          if (targetCardId) {
-            void this.selectCardInView(targetCardId);
-          }
-        });
-      });
+      if (/(^|\/)SystemLogs\//.test(context.sourcePath)) element.addClass("msdb-system-log-tree");
     });
+
+    // 投稿本文、末尾Wikiリンク、SystemLogs内カードリンクを右サイドバーへ連動する。
+    this.registerDomEvent(document, "click", (event: MouseEvent) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const link = target.closest("a.internal-link, a.tag");
+      if (!(link instanceof HTMLElement)) return;
+      const reference = link.getAttribute("data-href") ?? link.getAttribute("href") ?? link.textContent ?? "";
+      const sourcePath = this.app.workspace.getActiveFile()?.path ?? "";
+      if (!カードリンク候補か(reference, link.textContent ?? "", sourcePath, link.matches("a.tag"))) return;
+      event.preventDefault();
+      event.stopPropagation();
+      void this.selectCardInSidebar(reference);
+    }, { capture: true });
   }
 
-  async selectCardInView(cardIdOrWiki: string): Promise<void> {
-    await this.activateView();
-    const leaves = this.app.workspace.getLeavesOfType(VIEW_TYPE);
-    if (leaves[0]?.view instanceof MemorySynapseView) {
-      leaves[0].view.selectCard(cardIdOrWiki);
+  async selectCardInSidebar(cardIdOrWiki: string): Promise<void> {
+    let leaf = this.app.workspace.getLeavesOfType(SIDEBAR_VIEW_TYPE)[0];
+    if (!leaf) {
+      leaf = this.app.workspace.getRightLeaf(false) ?? undefined;
+      if (!leaf) {
+        new Notice("Memory Synapse DBの右サイドバーを開けませんでした。");
+        return;
+      }
+      await leaf.setViewState({ type: SIDEBAR_VIEW_TYPE, active: true });
     }
+    await this.app.workspace.revealLeaf(leaf);
+    if (leaf.view instanceof MemorySynapseView) leaf.view.selectCard(cardIdOrWiki);
   }
 
   async activateView(): Promise<void> {
@@ -102,7 +99,11 @@ export default class MemorySynapseDbPrototype extends Plugin {
 
   async saveSettings(): Promise<void> {
     await this.saveData(this.settings);
-    for (const leaf of this.app.workspace.getLeavesOfType(VIEW_TYPE)) {
+    const leaves = [
+      ...this.app.workspace.getLeavesOfType(VIEW_TYPE),
+      ...this.app.workspace.getLeavesOfType(SIDEBAR_VIEW_TYPE)
+    ];
+    for (const leaf of leaves) {
       const view = leaf.view;
       if (view instanceof MemorySynapseView) await view.refresh();
     }
@@ -120,23 +121,28 @@ class MemorySynapseView extends ItemView {
   private handwrittenOnly = false;
   private selectedCardId: string | null = null;
 
-  constructor(leaf: WorkspaceLeaf, private readonly plugin: MemorySynapseDbPrototype) {
+  constructor(
+    leaf: WorkspaceLeaf,
+    private readonly plugin: MemorySynapseDbPrototype,
+    private readonly surface: 表示面
+  ) {
     super(leaf);
   }
 
-  getViewType(): string { return VIEW_TYPE; }
-  getDisplayText(): string { return "Memory Synapse DB"; }
+  getViewType(): string { return this.surface === "sidebar" ? SIDEBAR_VIEW_TYPE : VIEW_TYPE; }
+  getDisplayText(): string { return this.surface === "sidebar" ? "Memory Synapse" : "Memory Synapse DB"; }
   getIcon(): string { return "network"; }
 
   selectCard(cardIdOrWiki: string): void {
     if (!this.sessionState) return;
-    const target = Object.values(this.sessionState.cards).find(
-      (c) => c.id === cardIdOrWiki || c.name === cardIdOrWiki || c.id.includes(cardIdOrWiki)
-    );
+    const target = 参照先カードを探す(this.sessionState.cards, cardIdOrWiki);
     if (target) {
       this.selectedCardId = target.id;
-      this.search = target.name;
+      if (this.surface === "workbench") this.search = target.name;
       this.notice = `選択カード: ${target.name}`;
+      this.rerender();
+    } else {
+      this.notice = `対応するSynapseカードが見つかりません: ${cardIdOrWiki}`;
       this.rerender();
     }
   }
@@ -190,6 +196,11 @@ class MemorySynapseView extends ItemView {
     warning.createDiv({ text: "対象Markdownを計測して表示するだけで、作成・変更・移動・削除は行いません。" });
     view.createDiv({ cls: "msdb-root", text: `対象ルート: ${root}` });
     view.createDiv({ cls: "msdb-session-notice", text: this.notice });
+
+    if (this.surface === "sidebar") {
+      this.renderSelectedSidebar(view, result, session);
+      return;
+    }
 
     const metrics = view.createDiv({ cls: "msdb-metrics" });
     metric(metrics, "対象カード", `${result.cards.length}件`, "Tag・Mention・Location");
@@ -293,6 +304,54 @@ class MemorySynapseView extends ItemView {
       details.createEl("summary", { text: "個別カードの保持情報を見る" });
       this.renderIndividualCard(details, card);
     }
+  }
+
+  private renderSelectedSidebar(parent: HTMLElement, result: Obsidian読取結果, session: 融合状態): void {
+    const selectedId = this.selectedCardId;
+    if (!selectedId) {
+      parent.createDiv({
+        cls: "msdb-empty",
+        text: "投稿本文、プロパティまたは写真下のタグ・メンション・位置情報を選択すると、対応するカードをここに表示します。"
+      });
+      return;
+    }
+    const selected = session.cards[selectedId];
+    if (!selected) {
+      parent.createDiv({ cls: "msdb-empty", text: "選択したカードが見つかりません。" });
+      return;
+    }
+    const group = Object.values(session.groups).find((item) => groupCardIds(item).includes(selectedId));
+    const heading = parent.createDiv({ cls: "msdb-list-head" });
+    heading.createEl("h3", { text: "選択中カード" });
+    heading.createSpan({ text: selected.name });
+    if (group) {
+      parent.createDiv({ cls: "msdb-root", text: "融合済みのため、カテゴリ別代表から組み立てた融合単位を表示します。" });
+      this.renderGroup(parent, group, result, session);
+      return;
+    }
+    const block = parent.createDiv({ cls: "msdb-card-block msdb-sidebar-card" });
+    const row = block.createDiv({ cls: "msdb-card" });
+    const fileCard = result.cardsById[selected.id];
+    const open = row.createEl("button", { cls: "msdb-card-link", text: `${fileCard?.basename ?? selected.name}.md` });
+    if (fileCard) open.addEventListener("click", () => void this.app.workspace.getLeaf(false).openFile(fileCard.file));
+    row.createSpan({ cls: `msdb-kind msdb-${selected.kind}`, text: KIND_LABEL[selected.kind] });
+    this.renderEffectiveFields(block, selected);
+    const actions = block.createDiv({ cls: "msdb-card-actions" });
+    actions.createEl("button", { text: "手書き" }).addEventListener("click", () => this.openHandwritten(selected.id));
+    const related = block.createDiv({ cls: "msdb-related-posts" });
+    related.createSpan({ cls: "msdb-related-label", text: `関連投稿 ${selected.relatedPosts.length}件` });
+    for (const wikiLink of selected.relatedPosts) {
+      const parsed = parseWikiLink(wikiLink);
+      if (!parsed || !fileCard) continue;
+      const post = related.createEl("button", {
+        cls: "msdb-related-post",
+        text: parsed.displayName ?? parsed.path.split("/").pop() ?? parsed.path
+      });
+      post.addEventListener("click", () => void this.app.workspace.openLinkText(parsed.path, fileCard.path, false));
+    }
+    const details = block.createEl("details", { cls: "msdb-individual-details" });
+    details.createEl("summary", { text: "元情報と保存済み手書き情報を見る" });
+    this.renderIndividualCard(details, selected);
   }
 
   private renderGroup(

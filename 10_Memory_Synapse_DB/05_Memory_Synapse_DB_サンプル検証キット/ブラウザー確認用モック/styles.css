@@ -82,9 +82,13 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px
 .sample-media { margin: 0; min-width: 0; }
 .sample-media img, .sample-media video { display: block; width: 100%; max-height: 520px; border: 1px solid var(--line); border-radius: 8px; background: #111; object-fit: contain; }
 .sample-media figcaption { margin-top: 5px; color: var(--text-muted); font-size: .76em; }
+.sample-media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 18px; }
+.sample-media { overflow: hidden; margin: 0; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-2); }
+.sample-media img, .sample-media video { display: block; width: 100%; max-height: 520px; object-fit: contain; background: #111; }
+.sample-media figcaption { padding: 8px 10px; color: var(--text-muted); font-size: .82em; }
 .sample-media-empty, .sample-media-missing { display: grid; place-items: center; min-height: 140px; margin-top: 18px; padding: 18px; border: 1px dashed var(--line); border-radius: 8px; color: var(--text-muted); text-align: center; }
-.sample-media-missing { border-color: var(--danger); color: var(--danger); }
-.sample-media-missing span { margin-top: 6px; overflow-wrap: anywhere; font-size: .78em; }
+.sample-media-missing { gap: 6px; border-color: var(--danger); color: var(--danger); background: transparent; }
+.sample-media-missing span { overflow-wrap: anywhere; font-size: .78em; }
 
 /* Right Sidebar (Memory Synapse) */
 .obsidian-sidebar-right { width: 340px; min-width: 260px; flex: 0 0 340px; background: var(--bg-panel); border-left: 1px solid var(--line); display: flex; flex-direction: column; }

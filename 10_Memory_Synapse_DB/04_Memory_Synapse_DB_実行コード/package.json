@@ -9,7 +9,7 @@
     "audit:bundle": "npm run check:boundary && npm run check && node esbuild.config.mjs audit",
     "check:boundary": "node ../../.agents/skills/msdb-browser-to-spec/scripts/check-plugin-boundary.mjs",
     "check": "tsc --project tsconfig.plugin.json --noEmit",
-    "test": "node --import tsx --test TypeScript元コード/02_操作処理/*.test.ts TypeScript元コード/03_データ入出力/*.test.ts"
+    "test": "node --import tsx --test TypeScript元コード/02_操作処理/*.test.ts TypeScript元コード/03_データ入出力/*.test.ts TypeScript元コード/04_画面/*.test.ts"
   },
   "keywords": [
     "obsidian",
