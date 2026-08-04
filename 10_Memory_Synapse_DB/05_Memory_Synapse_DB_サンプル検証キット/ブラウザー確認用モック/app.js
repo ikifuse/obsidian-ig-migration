@@ -386,13 +386,13 @@
   function shellHtml() {
     return `<main class="app-shell">
       <aside class="obsidian-ribbon"><span>◀</span><span>▶</span><span>🔍</span><span>📁</span><span>@</span><span>📍</span><span>🖊</span></aside>
-      <aside class="obsidian-sidebar-left"><div class="sidebar-header"><span>エクスプローラー</span></div><div class="explorer-tree">${explorerHtml()}</div></aside>
+      <aside class="obsidian-sidebar-left"><div class="sidebar-header"><span>エクスプローラー</span><span class="surface-role surface-standard">Obsidian標準で実現</span></div><div class="explorer-tree">${explorerHtml()}</div></aside>
       <section class="obsidian-center">
-        <div class="sample-environment-banner"><strong>ブラウザー用UIモック</strong><span>架空のサンプルデータ</span><span>実Vaultを読み込みません</span><span>正式プラグインではありません</span></div>
+        <div class="sample-environment-banner"><strong>ブラウザー用UIモック</strong><span>架空のサンプルデータ</span><span>実Vaultを読み込みません</span><span>正式プラグインではありません</span><span>左エクスプローラー・中央タブはObsidian標準で実現</span><span>右カードはプラグインで実現</span><span>検証番号・模擬外枠は05専用</span></div>
         <nav class="tab-bar"><button class="tab ${centerMode === "links" ? "active" : ""}" data-action="links">リンク一覧</button><button class="tab ${centerMode === "cases" ? "active" : ""}" data-action="cases">検証ケース</button><button class="tab" data-action="reset">初期状態へ戻す</button><button class="tab" data-action="undo">元に戻す</button></nav>
         <div class="center-content">${centerHtml()}</div>
       </section>
-      <aside class="obsidian-sidebar-right"><div class="sidebar-right-header"><h2>Memory Synapse</h2><div class="sidebar-header-actions"><button class="btn-open-grid" data-action="cases">🧪 検証ケース</button><button class="btn-open-grid" data-action="links">🔗 リンク一覧</button></div></div><div class="panel-body"><div class="notice">${esc(notice)}</div>${detailHtml()}</div></aside>
+      <aside class="obsidian-sidebar-right"><div class="sidebar-right-header"><div class="sidebar-right-title"><h2>Memory Synapse</h2><span class="surface-role surface-plugin">プラグインで実現</span></div><div class="sidebar-header-actions"><button class="btn-open-grid" data-action="cases">🧪 検証ケース</button><button class="btn-open-grid" data-action="links">🔗 リンク一覧</button></div></div><div class="panel-body"><div class="notice">${esc(notice)}</div>${detailHtml()}</div></aside>
       ${dialogHtml()}
     </main>`;
   }

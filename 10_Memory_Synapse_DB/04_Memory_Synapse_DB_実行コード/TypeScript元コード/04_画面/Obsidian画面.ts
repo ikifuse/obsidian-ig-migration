@@ -83,13 +83,22 @@ export default class MemorySynapseDbPrototype extends Plugin {
     this.registerDomEvent(document, "click", (event: MouseEvent) => {
       const target = event.target;
       if (!(target instanceof Element)) return;
-      const link = target.closest("a.internal-link, a.tag");
+      const standardLink = target.closest("a.internal-link, a.tag");
+      const livePreviewLink = target.closest(
+        ".markdown-source-view.is-live-preview .cm-hmd-internal-link, "
+        + ".markdown-source-view.is-live-preview .cm-hashtag"
+      );
+      const link = standardLink ?? livePreviewLink;
       if (!(link instanceof HTMLElement)) return;
-      const reference = link.getAttribute("data-href") ?? link.getAttribute("href") ?? link.textContent ?? "";
+      const reference = standardLink
+        ? link.getAttribute("data-href") ?? link.getAttribute("href") ?? link.textContent ?? ""
+        : link.textContent ?? "";
       const sourcePath = this.app.workspace.getActiveFile()?.path ?? "";
-      if (!カードリンク候補か(reference, link.textContent ?? "", sourcePath, link.matches("a.tag"))) return;
+      const isTagLink = link.matches("a.tag, .cm-hashtag");
+      if (!カードリンク候補か(reference, link.textContent ?? "", sourcePath, isTagLink)) return;
       event.preventDefault();
       event.stopPropagation();
+      event.stopImmediatePropagation();
       void this.selectCardInSidebar(reference);
     }, { capture: true });
   }

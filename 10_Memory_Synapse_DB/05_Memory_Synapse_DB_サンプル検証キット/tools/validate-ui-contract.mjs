@@ -68,6 +68,9 @@ assert.ok(appScript.includes("explorerSynapseFolder"), "左エクスプローラ
 assert.ok(appScript.includes("systemLogHtml"), "左エクスプローラーからSystemLogを開ける");
 assert.ok(appScript.includes('data-action="select-wiki-link"'), "投稿とSystemLogsから右パネルのカードを選択できる");
 assert.ok(appScript.includes('data-action="post"'), "右パネルの関連投稿から中央投稿へ戻れる");
+assert.ok(appScript.includes("Obsidian標準で実現"), "05の標準機能担当を画面から判別できる");
+assert.ok(appScript.includes("プラグインで実現"), "05のプラグイン担当を画面から判別できる");
+assert.ok(appScript.includes("検証番号・模擬外枠は05専用"), "05だけの表示を画面から判別できる");
 assert.ok(appScript.includes("sampleMediaHtml"), "メディア表示処理を共通化する");
 assert.ok(appScript.includes("<img"), "正常な写真を代替枠ではなく画像として表示する");
 assert.ok(appScript.includes("<video"), "正常な動画を代替枠ではなく動画として表示する");

@@ -37,6 +37,9 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px
 /* Left Sidebar (Explorer) */
 .obsidian-sidebar-left { width: 280px; min-width: 180px; flex: 0 0 280px; background: var(--bg-panel); border-right: 1px solid var(--line); display: flex; flex-direction: column; }
 .sidebar-header { padding: 12px 16px; font-weight: 600; border-bottom: 1px solid var(--line); font-size: 0.9em; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.surface-role { display: inline-flex; align-items: center; width: fit-content; border: 1px solid currentColor; border-radius: 999px; padding: 2px 7px; font-size: .68rem; font-weight: 700; line-height: 1.2; white-space: nowrap; }
+.surface-standard { color: var(--accent-2); }
+.surface-plugin { color: var(--accent); }
 .explorer-tree { flex: 1; overflow-y: auto; padding: 8px 0; font-size: 0.9em; }
 .tree-item { padding: 4px 16px; cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--text-main); }
 .tree-item:hover { background: var(--bg-hover); }
@@ -93,6 +96,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px
 /* Right Sidebar (Memory Synapse) */
 .obsidian-sidebar-right { width: 340px; min-width: 260px; flex: 0 0 340px; background: var(--bg-panel); border-left: 1px solid var(--line); display: flex; flex-direction: column; }
 .sidebar-right-header { padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); }
+.sidebar-right-title { display: grid; gap: 5px; }
 .sidebar-right-header h2 { margin: 0; font-size: 0.95em; color: var(--text-muted); font-weight: 600; }
 .sidebar-header-actions { display: flex; gap: 6px; }
 .btn-open-grid { font-size: 0.85em; padding: 4px 8px; border-radius: 4px; background: var(--bg-hover); color: var(--text-main); }

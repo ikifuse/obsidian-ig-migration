@@ -8,7 +8,15 @@ test("投稿リンクは中央を置き換えず右サイドバーへ連動す�
   assert.match(source, /getRightLeaf\(false\)/);
   assert.match(source, /SIDEBAR_VIEW_TYPE/);
   assert.match(source, /event\.preventDefault\(\)/);
+  assert.match(source, /event\.stopImmediatePropagation\(\)/);
   assert.match(source, /renderSelectedSidebar/);
+});
+
+test("閲覧モードとライブプレビューのリンクだけを連動対象にする", () => {
+  assert.match(source, /a\.internal-link, a\.tag/);
+  assert.match(source, /\.markdown-source-view\.is-live-preview \.cm-hmd-internal-link/);
+  assert.match(source, /\.markdown-source-view\.is-live-preview \.cm-hashtag/);
+  assert.doesNotMatch(source, /\.markdown-source-view:not\(\.is-live-preview\)/);
 });
 
 test("SystemLogsへ重複チェックボックスを追加しない", () => {

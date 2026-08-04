@@ -18,6 +18,8 @@ test("SynapseのWikiリンク、表示名、カードIDを同じカードへ解�
 test("投稿・SystemLogsのカードリンクだけを右サイドバー対象にする", () => {
   assert.equal(カードリンク候補か("野球バット", "#野球バット", "Instagram_Logs/Posts/post.md", true), true);
   assert.equal(カードリンク候補か("大阪城", "大阪城", "Instagram_Logs/Posts/post.md", false), true);
+  assert.equal(カードリンク候補か("gorucktough", "gorucktough", "Instagram_Logs/Posts/post.md", false), true);
+  assert.equal(カードリンク候補か("@goruck", "@goruck", "Instagram_Logs/Posts/post.md", false), true);
   assert.equal(カードリンク候補か("2026-01-30-15-00-00_IG_0001", "投稿", "Instagram_Logs/SystemLogs/場所一覧.md", false), false);
   assert.equal(カードリンク候補か("instagram", "instagram", "Instagram_Logs/Posts/post.md", false), false);
 });
