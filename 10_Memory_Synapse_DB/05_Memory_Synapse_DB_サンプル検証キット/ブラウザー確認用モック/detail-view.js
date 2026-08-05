@@ -5,6 +5,28 @@
   const appRoot = document.querySelector("#app");
   if (!core || !appRoot) return;
 
+  function appendValueNodes(container, value) {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const lines = String(value ?? "").split("\n");
+    lines.forEach((line, index) => {
+      if (index > 0) container.append(document.createElement("br"));
+      const parts = line.split(urlRegex);
+      parts.forEach((part) => {
+        if (/^https?:\/\//.test(part)) {
+          const a = document.createElement("a");
+          a.href = part;
+          a.textContent = part;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          a.className = "external-link";
+          container.append(a);
+        } else if (part) {
+          container.append(document.createTextNode(part));
+        }
+      });
+    });
+  }
+
   function createField({ label, value, empty }) {
     const field = document.createElement("div");
     field.className = "field source-field-expanded";
@@ -13,7 +35,7 @@
     term.textContent = label;
 
     const description = document.createElement("dd");
-    description.textContent = value;
+    appendValueNodes(description, value);
     if (empty) description.classList.add("field-empty");
 
     field.append(term, description);

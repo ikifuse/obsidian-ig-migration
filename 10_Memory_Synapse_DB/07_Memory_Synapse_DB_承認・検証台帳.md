@@ -2,10 +2,10 @@
 document_role: approval_and_verification_ledger
 schema_version: 2
 active_cycle: MSDB-2026-08-06-01
-phase: 05_candidate_review
+phase: 06_review
 branch: feature/MSDB-2026-08-06-01-url-links
-latest_checkpoint: 836a741
-next_owner_action: 05完成候補および仕様差分の承認待ち
+latest_checkpoint: 6679cfd
+next_owner_action: 06実物確認の承認待ち
 ---
 
 # Memory Synapse DB 承認・検証台帳
@@ -34,10 +34,10 @@ next_owner_action: 05完成候補および仕様差分の承認待ち
 | 項目 | 現在の状態 |
 |---|---|
 | 進行中の変更案件 | `MSDB-2026-08-06-01` |
-| phase | `05_candidate_review` |
+| phase | `06_review` |
 | 現在のブランチ | `feature/MSDB-2026-08-06-01-url-links` |
-| 最新の承認済み基準点 | `836a741` |
-| 次にオーナーが行うこと | 05完成候補および仕様差分の承認 |
+| 最新の承認済み基準点 | 06確認後更新 |
+| 次にオーナーが行うこと | 06実物確認の承認 |
 
 新しい変更案件を開始するとき、AIはこの表、先頭プロパティ、索引行および同じサイクルIDの詳細節を作成し、05の対象、維持条件、停止点、Git途中保存および04から06までの一括許可を一度だけ確認します。
 
@@ -47,7 +47,7 @@ next_owner_action: 05完成候補および仕様差分の承認待ち
 |---|---|---|---|---|
 | `MSDB-2026-07-31-01` | カテゴリ別集約、種類別手書き、項目単位の優先表示、可変境界、狭幅パネル、06実装補正 | `completed`（旧台帳では完了） | 旧記録には06実物確認待ちも残るため、必要時に整合を再確認 | `f56cf19` |
 | `MSDB-2026-08-01-01` | 05モックのリアリティ向上と04・06への反映 | `completed`・04実装、自動検査、06再生成、コピーVault実物検証、オーナー承認まで完了 | なし | 最終実装・承認コミット`cd4361b` |
-| `MSDB-2026-08-06-01` | Web等URLのリンク化（クリックで新しいタブで開く） | `05_candidate_review` | 05完成候補および仕様差分の承認待ち | `836a741` |
+| `MSDB-2026-08-06-01` | Web等URLのリンク化（クリックで新しいタブで開く） | `06_review` | 06実物確認の承認待ち | WIP保存参照 |
 
 ## サイクル詳細
 

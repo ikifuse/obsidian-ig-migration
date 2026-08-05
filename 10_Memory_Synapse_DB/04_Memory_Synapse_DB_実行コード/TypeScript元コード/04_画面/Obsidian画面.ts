@@ -461,8 +461,25 @@ class MemorySynapseView extends ItemView {
       itemActions.createEl("button", { text: "手書き" })
         .addEventListener("click", () => this.openHandwritten(id));
       itemActions.createEl("button", { text: "このカードを分離" })
-        .addEventListener("click", () => this.openSplit(group.managerId, id));
     }
+  }
+
+  private renderFieldValue(parent: HTMLElement, value: string): void {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const lines = value.split("\n");
+    lines.forEach((line, lineIndex) => {
+      if (lineIndex > 0) parent.createEl("br");
+      const parts = line.split(urlRegex);
+      parts.forEach((part) => {
+        if (/^https?:\/\//.test(part)) {
+          const a = parent.createEl("a", { text: part, href: part, cls: "external-link" });
+          a.setAttribute("target", "_blank");
+          a.setAttribute("rel", "noopener noreferrer");
+        } else if (part) {
+          parent.createSpan({ text: part });
+        }
+      });
+    });
   }
 
   private renderEffectiveFields(parent: HTMLElement, card: Card): void {
@@ -475,7 +492,8 @@ class MemorySynapseView extends ItemView {
       const heading = field.createDiv();
       heading.createSpan({ text: label });
       heading.createEl("small", { text: selected.origin });
-      field.createDiv({ text: selected.value });
+      const valDiv = field.createDiv();
+      this.renderFieldValue(valDiv, selected.value);
     }
   }
 
