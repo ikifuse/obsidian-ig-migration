@@ -179,6 +179,8 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px
 .field { padding: 8px; border-radius: 4px; background: var(--bg-panel); font-size: 0.9em; }
 .field dt { color: var(--text-muted); font-size: 0.85em; margin-bottom: 4px; }
 .field dd { margin: 0; }
+.external-link { color: var(--accent-2, #6ed4b5); text-decoration: underline; word-break: break-all; }
+.external-link:hover { opacity: 0.8; }
 .field-origin { float: right; border: 1px solid var(--line); border-radius: 999px; padding: 1px 5px; color: var(--accent-2); font-size: .72em; }
 .source-details-inline { margin-top: 10px; border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; }
 .source-details-inline summary { cursor: pointer; color: var(--text-muted); font-size: .84em; }

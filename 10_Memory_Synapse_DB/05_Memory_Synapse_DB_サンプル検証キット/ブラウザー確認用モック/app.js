@@ -31,6 +31,19 @@
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;");
+  const formatValue = (value) => {
+    const raw = String(value ?? "");
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    return raw.split("\n").map((line) => {
+      const parts = line.split(urlRegex);
+      return parts.map((part) => {
+        if (/^https?:\/\//.test(part)) {
+          return `<a href="${esc(part)}" target="_blank" rel="noopener noreferrer" class="external-link">${esc(part)}</a>`;
+        }
+        return esc(part);
+      }).join("");
+    }).join("<br>");
+  };
   const clone = (value) => structuredClone(value);
   const card = (id) => state.cards[id];
   const memberIds = (group) => group ? [group.managerId, ...group.memberIds] : [];
@@ -132,7 +145,7 @@
 
   function rowsHtml(rows, withOrigin = false) {
     if (!rows.length) return '<div class="compact">表示できる情報はありません。</div>';
-    return `<dl class="field-grid">${rows.map((row) => `<div class="field"><dt>${esc(row.label)}${withOrigin ? ` <span class="field-origin">${esc(row.origin)}</span>` : ""}</dt><dd>${esc(row.value)}</dd></div>`).join("")}</dl>`;
+    return `<dl class="field-grid">${rows.map((row) => `<div class="field"><dt>${esc(row.label)}${withOrigin ? ` <span class="field-origin">${esc(row.origin)}</span>` : ""}</dt><dd>${formatValue(row.value)}</dd></div>`).join("")}</dl>`;
   }
 
   function postLinks(item) {
