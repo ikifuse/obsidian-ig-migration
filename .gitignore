@@ -24,6 +24,10 @@ __pycache__/
 *.py[cod]
 scratch_*
 /tools/
+!/tools/
+/tools/*
+!/tools/README.md
+!/tools/audit-change-scope.mjs
 
 # 自動生成HTML・テスト表示ファイル
 10_Memory_Synapse_DB/test_table.html
