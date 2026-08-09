@@ -1,0 +1,4 @@
+interface:
+  display_name: "Obsidian IG 安全進行"
+  short_description: "OpenAI公式確認・範囲管理・差分検査を安全かつ確実に実行する"
+  default_prompt: "Use $obsidian-ig-safe-workflow to investigate or change this repository safely within the approved scope."
