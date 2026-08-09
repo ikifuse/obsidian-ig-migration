@@ -199,7 +199,7 @@ class MemorySynapseView extends ItemView {
       const result = await scanSynapses(this.app, root, parseYaml);
       loading.remove();
       this.readResult = result;
-      this.sessionState = { cards: result.cardsById, groups: result.groups };
+      this.sessionState = 画面操作状態を作る(result);
       this.history.初期化する();
       this.notice = "Vaultから読み取った初期状態です。";
       this.renderResult(root, result);
@@ -211,7 +211,7 @@ class MemorySynapseView extends ItemView {
   }
 
   private renderResult(root: string, result: Obsidian読取結果): void {
-    const session = this.sessionState ?? { cards: result.cardsById, groups: result.groups };
+    const session = this.sessionState ?? 画面操作状態を作る(result);
     const view = this.contentEl.createDiv({ cls: "memory-synapse-prototype" });
     const header = view.createDiv({ cls: "msdb-header" });
     const heading = header.createDiv();
@@ -283,7 +283,7 @@ class MemorySynapseView extends ItemView {
     for (const item of displayList.items) {
       if (item.type === "group" && item.managerId) {
         const group = session.groups[item.managerId];
-        if (group) this.renderGroup(list, group, result, session);
+        if (group) this.renderGroupListCard(list, group, result, session);
         continue;
       }
       const cardId = item.cardIds[0];
@@ -301,10 +301,55 @@ class MemorySynapseView extends ItemView {
   ): void {
     const fileCard = result.cardsById[card.id];
     if (!fileCard) return;
-    const block = parent.createDiv({ cls: "msdb-card-block" });
+    const block = parent.createDiv({ cls: "msdb-card-block msdb-grid-card" });
+    this.enableGridDragAndDrop(block, card.id);
+    const row = block.createDiv({ cls: "msdb-card" });
+    const select = row.createEl("button", {
+      cls: "msdb-card-link",
+      text: effectiveDisplayName(card).value,
+      attr: { title: `${fileCard.basename}.mdを右サイドバーで確認` }
+    });
+    select.addEventListener("click", () => this.selectGridCard(block, card.id));
+    row.createSpan({ cls: `msdb-kind msdb-${card.kind}`, text: KIND_LABEL[card.kind] });
+    const meta = block.createDiv({ cls: "msdb-grid-meta" });
+    meta.createSpan({ text: managerId ? "融合済み" : "単独" });
+    meta.createSpan({ text: `関連投稿 ${card.relatedPosts.length}件` });
+    if (card.handwritten) meta.createSpan({ text: "手書きあり" });
+  }
+
+  private renderGroupListCard(
+    parent: HTMLElement,
+    group: 融合グループ,
+    result: Obsidian読取結果,
+    session: 融合状態
+  ): void {
+    const manager = session.cards[group.managerId];
+    const fileCard = result.cardsById[group.managerId];
+    if (!manager || !fileCard) return;
+    const memberIds = groupCardIds(group);
+    const block = parent.createDiv({ cls: "msdb-card-block msdb-grid-card" });
+    this.enableGridDragAndDrop(block, group.managerId);
+    const row = block.createDiv({ cls: "msdb-card" });
+    const select = row.createEl("button", {
+      cls: "msdb-card-link",
+      text: `${effectiveDisplayName(manager).value}（融合${memberIds.length}枚）`,
+      attr: { title: `${fileCard.basename}.mdを右サイドバーで確認` }
+    });
+    select.addEventListener("click", () => this.selectGridCard(block, group.managerId));
+    row.createSpan({ cls: `msdb-kind msdb-${manager.kind}`, text: KIND_LABEL[manager.kind] });
+    const relatedPosts = new Set(memberIds.flatMap((id) => session.cards[id]?.relatedPosts ?? []));
+    const meta = block.createDiv({ cls: "msdb-grid-meta" });
+    meta.createSpan({ text: "関係管理カード" });
+    meta.createSpan({ text: `関連投稿 ${relatedPosts.size}件` });
+    if (memberIds.some((id) => Boolean(session.cards[id]?.handwritten))) {
+      meta.createSpan({ text: "手書きあり" });
+    }
+  }
+
+  private enableGridDragAndDrop(block: HTMLElement, cardId: string): void {
     block.draggable = true;
     block.addEventListener("dragstart", (event) => {
-      event.dataTransfer?.setData("text/x-memory-synapse-card", card.id);
+      event.dataTransfer?.setData("text/x-memory-synapse-card", cardId);
       if (event.dataTransfer) event.dataTransfer.effectAllowed = "move";
     });
     block.addEventListener("dragover", (event) => {
@@ -317,28 +362,18 @@ class MemorySynapseView extends ItemView {
     block.addEventListener("drop", (event) => {
       block.removeClass("msdb-drop-target");
       const sourceId = event.dataTransfer?.getData("text/x-memory-synapse-card");
-      if (!sourceId || sourceId === card.id) return;
+      if (!sourceId || sourceId === cardId) return;
       event.preventDefault();
-      this.openMerge(sourceId, card.id);
+      this.openMerge(sourceId, cardId);
     });
-    const row = block.createDiv({ cls: "msdb-card" });
-    const open = row.createEl("button", { cls: "msdb-card-link", text: `${fileCard.basename}.md` });
-    open.addEventListener("click", () => void this.app.workspace.getLeaf(false).openFile(fileCard.file));
-    row.createSpan({ cls: `msdb-kind msdb-${card.kind}`, text: KIND_LABEL[card.kind] });
-    row.createSpan({ cls: "msdb-link-count", text: `${fileCard.wikiLinkCount}リンク` });
-    if (managerId) row.createSpan({ cls: "msdb-link-count", text: 現在地を説明する(session, card.id) });
-    this.renderEffectiveFields(block, card);
-    const actions = block.createDiv({ cls: "msdb-card-actions" });
-    actions.createEl("button", { text: "融合へ追加" }).addEventListener("click", () => this.openMerge(card.id));
-    actions.createEl("button", { text: "手書き" }).addEventListener("click", () => this.openHandwritten(card.id));
-    if (managerId) {
-      actions.createEl("button", { text: "このカードを分離" })
-        .addEventListener("click", () => this.openSplit(managerId, card.id));
-    }
-    this.renderRelatedPosts(block, card, fileCard.path);
-    const details = block.createEl("details", { cls: "msdb-individual-details" });
-    details.createEl("summary", { text: "元情報と保存済み手書き情報を見る" });
-    this.renderIndividualCard(details, card);
+  }
+
+  private selectGridCard(block: HTMLElement, cardId: string): void {
+    this.selectedCardId = cardId;
+    block.parentElement?.querySelectorAll(".msdb-grid-card.is-selected")
+      .forEach((item) => item.removeClass("is-selected"));
+    block.addClass("is-selected");
+    void this.plugin.selectCardInSidebar(cardId);
   }
 
   private renderSelectedSidebar(parent: HTMLElement, result: Obsidian読取結果, session: 融合状態): void {
@@ -461,6 +496,7 @@ class MemorySynapseView extends ItemView {
       itemActions.createEl("button", { text: "手書き" })
         .addEventListener("click", () => this.openHandwritten(id));
       itemActions.createEl("button", { text: "このカードを分離" })
+        .addEventListener("click", () => this.openSplit(group.managerId, id));
     }
   }
 
@@ -867,6 +903,15 @@ function handwrittenFields(note?: 手書き情報): Record<string, unknown> {
     postalCode: note.address.postalCode,
     note: note.note
   };
+}
+
+function 画面操作状態を作る(result: Obsidian読取結果): 融合状態 {
+  const cards: Record<string, Card> = {};
+  for (const item of result.cards) {
+    const { file: _file, path: _path, basename: _basename, wikiLinkCount: _wikiLinkCount, ...card } = item;
+    cards[card.id] = card as Card;
+  }
+  return { cards, groups: structuredClone(result.groups) };
 }
 
 function categoryFields(kind: CardKind): Array<[string, string]> {

@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 const source = await readFile(new URL("./Obsidian画面.ts", import.meta.url), "utf8");
+const styles = await readFile(new URL("../../プラグイン素材/styles.css", import.meta.url), "utf8");
 
 test("投稿リンクは中央を置き換えず右サイドバーへ連動する", () => {
   assert.match(source, /getRightLeaf\(false\)/);
@@ -51,4 +52,24 @@ test("融合グループは受け皿で全個別カードを表示する", () =>
   assert.match(source, /groupCardIds\(group\)/);
   assert.match(source, /renderIndividualCard\(item, card\)/);
   assert.match(source, /renderRelatedPosts\(item, card, fileCard\.path\)/);
+});
+
+test("中央一覧は右サイドバー選択とドラッグ融合に使うカードグリッドである", () => {
+  assert.match(source, /renderGroupListCard/);
+  assert.match(source, /enableGridDragAndDrop/);
+  assert.match(source, /selectGridCard/);
+  assert.match(source, /selectCardInSidebar\(cardId\)/);
+  assert.match(styles, /\.msdb-card-list \{ display: grid;/);
+  assert.match(styles, /repeat\(auto-fill, minmax\(250px, 1fr\)\)/);
+});
+
+test("右サイドバーの受け皿から個別カードを分離できる", () => {
+  assert.match(source, /このカードを分離/);
+  assert.match(source, /openSplit\(group\.managerId, id\)/);
+});
+
+test("画面内操作状態へObsidianのTFileを混ぜない", () => {
+  assert.match(source, /画面操作状態を作る\(result\)/);
+  assert.match(source, /file: _file, path: _path, basename: _basename, wikiLinkCount: _wikiLinkCount/);
+  assert.match(source, /groups: structuredClone\(result\.groups\)/);
 });
