@@ -7,7 +7,7 @@ description: Safely execute repository work in obsidian-ig-migration by loading 
 
 ## 実行手順
 
-1. リポジトリ直下の`AGENTS.md`を適用し、対象工程を読み込みルーターから選ぶ。`09_IGC統合/`または`10_Memory_Synapse_DB/`では子`AGENTS.md`も適用する。
+1. リポジトリ直下の`AGENTS.md`を適用し、対象工程を読み込みルーターから選ぶ。対象パスを確定した後、作業場所にかかわらず、リポジトリルートから対象までの各階層にある`AGENTS.override.md`または`AGENTS.md`を順に適用する。
 2. `git status --short`を確認し、最新依頼を対象、求める結果、許可された操作、停止点に整理する。既存差分と今回の差分を分ける。
 3. 「確認」「調査」では、現物、適用ルール、必要な履歴と過去の承認、発生理由、影響をつないで判定する。提案する場合は、`AGENTS.md`の全体完走に対する分類、追加作業量、影響工程および変更サイクルの判定を先に実行する。安全に続けられる必要調査を終えるまで採否を求めない。
 4. `AGENTS.md`または`docs/`配下を扱う場合は、`AGENTS.md`のOpenAI公式資料確認と適用判断の規則を編集前に実行する。AI運用構造では、読み込みルーターから`docs/rule-addition-criteria.md`と`docs/information-architecture.md`も適用する。必要な照合が未完了なら変更しない。
