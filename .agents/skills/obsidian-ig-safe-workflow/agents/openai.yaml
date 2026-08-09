@@ -1,0 +1,4 @@
+interface:
+  display_name: "Obsidian IG 安全進行"
+  short_description: "調査・提案・変更・Git操作を完走条件に沿って安全に進める"
+  default_prompt: "Use $obsidian-ig-safe-workflow to investigate this request fully and explain one owner decision concisely."
