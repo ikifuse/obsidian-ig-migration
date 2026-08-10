@@ -190,6 +190,14 @@ class MemorySynapseView extends ItemView {
 
   async onOpen(): Promise<void> { await this.refresh(); }
 
+  async onClose(): Promise<void> {
+    this.contentEl.empty();
+    this.readResult = null;
+    this.sessionState = null;
+    this.history.初期化する();
+    this.selectedCardId = null;
+  }
+
   async refresh(): Promise<void> {
     const root = normalizeRoot(this.plugin.settings.targetRoot);
     this.contentEl.empty();
@@ -942,17 +950,21 @@ type ChoiceField = {
 };
 
 class ChoiceModal extends Modal {
-  private readonly values: Record<string, string> = {};
+  private values: Record<string, string> = {};
   private readonly confirmed = new Set<string>();
+  private fields: ChoiceField[];
+  private onConfirm: ((values: Record<string, string>) => void) | null;
 
   constructor(
     app: App,
     private readonly titleText: string,
-    private readonly fields: ChoiceField[],
-    private readonly onConfirm: (values: Record<string, string>) => void,
+    fields: ChoiceField[],
+    onConfirm: (values: Record<string, string>) => void,
     private readonly description = ""
   ) {
     super(app);
+    this.fields = fields;
+    this.onConfirm = onConfirm;
     for (const field of fields) this.values[field.key] = field.initial;
   }
 
@@ -995,40 +1007,58 @@ class ChoiceModal extends Modal {
     updateConfirm();
     confirm.addEventListener("click", () => {
       if (confirm.disabled) return;
+      const onConfirm = this.onConfirm;
+      if (!onConfirm) return;
+      const values = { ...this.values };
       this.close();
-      this.onConfirm({ ...this.values });
+      onConfirm(values);
     });
   }
 
-  onClose(): void { this.contentEl.empty(); }
+  onClose(): void {
+    this.contentEl.empty();
+    this.fields = [];
+    this.values = {};
+    this.confirmed.clear();
+    this.onConfirm = null;
+  }
 }
 
 class HandwrittenModal extends Modal {
-  private readonly note: 手書き情報;
+  private card: Card | null;
+  private note: 手書き情報;
+  private onConfirm: ((note: 手書き情報) => void) | null;
 
   constructor(
     app: App,
-    private readonly card: Card,
-    private readonly onConfirm: (note: 手書き情報) => void
+    card: Card,
+    onConfirm: (note: 手書き情報) => void
   ) {
     super(app);
+    this.card = card;
     this.note = structuredClone(card.handwritten ?? emptyHandwritten);
+    this.onConfirm = onConfirm;
   }
 
   onOpen(): void {
-    this.titleEl.setText(`${KIND_LABEL[this.card.kind]}個別カードの手書き`);
+    const card = this.card;
+    if (!card) {
+      this.close();
+      return;
+    }
+    this.titleEl.setText(`${KIND_LABEL[card.kind]}個別カードの手書き`);
     this.contentEl.createEl("p", {
       text: "元情報は消しません。入力した非空項目だけが表示で優先され、空項目は移行時点の値を使います。",
       cls: "setting-item-description"
     });
     this.text("表示名", this.note.displayName, (value) => { this.note.displayName = value; });
     this.lines("別名（1行1件）", this.note.aliases, (value) => { this.note.aliases = value; });
-    if (this.card.kind === "mention") {
+    if (card.kind === "mention") {
       this.text("名称", this.note.name, (value) => { this.note.name = value; });
       this.lines("電話（1行1件）", this.note.phone, (value) => { this.note.phone = value; });
       this.lines("Web等（1行1件）", this.note.web, (value) => { this.note.web = value; });
     }
-    if (this.card.kind === "location") {
+    if (card.kind === "location") {
       this.text("緯度", this.note.geo.lat, (value) => { this.note.geo.lat = value; });
       this.text("経度", this.note.geo.lng, (value) => { this.note.geo.lng = value; });
       this.text("高度", this.note.geo.alt, (value) => { this.note.geo.alt = value; });
@@ -1046,8 +1076,11 @@ class HandwrittenModal extends Modal {
     cancel.addEventListener("click", () => this.close());
     const confirm = buttons.createEl("button", { text: "保存内容を確認" });
     confirm.addEventListener("click", () => {
+      const onConfirm = this.onConfirm;
+      if (!onConfirm) return;
+      const note = structuredClone(this.note);
       this.close();
-      this.onConfirm(structuredClone(this.note));
+      onConfirm(note);
     });
   }
 
@@ -1063,26 +1096,46 @@ class HandwrittenModal extends Modal {
     new Setting(this.contentEl).setName(label).addTextArea((input) => input.setValue(value).onChange(set));
   }
 
-  onClose(): void { this.contentEl.empty(); }
+  onClose(): void {
+    this.contentEl.empty();
+    this.card = null;
+    this.note = structuredClone(emptyHandwritten);
+    this.onConfirm = null;
+  }
 }
 
 class OperationConfirmModal extends Modal {
+  private before: 融合状態 | null;
+  private after: 融合状態 | null;
+  private changedPaths: string[];
+  private onConfirm: (() => void) | null;
+
   constructor(
     app: App,
     private readonly operationTitle: string,
-    private readonly before: 融合状態,
-    private readonly after: 融合状態,
-    private readonly changedPaths: string[],
-    private readonly onConfirm: () => void
+    before: 融合状態,
+    after: 融合状態,
+    changedPaths: string[],
+    onConfirm: () => void
   ) {
     super(app);
+    this.before = before;
+    this.after = after;
+    this.changedPaths = changedPaths;
+    this.onConfirm = onConfirm;
   }
 
   onOpen(): void {
+    const before = this.before;
+    const after = this.after;
+    if (!before || !after) {
+      this.close();
+      return;
+    }
     this.titleEl.setText(`${this.operationTitle} — 操作前後比較`);
-    this.section("現在", comparisonLines(this.before));
-    this.section("操作後", comparisonLines(this.after));
-    const handwritten = handwrittenComparisonLines(this.before, this.after);
+    this.section("現在", comparisonLines(before));
+    this.section("操作後", comparisonLines(after));
+    const handwritten = handwrittenComparisonLines(before, after);
     if (handwritten.length > 0) this.section("手書き情報の変更", handwritten);
     this.section(
       "変更するファイル",
@@ -1104,8 +1157,10 @@ class OperationConfirmModal extends Modal {
     cancel.addEventListener("click", () => this.close());
     const confirm = buttons.createEl("button", { text: "画面内で実行", cls: "mod-cta" });
     confirm.addEventListener("click", () => {
+      const onConfirm = this.onConfirm;
+      if (!onConfirm) return;
       this.close();
-      this.onConfirm();
+      onConfirm();
     });
   }
 
@@ -1116,7 +1171,13 @@ class OperationConfirmModal extends Modal {
     for (const line of lines) list.createEl("li", { text: line });
   }
 
-  onClose(): void { this.contentEl.empty(); }
+  onClose(): void {
+    this.contentEl.empty();
+    this.before = null;
+    this.after = null;
+    this.changedPaths = [];
+    this.onConfirm = null;
+  }
 }
 
 function addOptions(

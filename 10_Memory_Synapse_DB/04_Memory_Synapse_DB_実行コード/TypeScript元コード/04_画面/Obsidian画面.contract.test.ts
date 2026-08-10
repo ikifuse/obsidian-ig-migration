@@ -73,3 +73,18 @@ test("画面内操作状態へObsidianのTFileを混ぜない", () => {
   assert.match(source, /file: _file, path: _path, basename: _basename, wikiLinkCount: _wikiLinkCount/);
   assert.match(source, /groups: structuredClone\(result\.groups\)/);
 });
+
+test("閉じた確認画面は一覧状態と実行処理への参照を残さない", () => {
+  assert.match(source, /async onClose\(\): Promise<void> \{/);
+  assert.match(source, /this\.readResult = null;/);
+  assert.match(source, /this\.sessionState = null;/);
+  assert.match(source, /this\.history\.初期化する\(\);/);
+  assert.match(source, /this\.fields = \[\];/);
+  assert.match(source, /this\.values = \{\};/);
+  assert.match(source, /this\.card = null;/);
+  assert.match(source, /this\.note = structuredClone\(emptyHandwritten\);/);
+  assert.match(source, /this\.before = null;/);
+  assert.match(source, /this\.after = null;/);
+  assert.match(source, /this\.changedPaths = \[\];/);
+  assert.equal(source.match(/this\.onConfirm = null;/g)?.length, 3);
+});
