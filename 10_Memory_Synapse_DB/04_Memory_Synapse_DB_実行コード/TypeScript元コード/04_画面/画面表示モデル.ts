@@ -13,7 +13,7 @@ export interface 一覧項目 {
 }
 
 export interface 一覧絞り込み {
-  kind: カード種類 | "all";
+  kinds: ReadonlySet<カード種類>;
   status: 一覧状態絞り込み;
   handwrittenOnly: boolean;
   search: string;
@@ -72,7 +72,7 @@ function 一覧項目が一致する(state: 融合状態, item: 一覧項目, fi
   const cards = item.cardIds
     .map((id) => state.cards[id])
     .filter((card): card is カード => Boolean(card));
-  if (filter.kind !== "all" && !cards.some((card) => card.kind === filter.kind)) return false;
+  if (filter.kinds.size > 0 && !cards.some((card) => filter.kinds.has(card.kind))) return false;
   if (filter.handwrittenOnly && !cards.some((card) => Boolean(card.handwritten))) return false;
   const query = filter.search.trim().toLowerCase();
   if (!query) return true;

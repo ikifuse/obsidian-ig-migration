@@ -157,7 +157,7 @@ class MemorySynapseView extends ItemView {
   private readonly history = new SessionHistory();
   private notice = "Vaultから読み取った初期状態です。";
   private search = "";
-  private kindFilter: CardKind | "all" = "all";
+  private readonly kindFilters = new Set<CardKind>();
   private statusFilter: 一覧状態絞り込み = "all";
   private handwrittenOnly = false;
   private selectedCardId: string | null = null;
@@ -228,6 +228,10 @@ class MemorySynapseView extends ItemView {
     const reload = header.createEl("button", { text: "再読込", cls: "mod-cta" });
     reload.addEventListener("click", () => void this.refresh());
     const sessionActions = header.createDiv({ cls: "msdb-session-actions" });
+    if (this.surface === "sidebar") {
+      const openList = sessionActions.createEl("button", { text: "リンク一覧" });
+      openList.addEventListener("click", () => void this.plugin.activateView());
+    }
     const undo = sessionActions.createEl("button", { text: "元に戻す" });
     undo.disabled = this.history.件数() === 0;
     undo.addEventListener("click", () => {
@@ -255,13 +259,6 @@ class MemorySynapseView extends ItemView {
     const metrics = view.createDiv({ cls: "msdb-metrics" });
     metric(metrics, "対象カード", `${result.cards.length}件`, "Tag・Mention・Location");
     metric(metrics, "Wikiリンク", `${result.totalWikiLinks}件`, "対象カード内の合計");
-    metric(metrics, "読取時間", `${result.elapsedMs.toFixed(1)} ms`, "cachedReadによる計測");
-    metric(
-      metrics,
-      "JSヒープ概算",
-      result.approximateHeapMb === undefined ? "取得不可" : `${result.approximateHeapMb.toFixed(1)} MB`,
-      "取得できる環境だけ表示"
-    );
 
     const types = view.createDiv({ cls: "msdb-types" });
     for (const kind of ["tag", "mention", "location"] as CardKind[]) {
@@ -272,16 +269,19 @@ class MemorySynapseView extends ItemView {
 
     this.renderProblems(view, result, session);
 
-    const listHead = view.createDiv({ cls: "msdb-list-head" });
-    listHead.createEl("h3", { text: this.statusFilter === "merged" ? "融合済みの個別カード" : "リンク一覧" });
     const displayList = 表示一覧を作る(session, {
-      kind: this.kindFilter,
+      kinds: this.kindFilters,
       status: this.statusFilter,
       handwrittenOnly: this.handwrittenOnly,
       search: this.search
     });
-    listHead.createSpan({ text: `全${displayList.total}件中 ${displayList.items.length}件を表示` });
-    this.renderFilters(view);
+    const toolbar = view.createDiv({ cls: "msdb-grid-toolbar" });
+    const gridHeading = toolbar.createDiv({ cls: "msdb-grid-heading" });
+    gridHeading.createEl("h3", {
+      text: this.statusFilter === "merged" ? "融合済みの個別カード" : "Memory Synapse DB（リンク一覧）"
+    });
+    gridHeading.createEl("p", { cls: "msdb-drag-help", text: "⠿ カードを別のカードへドラッグして融合" });
+    this.renderFilters(toolbar, displayList.total, displayList.items.length);
     const list = view.createDiv({ cls: "msdb-card-list" });
     if (displayList.items.length === 0) {
       list.createDiv({ cls: "msdb-empty", text: "条件に一致する知識単位がありません。" });
@@ -652,46 +652,71 @@ class MemorySynapseView extends ItemView {
     }
   }
 
-  private renderFilters(parent: HTMLElement): void {
-    const filters = parent.createDiv({ cls: "msdb-filters" });
-    const search = filters.createEl("input", { type: "search", placeholder: "名前・別名・関連投稿を検索" });
+  private renderFilters(parent: HTMLElement, total: number, displayed: number): void {
+    const filters = parent.createEl("section", { cls: "msdb-filter-panel" });
+    const search = filters.createEl("input", {
+      cls: "msdb-filter-search",
+      type: "search",
+      placeholder: "カード名・別名・元情報・関連投稿を検索"
+    });
     search.value = this.search;
     search.addEventListener("input", () => {
       this.search = search.value;
+      const selection = search.selectionStart ?? this.search.length;
+      this.rerender();
+      const replacement = this.contentEl.querySelector<HTMLInputElement>(".msdb-filter-search");
+      replacement?.focus();
+      replacement?.setSelectionRange(selection, selection);
+    });
+    const kindRow = filters.createDiv({ cls: "msdb-filter-row" });
+    kindRow.createSpan({ cls: "msdb-filter-label", text: "種類" });
+    for (const kind of ["mention", "location", "tag"] as CardKind[]) {
+      const active = this.kindFilters.has(kind);
+      const button = kindRow.createEl("button", {
+        cls: `msdb-filter-button${active ? " is-active" : ""}`,
+        text: KIND_LABEL[kind]
+      });
+      button.setAttribute("aria-pressed", String(active));
+      button.addEventListener("click", () => {
+        this.kindFilters.has(kind) ? this.kindFilters.delete(kind) : this.kindFilters.add(kind);
+        this.rerender();
+      });
+    }
+    const statusRow = filters.createDiv({ cls: "msdb-filter-row" });
+    statusRow.createSpan({ cls: "msdb-filter-label", text: "状態" });
+    for (const [status, label] of [
+      ["single", "単独"], ["manager", "関係管理カード"], ["merged", "融合済み"]
+    ] as Array<[Exclude<一覧状態絞り込み, "all">, string]>) {
+      const active = this.statusFilter === status;
+      const button = statusRow.createEl("button", {
+        cls: `msdb-filter-button${active ? " is-active" : ""}`,
+        text: label
+      });
+      button.setAttribute("aria-pressed", String(active));
+      button.addEventListener("click", () => {
+        this.statusFilter = active ? "all" : status;
+        this.rerender();
+      });
+    }
+    const handwritten = statusRow.createEl("button", {
+      cls: `msdb-filter-button${this.handwrittenOnly ? " is-active" : ""}`,
+      text: "手書きあり"
+    });
+    handwritten.setAttribute("aria-pressed", String(this.handwrittenOnly));
+    handwritten.addEventListener("click", () => {
+      this.handwrittenOnly = !this.handwrittenOnly;
       this.rerender();
     });
-    const kind = filters.createEl("select");
-    addOptions(kind, [
-      ["all", "全種類"], ["mention", "Mention"], ["location", "Location"], ["tag", "Tag"]
-    ], this.kindFilter);
-    kind.addEventListener("change", () => {
-      this.kindFilter = kind.value as typeof this.kindFilter;
-      this.rerender();
-    });
-    const status = filters.createEl("select");
-    addOptions(status, [
-      ["all", "全状態"], ["single", "単独"], ["manager", "関係管理カード"], ["merged", "融合済み"]
-    ], this.statusFilter);
-    status.addEventListener("change", () => {
-      this.statusFilter = status.value as typeof this.statusFilter;
-      this.rerender();
-    });
-    const label = filters.createEl("label");
-    const handwritten = label.createEl("input", { type: "checkbox" });
-    handwritten.checked = this.handwrittenOnly;
-    handwritten.addEventListener("change", () => {
-      this.handwrittenOnly = handwritten.checked;
-      this.rerender();
-    });
-    label.appendText("手書きあり");
-    const reset = filters.createEl("button", { text: "絞り込み解除" });
+    const summary = filters.createDiv({ cls: "msdb-filter-summary" });
+    const reset = summary.createEl("button", { cls: "msdb-filter-clear", text: "絞り込み解除" });
     reset.addEventListener("click", () => {
       this.search = "";
-      this.kindFilter = "all";
+      this.kindFilters.clear();
       this.statusFilter = "all";
       this.handwrittenOnly = false;
       this.rerender();
     });
+    summary.createSpan({ text: `全${total}件中${displayed}件を表示` });
   }
 
   private openMerge(sourceId: string, fixedReceiverId?: string): void {

@@ -24,11 +24,19 @@
 .msdb-mention { color: var(--msdb-mention); }
 .msdb-location { color: var(--msdb-location); }
 .msdb-tag { color: var(--msdb-tag); }
-.msdb-list-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 24px; }
-.msdb-list-head span { color: var(--text-muted); font-size: var(--font-ui-smaller); }
+.msdb-grid-toolbar { display: grid; grid-template-columns: max-content minmax(0, 1fr); align-items: start; gap: 24px; margin: 24px 0; }
+.msdb-grid-heading { padding-top: 8px; }
+.msdb-grid-heading h3 { margin: 0; white-space: nowrap; }
+.msdb-drag-help { margin: 8px 0 0; color: var(--text-muted); font-size: var(--font-ui-smaller); }
 .msdb-card-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
-.msdb-filters { display: grid; grid-template-columns: minmax(180px, 1fr) auto auto auto auto; align-items: center; gap: 8px; margin: 8px 0 12px; }
-.msdb-filters label { display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+.msdb-filter-panel { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px; border: 1px solid var(--background-modifier-border); border-radius: 8px; background: var(--background-secondary); }
+.msdb-filter-search { width: 100%; }
+.msdb-filter-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.msdb-filter-label { width: 44px; color: var(--text-muted); font-size: var(--font-ui-smaller); }
+.msdb-filter-button, .msdb-filter-clear { border-radius: 999px; font-size: var(--font-ui-smaller); }
+.msdb-filter-button.is-active { color: var(--text-on-accent); background: var(--interactive-accent); }
+.msdb-filter-summary { display: flex; align-items: center; gap: 12px; margin-left: auto; color: var(--text-muted); font-size: var(--font-ui-smaller); }
+.msdb-filter-clear { border-radius: 6px; }
 .msdb-card { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--background-modifier-border); }
 .msdb-card-link { overflow: hidden; border: 0; background: transparent; color: var(--text-accent); text-align: left; text-overflow: ellipsis; white-space: nowrap; }
 .msdb-kind { font-size: var(--font-ui-smaller); font-weight: 600; }
@@ -96,7 +104,9 @@
   .msdb-card { grid-template-columns: minmax(0, 1fr) auto; }
   .msdb-link-count { grid-column: 1 / -1; }
   .memory-synapse-prototype { padding: 12px; }
-  .msdb-filters { grid-template-columns: 1fr; }
+  .msdb-grid-toolbar { grid-template-columns: 1fr; }
+  .msdb-grid-heading h3 { white-space: normal; }
+  .msdb-filter-summary { width: 100%; margin-left: 0; }
   .msdb-card-list { grid-template-columns: 1fr; }
   .msdb-representative-header span:last-child { width: 100%; margin-left: 0; }
   .msdb-problem-row { grid-template-columns: 1fr; }

@@ -63,6 +63,20 @@ test("中央一覧は右サイドバー選択とドラッグ融合に使うカ�
   assert.match(styles, /repeat\(auto-fill, minmax\(250px, 1fr\)\)/);
 });
 
+test("中央操作窓と右サイドバーのリンク一覧は承認済み配置に対応する", () => {
+  assert.match(source, /msdb-grid-toolbar/);
+  assert.match(source, /カード名・別名・元情報・関連投稿を検索/);
+  assert.match(source, /this\.kindFilters\.has\(kind\)/);
+  assert.match(source, /aria-pressed/);
+  assert.match(source, /text: "リンク一覧"/);
+  assert.match(source, /this\.plugin\.activateView\(\)/);
+  assert.doesNotMatch(source, /metric\(metrics, "読取時間"/);
+  assert.doesNotMatch(source, /"JSヒープ概算"/);
+  assert.match(styles, /\.msdb-grid-toolbar \{ display: grid;/);
+  assert.match(styles, /\.msdb-filter-panel/);
+  assert.match(styles, /\.msdb-filter-button\.is-active/);
+});
+
 test("右サイドバーの受け皿から個別カードを分離できる", () => {
   assert.match(source, /このカードを分離/);
   assert.match(source, /openSplit\(group\.managerId, id\)/);
