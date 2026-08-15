@@ -31,7 +31,6 @@
 | 新規ファイルの作成、文書・補助ツールの配置・退役 | `../docs/document-governance.md` | 配置判断に必要な対象資料 |
 | 恒久ルールの追加・修正 | `../docs/rule-addition-criteria.md`、`../docs/information-architecture.md` | 根拠となる承認済み文書・履歴 |
 
-- 実装・成果物検証でコードの依存関係を調べる場合は、grepで全ファイルを検索する前に`../graphify-out/graph.json`のノードとエッジを参照し、対象ファイルを絞る。graph.jsonを丸読みせず、対象の識別名で検索して隣接エッジだけを確認する。
 
 ## 現役正本と比較資料
 
